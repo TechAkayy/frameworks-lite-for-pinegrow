@@ -93,11 +93,13 @@ For a Vite-powered Vue experience with Single-File components (.vue components),
 
 ![Add directive](/screenshots/file2.png?raw=true 'Add directive')
 
-![Update directive](/screenshots/file3.png?raw=true 'Update directive')
+![Add a loop](/screenshots/file3.png?raw=true 'Add a loop')
 
-![Refresh page](/screenshots/file4.png?raw=true 'Refresh page')
+![Add a key](/screenshots/file4.png?raw=true 'Add a key')
 
-![Validate updates](/screenshots/file5.png?raw=true 'Validate updates')
+![Refresh page](/screenshots/file5.png?raw=true 'Refresh page')
+
+![Validate updates](/screenshots/file6.png?raw=true 'Validate updates')
 
 ## Development / Contribution
 
