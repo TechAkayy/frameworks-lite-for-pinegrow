@@ -2,7 +2,7 @@
 
 A [Pinegrow](https://pinegrow.com/) Plugin that provides the ability to [progressively enhance](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement) your HTML with light-weight framework directives via the Props Panel.
 
-Currently supported frameworks - [Petite Vue](https://github.com/vuejs/petite-vue), [Vue](https://vuejs.org/guide/quick-start.html#using-the-global-build) and [AlpineJS](https://alpinejs.dev/start-here). To add a new framework, refer to the [Development](#development) section.
+Currently supported frameworks - [Petite Vue](https://github.com/vuejs/petite-vue), [Vue](https://vuejs.org/guide/quick-start.html#using-the-global-build) and [AlpineJS](https://alpinejs.dev/start-here). To add a new framework, refer to the [Development & Contribution](#development--contribution) section.
 
 ❗Note: This is not an official plugin by the Pinegrow team, rather a personal contribution for the community. Follow me on twitter - [@techakayy](https://twitter.com/techakayy)
 
@@ -150,7 +150,7 @@ $(function () {
 7. Build the plugin - `npm run build`
 8. Your new plugin is now available within the `dist` folder.
 9. In Pinegrow, unload any previous versions of the plugin.
-10. Follow [usage](#Usage) section for instructions to load your new plugin.
+10. Follow [usage](#usage) section for instructions to load your new plugin.
 
 ## Community
 
