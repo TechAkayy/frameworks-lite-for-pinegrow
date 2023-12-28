@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>An AlpineJS Page</title>
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+      defer
+    ></script>
+    <link rel="pg-require" href="pinegrow.json" />
+  </head>
+  <body>
+    <main>
+      <div x-data="{ message: 'A Fresh Start!' }">
+        <div
+          style="
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            padding-top: 1.5rem /* 24px */;
+            padding-bottom: 1.5rem /* 24px */;
+          "
+        >
+          <span style="margin-left: 1rem; /* 16px */" x-text="message"></span>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
