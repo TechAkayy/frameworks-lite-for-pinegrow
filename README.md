@@ -29,7 +29,7 @@ Currently supported frameworks - [Petite Vue](https://github.com/vuejs/petite-vu
 
 > Note, the list of directives are not exhaustive. To learn about how to use them, refer to the official documentation of the framework.
 
-## Common Gotchas:
+## Common Gotchas
 
 - Don't mix frameworks, it can be hard to debug the behaviour.
 - When using v-for of Petite-Vue or Vue, ensure you also add the key directive.
@@ -73,6 +73,12 @@ Currently supported frameworks - [Petite Vue](https://github.com/vuejs/petite-vu
     </script>
   </body>
   ```
+
+## Subscribe for updates
+
+![Custom Notification1](/screenshots/file7.png?raw=true 'Custom Notification1')
+
+![Custom Notification2](/screenshots/file8.png?raw=true 'Custom Notification2')
 
 ## Improvement opportunities
 
