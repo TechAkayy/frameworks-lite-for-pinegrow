@@ -61,6 +61,10 @@ const onProjectClosed = () => {
   $menu.remove()
 }
 
+// Entry-1: Plugin loaded via plugin manager for the first time
+if (pinegrow.getCurrentProjectInfo() !== null) onProjectLoaded()
+
+// Entry-2: Plugin already loaded & Project was opened
 pinegrow.addEventHandler('on_project_loaded', onProjectLoaded)
 pinegrow.addEventHandler('on_project_closed', onProjectClosed)
 

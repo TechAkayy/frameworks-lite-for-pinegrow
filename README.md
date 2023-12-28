@@ -20,9 +20,9 @@ Currently supported frameworks - [Petite Vue](https://github.com/vuejs/petite-vu
    - `templates` folder - that contains a bunch of html templates with cdn links.
 3. Open Pinegrow Desktop app.
 4. Load the plugin (`plugin.cjs`) via **File -> Manage libraries & plugins** (scroll to the bottom of the panel).
-5. **IMPORTANT**: Restart Pinegrow after loading the plugin.
-6. Open your HTML project.
-7. Choose your favourite framework via **Frameworks** menu.
+5. Open your HTML project.
+6. Choose your favourite framework via **Frameworks** menu. If don't see it, try restarting Pinegrow, and re-open your project.
+7. If you still do not see the `Frameworks` menu, then open devtools (cmd/ctrl+shift+c) and look for any errors. Create a new issue if required with the screenshot of the error.
 8. Open any HTML file, and ensure it contains the necessary cdn link for the chosen framework, and any additional setup (if any). If in doubt, use one of the templates via menu **File -> New Page** (look for **Frameworks Lite** in the vertical menu).
 9. Choose a tag in the Tree Panel. The props panel will now include a new section with a `Add directive` button, and clicking that will display the list of directives for the chosen framework.
 10. Select the directive as per your need, and see it get added as an attribute to the selected tag. Change the values of the directive as per your needs. Refresh the page to see the changes in action.
