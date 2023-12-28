@@ -107,6 +107,8 @@ For a Vite-powered Vue experience with Single-File components (.vue components),
 
 ![Validate updates](/screenshots/file6.png?raw=true 'Validate updates')
 
+![Templates](/screenshots/file9.png?raw=true 'Templates')
+
 ## Development / Contribution
 
 Pinegrow Plugins must be a Commonjs Javascript module that is loaded after the `pinegrow` instance.
