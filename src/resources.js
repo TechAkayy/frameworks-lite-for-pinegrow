@@ -8,12 +8,6 @@ try {
 
   pages.push(
     {
-      name: 'vue-page.html',
-      desc_name: 'Vue Page',
-      url: templates_url + 'vue-page.html',
-      image_direct: thumbs_url + 'vue-page.jpg',
-    },
-    {
       name: 'petite-vue-page.html',
       desc_name: 'Petite Vue Page',
       url: templates_url + 'petite-vue-page.html',
@@ -24,6 +18,12 @@ try {
       desc_name: 'Alpinejs Page',
       url: templates_url + 'alpinejs-page.html',
       image_direct: thumbs_url + 'alpinejs-page.jpg',
+    },
+    {
+      name: 'vue-page.html',
+      desc_name: 'Vue Page',
+      url: templates_url + 'vue-page.html',
+      image_direct: thumbs_url + 'vue-page.jpg',
     },
   )
 
