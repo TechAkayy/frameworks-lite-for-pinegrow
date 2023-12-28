@@ -90,6 +90,14 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
             // 	return
             // }
 
+            if (value === null) {
+              const api = new PgApi()
+              api.removeAttribute(null /* to all sel elements */, a.name)
+              //a quick and dumb way to refresh the prop panel
+              pinegrow.selectedElements.reselect()
+              return
+            }
+
             if (value === 'true') {
               pgel.setAttr(attr.name, null)
             } else {
