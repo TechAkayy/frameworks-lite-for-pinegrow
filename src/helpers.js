@@ -14,18 +14,35 @@ export const addLibSection = function (sec) {
 }
 
 import path from 'path'
-import { fileURLToPath } from 'url'
-const __filename = fileURLToPath(import.meta.url)
-export const __dirname = path.dirname(__filename)
+// import { fileURLToPath } from 'url'
 
-export const pluginPath = path
-  .resolve(__dirname, config.plugin_path)
-  .replace('src', 'dist')
-export const pluginUrl = crsaMakeUrlFromFile(pluginPath)
-f.pluginUrl = pluginUrl
+// const __filename = fileURLToPath(import.meta.url)
+// export const __dirname = path.dirname(__filename)
 
-export const templatesPath = path
-  .resolve(__dirname, config.templates_path)
-  .replace('src', 'dist')
+// https://stackoverflow.com/a/27369985
+var getCurrentScript = function () {
+  if (document.currentScript) {
+    return document.currentScript.src
+  } else {
+    var scripts = document.getElementsByTagName('script')
+    return scripts[scripts.length - 1].src
+  }
+}
+
+let pluginUrl
+if (f.pluginUrl) {
+  pluginUrl = f.pluginUrl
+} else {
+  pluginUrl = getCurrentScript()
+  f.pluginUrl = pluginUrl
+}
+
+export { pluginUrl }
+
+export const pluginPath = crsaMakeFileFromUrl(pluginUrl)
+const dependencyRoot = path.dirname(pluginPath)
+
+export const templatesPath = path.resolve(dependencyRoot, config.templates_path)
+// .replace('src', 'dist')
 export const templatesUrl = crsaMakeUrlFromFile(templatesPath)
 f.templatesUrl = templatesUrl
