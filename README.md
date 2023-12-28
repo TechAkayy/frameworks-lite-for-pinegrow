@@ -150,6 +150,10 @@ $(function () {
 9. In Pinegrow, unload any previous versions of the plugin.
 10. Follow [usage](#Usage) section for instructions to load your new plugin.
 
+## Community
+
+- [Pinegrow Forum](https://forum.pinegrow.com/c/third-party/24)
+
 ## Thanks & Inspirations
 
 - [Matjaž Trontelj](https://twitter.com/mattront) - Founder, Pinegrow and more...
