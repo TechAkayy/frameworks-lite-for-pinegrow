@@ -61,7 +61,7 @@ export class TutorialPanelPgQuickWindow {
     var eh = (ph - 700) / 2
 
     var win = new PgQuickWindow(
-      `Quick Start` /* title */,
+      `Frameworks Lite Plugin - Quick Start` /* title */,
       uiComponent,
       'TutorialPanelPgQuickWindow' /* key */,
       1024, // width

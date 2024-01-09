@@ -1,6 +1,6 @@
 import { key, framework, addLibSection } from './helpers.js'
 import { directiveGroups } from './data/index.js'
-import { tutorialPanelState } from './tutorial.js'
+import { tutorialPanelState } from './tutorial-panel.js'
 
 const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
   const { activeFramework, isShortform, autoReloadOnUpdate } =

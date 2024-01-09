@@ -152,5 +152,6 @@
     "py-4"
   ],
   "use-shortform-for-prop-binder": false,
-  "auto-reload-on-update": true
+  "auto-reload-on-update": true,
+  "framework_directives": "petite-vue"
 }

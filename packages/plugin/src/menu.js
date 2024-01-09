@@ -1,6 +1,6 @@
 import { framework } from './helpers.js'
 import { directiveGroups } from './data/index.js'
-import { TutorialPanel, tutorialPanelState } from './tutorial.js'
+import { TutorialPanel, tutorialPanelState } from './tutorial-panel.js'
 
 export const capitalize = (s) => (s && s[0].toUpperCase() + s.slice(1)) || ''
 
@@ -163,6 +163,9 @@ const onProjectLoaded = () => {
 const onProjectClosed = () => {
   $menu.remove()
   // Reload menu with vanilla settings
+  tutorialPanelState.activeFramework = frameworks[0]
+  tutorialPanelState.isShortform = false
+  tutorialPanelState.autoReloadOnUpdate = false
   onProjectLoaded()
 }
 
