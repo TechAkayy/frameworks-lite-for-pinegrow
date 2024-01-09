@@ -1,6 +1,6 @@
 import { key, framework, addLibSection } from './helpers.js'
 import { directiveGroups } from './data/index.js'
-import { activeFramework } from './menu.js'
+import { activeFramework, isShortform, autoReloadOnUpdate } from './menu.js'
 
 const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
   if (!showPropertiesView.showCustomSections) {
@@ -26,43 +26,226 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
     return findAttrsInList(attr, null, true, pgel)
   }
 
-  const addDirectives = (title, label, directives) => {
-    //Add another section for VUE directives
+  const getAttrList = (pgel) => {
+    const _this = pgel
+    const attrList = []
+    if (
+      pgel.script ||
+      pgel.comment ||
+      !pgel.attributes ||
+      pgel.attributes.length === 0
+    ) {
+      return attrList
+    }
+
+    var i = 0
+    var in_name = true
+    var in_value = false
+    var cur_name = ''
+    var cur_value = ''
+    var in_quote = null
+
+    var attrReadUntil = function (end_ch, ignore) {
+      //var idx = _this.attributes.indexOf(end_ch, i);
+
+      var idx = scripts_possible
+        ? indexOfCodeAware(_this.attributes, end_ch, i)
+        : _this.attributes.indexOf(end_ch, i)
+
+      do {
+        if (idx < 0) {
+          i = _this.attributes.length
+          return null
+        } else {
+          /*
+                 if(ignore) {
+                 var ign_idx = _this.attributes.indexOf(ignore, i);
+                 if(ign_idx >= 0 && idx >= ign_idx && idx + end_ch.length <= ign_idx + ignore.length) {
+                 i = idx + end_ch.length;
+                 continue;
+                 }
+                 }
+                 */
+          var s = _this.attributes.substr(i, idx - i)
+          i = idx + end_ch.length
+          return s
+        }
+      } while (i < _this.attributes.length)
+    }
+
+    var scripts_possible = pgel.attributes.indexOf('<') >= 0
+
+    while (i < pgel.attributes.length) {
+      var ch = pgel.attributes.charAt(i)
+      if (
+        ch === ' ' ||
+        ch === '\t' ||
+        ch === '\n' ||
+        ch === '\r' ||
+        ch === '/' ||
+        ch === '>' ||
+        ch === '='
+      ) {
+        //space
+        if (cur_name.length > 0) {
+          //name done
+
+          var has_equal = false
+          if (i < pgel.attributes.length - 1) {
+            while (i < pgel.attributes.length && (ch === ' ' || ch === '=')) {
+              if (ch === '=') has_equal = true
+              i++
+              ch = pgel.attributes.charAt(i)
+            }
+          }
+
+          if (has_equal) {
+            var which_quote = '"'
+
+            in_value = true
+            if (ch === '"' || ch === "'") {
+              in_quote = ch
+              which_quote = ch
+            } else {
+              in_quote = null
+            }
+            var val = ''
+            if (in_quote) {
+              i++
+              val = attrReadUntil(in_quote) //disable escaping quotes, '\\' + in_quote);
+            } else {
+              if (i < pgel.attributes.length - 1) {
+                //var next_ch;
+                do {
+                  val += ch
+                  i++
+                  ch = pgel.attributes.charAt(i)
+                  //next_ch = pgel.attributes.length < i + 1 ? pgel.attributes.charAt(i+1) : null;
+                } while (
+                  i < pgel.attributes.length &&
+                  ch !== ' ' &&
+                  ch !== '>' &&
+                  (ch !== '/' || i + 1 < pgel.attributes.length)
+                )
+              }
+            }
+            attrList.push({
+              name: cur_name,
+              value: val,
+              quote: which_quote,
+              name_lc: cur_name.toLowerCase(),
+            })
+          } else {
+            i--
+            attrList.push({
+              name: cur_name,
+              value: null,
+              name_lc: cur_name.toLowerCase(),
+            })
+          }
+          cur_name = ''
+        }
+      } else {
+        //nonspace
+        cur_name += ch //keep the case .toLowerCase();
+
+        var si = pgGetScriptInfo(cur_name)
+
+        if (si) {
+          i++
+          var r = attrReadUntil(si.close)
+          cur_name += r + si.close
+          if (r.length) i--
+        }
+        /*
+             if(cur_name === '<?php' || cur_name === '<?=') {
+             i++;
+             var r = attrReadUntil('?>');
+             cur_name +=  r + '?>';
+             if(r.length) i--;
+             }*/
+      }
+      i++
+    }
+    if (cur_name.length) {
+      attrList.push({
+        name: cur_name,
+        value: null,
+        name_lc: cur_name.toLowerCase(),
+      })
+    }
+    //console.log(attrList);
+    return attrList
+  }
+
+  const addDirectives = (title, label, directivesList) => {
+    //Add another section for VUE directivesList
     const directives_section = {
       framework,
       name: `${title} Directives`,
       fields: {},
     }
 
-    const directivesAttributes = directives.map((action) => action.attribute)
+    const directivesAttributes = directivesList.map(
+      (action) => action.attribute,
+    )
     const infoColor =
       pinegrow.getWorkspaceTheme() === 'light' ? '#4396c7' : '#33add6'
-    //go through attributes and list all directives
+    //go through attributes and list all directivesList
     pgel.getAttrList().forEach(function (a) {
-      if (directivesAttributes.includes(a.name)) {
-        const field_key = key + '.' + a.name
+      let attrName = a.name
+      if (isShortform) {
+        const activeDirectiveGroup = directiveGroups[activeFramework.name]
+        activeDirectiveGroup.propBinders.forEach(({ fullform, shortform }) => {
+          if (attrName.startsWith(fullform)) {
+            attrName = attrName.replace(fullform, shortform)
+          }
+        })
+      }
+
+      if (directivesAttributes.includes(attrName)) {
+        const field_key = key + '.' + attrName
+
         directives_section.fields[field_key] = {
           type: 'text',
-          name: a.name,
+          name: attrName,
           action: 'custom',
-          // attribute: a.name,
+          // attribute: attrName,
           with_clear_icon: function () {
             const api = new PgApi()
-            api.removeAttribute(null /* to all sel elements */, a.name)
-            //a quick and dumb way to refresh the prop panel
-            pinegrow.selectedElements.reselect()
+            api.removeAttribute(null /* to all sel elements */, attrName)
+            if (autoReloadOnUpdate) {
+              setTimeout(() => {
+                pgel.getPage()?.refresh()
+              }, 500)
+            } else {
+              //a quick and dumb way to refresh the prop panel
+              pinegrow.selectedElements.reselect()
+            }
           },
 
           // From attribute editor to this prop defn (Into Control)
           get_value: function (pgel, field_key, values, fdef) {
+            const activeDirectiveGroup = directiveGroups[activeFramework.name]
+
+            let attrName = fdef.name
+
             // Look for 'client:load' in pgel
-            var attr = findSingleAttr(fdef.name, pgel)
+            var attr = findSingleAttr(attrName, pgel)
+
+            activeDirectiveGroup.propBinders.forEach(
+              ({ fullform, shortform }) => {
+                if (attrName.startsWith(fullform)) {
+                  attrName = attrName.replace(fullform, shortform)
+                }
+                if (!attr) {
+                  attr = findSingleAttr(attrName, pgel)
+                }
+              },
+            )
 
             if (attr) {
               var value = attr.value
-              if (value === 'true') {
-                pgel.setAttr(attr.name, null)
-              }
               return value || 'true'
             }
           },
@@ -92,16 +275,48 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
 
             if (value === null) {
               const api = new PgApi()
-              api.removeAttribute(null /* to all sel elements */, a.name)
-              //a quick and dumb way to refresh the prop panel
-              pinegrow.selectedElements.reselect()
+              const attrName = attr.name
+              api.removeAttribute(null /* to all sel elements */, attrName)
+              if (autoReloadOnUpdate) {
+                setTimeout(() => {
+                  pgel.getPage()?.refresh()
+                }, 500)
+              } else {
+                //a quick and dumb way to refresh the prop panel
+                pinegrow.selectedElements.reselect()
+              }
               return
             }
 
-            if (value === 'true') {
-              pgel.setAttr(attr.name, null)
-            } else {
-              pgel.setAttr(attr.name, value)
+            let attrName = attr.name
+            if (isShortform) {
+              const activeDirectiveGroup = directiveGroups[activeFramework.name]
+              activeDirectiveGroup.propBinders.forEach(
+                ({ fullform, shortform }) => {
+                  if (attrName.startsWith(fullform)) {
+                    attrName = attrName.replace(fullform, shortform)
+                  }
+                },
+              )
+            }
+
+            pgel.setAttr(attrName, value)
+
+            if (eventType === 'change') {
+              const currentAttrList = getAttrList(pgel)
+              const currentAttr = currentAttrList.find(
+                (attr) => attr.name === attrName,
+              )
+              if (currentAttr) {
+                const currentAttrValue = currentAttr.value || 'true'
+                if (currentAttrValue !== value) {
+                  if (autoReloadOnUpdate) {
+                    setTimeout(() => {
+                      pgel.getPage()?.refresh()
+                    }, 500)
+                  }
+                }
+              }
             }
             return value
           },
@@ -139,16 +354,34 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
 
         const addDirective = function () {
           const api = new PgApi()
-          api.setAttribute(
-            null /* to all sel elements */,
-            this.attribute,
-            this.default_value,
-          )
-          //a quick and dumb way to refresh the prop panel
-          pinegrow.selectedElements.reselect()
+
+          if (
+            pgel.tagNameOriginal !== 'template' &&
+            (this.attribute === 'x-for' || this.attribute === 'x-if')
+          ) {
+            const wrapWithTemplate = `<template></template>`
+            var pgNew = pgCreateNodeFromHtml(wrapWithTemplate)
+            api.setAttribute(pgNew, this.attribute, this.default_value)
+            api.wrapWithElement(pgel, pgNew.toStringOriginal())
+          } else {
+            api.setAttribute(
+              null /* to all sel elements */,
+              this.attribute,
+              this.default_value,
+            )
+          }
+
+          if (autoReloadOnUpdate) {
+            setTimeout(() => {
+              pgel.getPage()?.refresh()
+            }, 500)
+          } else {
+            //a quick and dumb way to refresh the prop panel
+            pinegrow.selectedElements.reselect()
+          }
         }
 
-        const actions = directives.map((directive) => ({
+        const actions = directivesList.map((directive) => ({
           ...directive,
           action: addDirective,
         }))
@@ -158,7 +391,7 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
       },
     }
 
-    //remove previous directives section
+    //remove previous directivesList section
     const indexDirectives = sections.findIndex(
       (section) => section.name === `${title} Directives`,
     )
@@ -169,9 +402,11 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
     sections.unshift(directives_section)
   }
 
-  Object.entries(directiveGroups).forEach(([frameworkName, directives]) => {
+  Object.entries(directiveGroups).forEach(([frameworkName, directiveGroup]) => {
+    const { directives, lifecycleHooks } = directiveGroup
+    const directivesList = [...directives, ...lifecycleHooks]
     if (frameworkName === activeFramework.name) {
-      addDirectives(frameworkName, 'Add directive', directives)
+      addDirectives(frameworkName, 'Add directive', directivesList)
     }
   })
 

@@ -1,3 +1,36 @@
+const propBinders = [
+  {
+    fullform: 'v-bind:',
+    shortform: ':',
+  },
+  {
+    fullform: 'v-on:',
+    shortform: '@',
+  },
+  {
+    fullform: 'v-slot',
+    shortform: '#',
+  },
+]
+
+const lifecycleHooks = [
+  {
+    label: '@vue:mounted',
+    attribute: 'v-on:vue:mounted',
+    default_value: 'myFunc()',
+  },
+  {
+    label: '@vue:updated',
+    attribute: 'v-on:vue:updated',
+    default_value: 'myFunc()',
+  },
+  {
+    label: '@vue:unmounted',
+    attribute: 'v-on:vue:unmounted',
+    default_value: 'myFunc()',
+  },
+]
+
 // https://vuejs.org/api/built-in-directives.html (15)
 const directives = [
   {
@@ -31,62 +64,40 @@ const directives = [
     attribute: 'v-else-if',
     default_value: 'true',
   },
-  // https://vuejs.org/guide/essentials/template-syntax.html#modifiers
-  // TODO: Needs further customisation
-  {
-    label: 'v-on:click',
-    attribute: '@click',
-    default_value: 'myFunc()',
-  },
-  {
-    label: 'v-on:click.once',
-    attribute: '@click.once',
-    default_value: 'myFunc()',
-  },
-  {
-    label: 'v-on:click.prevent',
-    attribute: '@click.prevent',
-    default_value: 'myFunc()',
-  },
-  {
-    label: 'v-on:click.stop',
-    attribute: '@click.stop',
-    default_value: 'myFunc()',
-  },
-  {
-    label: 'v-on:submit',
-    attribute: '@submit',
-    default_value: 'myFunc()',
-  },
-  {
-    label: 'v-on:submit.prevent',
-    attribute: '@submit.prevent',
-    default_value: 'myFunc()',
-  },
-  {
-    label: 'v-on:keyup.enter',
-    attribute: '@keyup.enter',
-    default_value: 'myFunc()',
-  },
   {
     label: 'v-model',
     attribute: 'v-model',
     default_value: 'message',
   },
   {
-    label: 'v-slot default',
-    attribute: 'v-slot:default',
+    label: 'v-text',
+    attribute: 'v-text',
+    default_value: '`v-text`',
+  },
+  {
+    label: 'v-html',
+    attribute: 'v-html',
+    default_value: '`<span>v-html</span>`',
+  },
+  {
+    label: 'v-cloak',
+    attribute: 'v-cloak',
     default_value: 'true',
   },
   {
-    label: 'v-slot with slotName',
-    attribute: 'v-slot:slotName',
+    label: 'v-pre',
+    attribute: 'v-pre',
     default_value: 'true',
   },
   {
-    label: 'v-slot with props',
-    attribute: 'v-slot',
-    default_value: '{}',
+    label: 'v-memo',
+    attribute: 'v-memo',
+    default_value: '[]',
+  },
+  {
+    label: 'v-once',
+    attribute: 'v-once',
+    default_value: 'true',
   },
   {
     label: 'v-bind object',
@@ -114,36 +125,61 @@ const directives = [
     default_value:
       "[setFontBaseSize ? '{ font-size: '13px'}' : '', '{ color: 'gray'}']",
   },
+  // https://vuejs.org/guide/essentials/template-syntax.html#modifiers
+  // TODO: Needs further customisation
   {
-    label: 'v-pre',
-    attribute: 'v-pre',
+    label: 'v-on:click',
+    attribute: 'v-on:click',
+    default_value: 'myFunc()',
+  },
+  {
+    label: 'v-on:click.once',
+    attribute: 'v-on:click.once',
+    default_value: 'myFunc()',
+  },
+  {
+    label: 'v-on:click.prevent',
+    attribute: 'v-on:click.prevent',
+    default_value: 'myFunc()',
+  },
+  {
+    label: 'v-on:click.stop',
+    attribute: 'v-on:click.stop',
+    default_value: 'myFunc()',
+  },
+  {
+    label: 'v-on:submit',
+    attribute: 'v-on:submit',
+    default_value: 'myFunc()',
+  },
+  {
+    label: 'v-on:submit.prevent',
+    attribute: 'v-on:submit.prevent',
+    default_value: 'myFunc()',
+  },
+  {
+    label: 'v-on:keyup.enter',
+    attribute: 'v-on:keyup.enter',
+    default_value: 'myFunc()',
+  },
+  {
+    label: 'v-slot default',
+    attribute: 'v-slot:default',
     default_value: 'true',
   },
   {
-    label: 'v-once',
-    attribute: 'v-once',
+    label: 'v-slot with slotName',
+    attribute: 'v-slot:slotName',
     default_value: 'true',
   },
   {
-    label: 'v-cloak',
-    attribute: 'v-cloak',
-    default_value: 'true',
-  },
-  {
-    label: 'v-memo',
-    attribute: 'v-memo',
-    default_value: '[]',
-  },
-  {
-    label: 'v-html',
-    attribute: 'v-html',
-    default_value: '`<span>v-html</span>`',
-  },
-  {
-    label: 'v-text',
-    attribute: 'v-text',
-    default_value: '`v-text`',
+    label: 'v-slot with props',
+    attribute: 'v-slot',
+    default_value: '{}',
   },
 ]
 
-export default directives
+export { propBinders, lifecycleHooks, directives }
+
+const defaultExport = { propBinders, lifecycleHooks, directives }
+export default defaultExport

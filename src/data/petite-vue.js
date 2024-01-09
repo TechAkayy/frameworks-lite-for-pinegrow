@@ -1,5 +1,21 @@
 // https://github.com/vuejs/petite-vue#features (4 + 15 from Vue)
-import vueDirectives from './vue.js'
+import {
+  propBinders as vuePropBinder,
+  lifecycleHooks as vueLifecycleHooks,
+  directives as vueDirectives,
+} from './vue.js'
+
+const propBinders = vuePropBinder.filter(
+  (binder) => binder.fullform !== 'v-slot',
+)
+
+// petite-vue doesn't have updated hook
+const lifecycleHooks = vueLifecycleHooks.filter(
+  (directive) =>
+    directive.label !== '@vue:updated' &&
+    directive.label !== 'v-on:vue:updated',
+)
+
 const directives = [
   {
     label: 'v-scope',
@@ -11,17 +27,10 @@ const directives = [
     attribute: 'v-effect',
     default_value: 'true',
   },
-  {
-    label: '@vue:mounted',
-    attribute: '@vue:mounted',
-    default_value: 'myFunc()',
-  },
-  {
-    label: '@vue:unmounted',
-    attribute: '@vue:unmounted',
-    default_value: 'myFunc()',
-  },
-  ...vueDirectives,
+  // Filter out v-slot directives as petite-vue doesn't support them
+  ...vueDirectives.filter((directive) => !directive.label.startsWith('v-slot')),
 ]
 
-export default directives
+export { propBinders, lifecycleHooks, directives }
+const defaultExport = { propBinders, lifecycleHooks, directives }
+export default defaultExport
