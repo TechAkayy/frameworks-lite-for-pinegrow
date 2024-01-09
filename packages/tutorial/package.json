@@ -8,7 +8,7 @@
     "url": "https://github.com/techakayy/pg-vite-tailwindcss.git"
   },
   "scripts": {
-    "dev": "npm-run-all --parallel watch watch-wp serve",
+    "dev": "npm-run-all --parallel watch serve",
     "serve": "vite",
     "watch": "cross-env LIB=true NODE_ENV=development vite build  --watch",
     "watch-wp": "cross-env LIB=true WP=true NODE_ENV=development vite build  --watch",

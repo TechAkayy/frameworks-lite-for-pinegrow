@@ -175,7 +175,9 @@ export class TutorialPanelUiComponent {
 
     var _this = this
 
-    $tutorialPanelContainer.ready(function () {
+    this.tutorialPanelLoaded = false
+
+    const loadTutorialPanel = () => {
       var timesRun = 0
       var loopRun = setInterval(() => {
         if (timesRun < 40) {
@@ -218,10 +220,24 @@ export class TutorialPanelUiComponent {
             tutorialPanelState.closeDialog
 
           tutorialPanelState = tutorialPanelContainerWindow.tutorialPanelState
+          _this.tutorialPanelLoaded = true
           _this.init()
         }
       }
       initTutorialPanelContainerWindow()
+    }
+
+    $tutorialPanelContainer.on('load', function () {
+      if (!_this.tutorialPanelLoaded) {
+        loadTutorialPanel()
+        _this.tutorialPanelLoaded = false
+      } else {
+        _this.tutorialPanelLoaded = false
+      }
+    })
+
+    $tutorialPanelContainer.ready(function () {
+      loadTutorialPanel()
     })
 
     this.destroy = () => {}
