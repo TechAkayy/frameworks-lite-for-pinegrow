@@ -220,7 +220,7 @@ export class TutorialPanelUiComponent {
             tutorialPanelState.closeDialog
 
           tutorialPanelState = tutorialPanelContainerWindow.tutorialPanelState
-          _this.tutorialPanelLoaded = true
+          // _this.tutorialPanelLoaded = true
           _this.init()
         }
       }
@@ -228,17 +228,19 @@ export class TutorialPanelUiComponent {
     }
 
     $tutorialPanelContainer.on('load', function () {
-      if (!_this.tutorialPanelLoaded) {
-        loadTutorialPanel()
-        _this.tutorialPanelLoaded = false
-      } else {
-        _this.tutorialPanelLoaded = false
-      }
+      loadTutorialPanel()
+
+      // if (!_this.tutorialPanelLoaded) {
+      //   loadTutorialPanel()
+      //   _this.tutorialPanelLoaded = false
+      // } else {
+      //   _this.tutorialPanelLoaded = false
+      // }
     })
 
-    $tutorialPanelContainer.ready(function () {
-      loadTutorialPanel()
-    })
+    // $tutorialPanelContainer.ready(function () {
+    //   loadTutorialPanel()
+    // })
 
     this.destroy = () => {}
   }
