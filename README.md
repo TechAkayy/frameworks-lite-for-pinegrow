@@ -128,7 +128,9 @@ $(function () {
 
 - This repo uses webpack to bundle the plugin. This way, we can author the plugin as ES modules, and break them into smaller easy-to-maintain parts. Refer to `webpack.config.js`.
 
-### `src` folder
+## Plugin Package (`packages/plugin`)
+
+### `packages/plugin/src` folder
 
 - `plugin.js` - Entry file that loads the plugin after the `pinegrow` instance is available.
 - `load.js` - Simply imports all the different parts of the plugin.
@@ -143,16 +145,20 @@ $(function () {
 - `directives.js` - Displays the directives via the Props Panel for the active framework. The directives are maintained in the `src/data` folder (see next section).
 - `resources.js` - Adds empty html templates (available with the `templates` folder) that pre-includes the cdn links for the frameworks.
 
-### `src/data` folder
+### `packages/plugin/src/data` folder
 
 - Each framework's directives are maintained in a separate file. `index.js` imports them all and exports them together as a single object.
+
+## Tutorial Package (`packages/tutorial`)
+
+- Onboarding dialog using petite-vue and tailwindcss, designed with Pinegrow and this plugin.
 
 ## To add a new framework
 
 1. Fork this repo, and clone it to your local machine.
 2. Open project in your code editor, open your terminal and navigate to the project root.
 3. Install dependencies - `npm install`.
-4. Add a new file, say `my-framework.js` within the `src/data` folder that contains an array of directives and default exported. Refer to existing files for examples.
+4. Add a new file, say `my-framework.js` within the `packages/plugin/src/data` folder that contains an array of directives and default exported. Refer to existing files for examples.
 5. Import the new framework within `index.js` and add it to the exported object. Refer to existing code for an example.
 6. Format your project (optional) - `npm run lint`.
 7. Build the plugin - `npm run build`

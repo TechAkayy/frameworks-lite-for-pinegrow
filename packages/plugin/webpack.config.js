@@ -69,10 +69,14 @@ export default (env, argv) => {
       get plugins() {
         return [
           new CopyPlugin({
-            patterns: [{ from: './src/templates', to: 'templates' }],
+            patterns: [
+              { from: './src/templates', to: 'templates' },
+              { from: '../tutorial/dist', to: 'tutorial' },
+            ],
           }),
           new webpack.DefinePlugin({
             __DEVMODE__: !!(mode === 'development'),
+            __VUE_PROD_DEVTOOLS__: JSON.stringify(false),
             // __FRAMEWORKS__: JSON.stringify(fetchDirectives('./data')),
           }),
         ]

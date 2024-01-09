@@ -1,8 +1,11 @@
 import { key, framework, addLibSection } from './helpers.js'
 import { directiveGroups } from './data/index.js'
-import { activeFramework, isShortform, autoReloadOnUpdate } from './menu.js'
+import { tutorialPanelState } from './tutorial.js'
 
 const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
+  const { activeFramework, isShortform, autoReloadOnUpdate } =
+    tutorialPanelState
+
   if (!showPropertiesView.showCustomSections) {
     //custom sections should not be shown in this panel (for example, TW bottom props).
     return
