@@ -16,7 +16,12 @@ const directives = [
   {
     label: 'x-data',
     attribute: 'x-data',
-    default_value: "{ foo: 'bar' }",
+    default_value: '{}',
+  },
+  {
+    label: 'x-data with state',
+    attribute: 'x-data',
+    default_value: "{ msg: 'Happy Life!' }",
   },
   {
     label: 'x-init',
@@ -52,7 +57,7 @@ const directives = [
   {
     label: 'x-model',
     attribute: 'x-model',
-    default_value: 'message',
+    default_value: 'msg',
   },
   {
     label: 'x-modelable',

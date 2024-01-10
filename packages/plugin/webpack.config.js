@@ -9,7 +9,7 @@ import webpack from 'webpack'
 import CopyPlugin from 'copy-webpack-plugin'
 
 export default (env, argv) => {
-  const framework = argv.framework || env.framework || 'vue'
+  const framework = argv.framework || env.framework || 'standard-vue'
   const mode = argv.mode || env.mode || 'production'
 
   try {
@@ -69,10 +69,14 @@ export default (env, argv) => {
       get plugins() {
         return [
           new CopyPlugin({
-            patterns: [{ from: './src/templates', to: 'templates' }],
+            patterns: [
+              { from: './src/templates', to: 'templates' },
+              { from: '../docs/dist', to: 'docs' },
+            ],
           }),
           new webpack.DefinePlugin({
             __DEVMODE__: !!(mode === 'development'),
+            __VUE_PROD_DEVTOOLS__: JSON.stringify(false),
             // __FRAMEWORKS__: JSON.stringify(fetchDirectives('./data')),
           }),
         ]

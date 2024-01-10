@@ -2,7 +2,7 @@
 
 A [Pinegrow](https://pinegrow.com/) Plugin that provides the ability to [progressively enhance](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement) your HTML with light-weight framework directives via the Props Panel.
 
-Currently supported frameworks - [Petite Vue](https://github.com/vuejs/petite-vue), [Vue](https://vuejs.org/guide/quick-start.html#using-the-global-build) and [AlpineJS](https://alpinejs.dev/start-here). To add a new framework, refer to the [Development & Contribution](#development--contribution) section.
+Currently supported frameworks - [Petite-Vue](https://github.com/vuejs/petite-vue), [AlpineJS](https://alpinejs.dev/start-here) and [Standard-Vue](https://vuejs.org/guide/quick-start.html#using-the-global-build). To add a new framework, refer to the [Development & Contribution](#development--contribution) section.
 
 ❗Note: This is not an official plugin by the Pinegrow team, rather a personal contribution for the community. Follow me on twitter - [@techakayy](https://twitter.com/techakayy)
 
@@ -32,7 +32,7 @@ Currently supported frameworks - [Petite Vue](https://github.com/vuejs/petite-vu
 ## Common Gotchas
 
 - Don't mix frameworks, it can be hard to debug the behaviour.
-- When using v-for of Petite-Vue or Vue, ensure you also add the key directive.
+- When using v-for of Petite-Vue or Standard-Vue, ensure you also add the key directive.
 - When using x-for of Alpinejs, it must be added only to a `template` tag. So, create a new template tag, and enclose your loopable content within it.
 - Make sure your page includes the cdn script tags.
 
@@ -51,12 +51,12 @@ Currently supported frameworks - [Petite Vue](https://github.com/vuejs/petite-vu
   ></script>
   ```
 
-  - Vue (add before closing `body` tag, ensure you have a div with id="app")
+  - Standard-Vue (add before closing `body` tag, ensure you have a div with id="app")
 
   ```html
   <body>
     <div id="app">
-      <span> {{ message }}</span>
+      <span> {{ msg }}</span>
       <!-- rest of the body -->
     </div>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -64,9 +64,9 @@ Currently supported frameworks - [Petite Vue](https://github.com/vuejs/petite-vu
       const { createApp, ref } = Vue
       createApp({
         setup() {
-          const message = ref('A Fresh Start!')
+          const msg = ref('A Fresh Start!')
           return {
-            message,
+            msg,
           }
         },
       }).mount('#app')
@@ -82,10 +82,13 @@ Currently supported frameworks - [Petite Vue](https://github.com/vuejs/petite-vu
 
 ## Improvement opportunities
 
-- Use the actions panel instead of props panel.
-- Add examples via library panel to drag-and-drop.
-- Auto-refresh page on updating the directives.
-- Anything else you can think of?
+- [x] Support both simple HTML page only (Pinegrow free version) & projects (Pinegrow pro).
+- [x] Add cdn script of different flavours to an existing page.
+- [x] Auto-reload page when adding or updating directives.
+- [ ] Add examples via library panel to drag-and-drop.
+- [ ] In-app quick-start - Should we use Pinegrow tutorials api or a separate dialog for this?
+- [ ] Use the actions panel instead of props panel.
+- [ ] Anything else you can think of?
 
 ## Vue with Pinegrow (or) Vue Designer?
 
@@ -128,7 +131,9 @@ $(function () {
 
 - This repo uses webpack to bundle the plugin. This way, we can author the plugin as ES modules, and break them into smaller easy-to-maintain parts. Refer to `webpack.config.js`.
 
-### `src` folder
+## Plugin Package (`packages/plugin`)
+
+### `packages/plugin/src` folder
 
 - `plugin.js` - Entry file that loads the plugin after the `pinegrow` instance is available.
 - `load.js` - Simply imports all the different parts of the plugin.
@@ -143,7 +148,7 @@ $(function () {
 - `directives.js` - Displays the directives via the Props Panel for the active framework. The directives are maintained in the `src/data` folder (see next section).
 - `resources.js` - Adds empty html templates (available with the `templates` folder) that pre-includes the cdn links for the frameworks.
 
-### `src/data` folder
+### `packages/plugin/src/data` folder
 
 - Each framework's directives are maintained in a separate file. `index.js` imports them all and exports them together as a single object.
 
@@ -152,7 +157,7 @@ $(function () {
 1. Fork this repo, and clone it to your local machine.
 2. Open project in your code editor, open your terminal and navigate to the project root.
 3. Install dependencies - `npm install`.
-4. Add a new file, say `my-framework.js` within the `src/data` folder that contains an array of directives and default exported. Refer to existing files for examples.
+4. Add a new file, say `my-framework.js` within the `packages/plugin/src/data` folder that contains an array of directives and default exported. Refer to existing files for examples.
 5. Import the new framework within `index.js` and add it to the exported object. Refer to existing code for an example.
 6. Format your project (optional) - `npm run lint`.
 7. Build the plugin - `npm run build`

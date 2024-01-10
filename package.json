@@ -1,12 +1,19 @@
 {
   "name": "frameworks-lite-for-pinegrow",
   "version": "0.0.1",
-  "description": "Pinegrow Plugin for Vue, Petite-Vue and AlpineJS",
+  "description": "Pinegrow Plugin for Petite-Vue, Alpinejs and Standard-Vue",
   "type": "module",
+  "workspaces": [
+    "./packages/*"
+  ],
   "author": "Ahmed Kaja (https://twitter.com/techakayy)",
   "license": "MIT",
-  "files": [
-    "dist"
+  "keywords": [
+    "pinegrow",
+    "vue",
+    "petite-vue",
+    "alpinejs",
+    "standard-vue"
   ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -16,36 +23,17 @@
       "require": "./dist/index.cjs"
     }
   },
-  "keywords": [
-    "pinegrow",
-    "vue",
-    "petite-vue",
-    "alpinejs"
-  ],
   "scripts": {
-    "dev": "cross-env webpack serve -- --env mode=development",
-    "build": "cross-env webpack -- --env mode=production",
-    "dev:build": "cross-env webpack -- --env mode=development",
+    "build": "npm-run-all --serial build:docs build:plugin",
+    "build:dev": "npm-run-all --serial build:docs build:plugin:dev",
+    "build:docs": "npm run build -w @pinegrow/docs",
+    "build:plugin": "npm run build -w @pinegrow/plugin",
+    "build:plugin:dev": "npm run dev:build -w @pinegrow/plugin",
     "lint": "npm run format",
     "format": "prettier --write . !public"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.6",
-    "@babel/plugin-proposal-class-properties": "^7.14.5",
-    "@babel/plugin-proposal-decorators": "^7.15.8",
-    "@babel/plugin-transform-arrow-functions": "^7.16.0",
-    "@babel/plugin-transform-runtime": "^7.17.0",
-    "@babel/preset-env": "^7.15.6",
-    "babel-loader": "^8.2.2",
-    "babel-plugin-add-module-exports": "^1.0.4",
-    "copy-webpack-plugin": "^10.2.4",
-    "cross-env": "^7.0.3",
-    "ifdef-loader": "^2.3.2",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.8.4",
-    "webpack": "^5.62.1",
-    "webpack-cli": "^4.8.0",
-    "webpack-dev-server": "^4.3.0",
-    "webpack-merge": "^5.8.0"
+    "prettier": "^2.8.4"
   }
 }

@@ -1,0 +1,157 @@
+{
+  "files": {
+    "index.html": {
+      "frameworks": [
+        "docs",
+        "pg.svg.lib",
+        "pg.tree.painter",
+        "pg.tw.lib",
+        "pg.asset.manager",
+        "pg.project.items",
+        "pg.code-validator",
+        "pg.image.overlay",
+        "pg.css.grid",
+        "pg.ia",
+        "pg.ia.lib",
+        "pg.insight.events",
+        "tw",
+        "pg.html",
+        "pg.components"
+      ]
+    },
+    "home.html": {
+      "frameworks": [
+        "pg-vite-tailwindcss",
+        "pg.tw.lib",
+        "my-awesome-lib",
+        "pg.asset.manager",
+        "@unocss/preset-icons",
+        "pg.project.items",
+        "@pinegrow/vite-plugin",
+        "pg.code-validator",
+        "project",
+        "vite",
+        "pg.image.overlay",
+        "app_designer",
+        "pg.css.grid",
+        "pg.insight.events",
+        "pg.vue.tree.painter",
+        "pg.ai.lib",
+        "tw",
+        "pg.html",
+        "pg.components"
+      ]
+    },
+    "pages/blog.html": {
+      "frameworks": [
+        "pg-vite-tailwindcss",
+        "pg.svg.lib",
+        "pg.asset.manager",
+        "pg.project.items",
+        "pg.code-validator",
+        "pg.ia.lib",
+        "pg.image.overlay",
+        "pg.ia",
+        "pg.tw.lib",
+        "pg.insight.events",
+        "pg.css.grid",
+        "tw",
+        "pg.html",
+        "pg.components"
+      ]
+    }
+  },
+  "open-pages": ["index.html"],
+  "urls": {
+    "index.html": {
+      "open-with-wrapper": false,
+      "open-page-views": [{ "w": 480, "h": 0 }]
+    },
+    "src/pages/home.html": {
+      "open-with-wrapper": false,
+      "open-page-views": [{ "w": 640, "h": 0 }]
+    },
+    "src/pages/subscribe.html": { "open-with-wrapper": false },
+    "dist/index.html": { "open-with-wrapper": false },
+    "home.html": {
+      "open-with-wrapper": false,
+      "open-page-views": [{ "w": 1024, "h": 0 }]
+    },
+    "pages/blog.html": {
+      "open-with-wrapper": false,
+      "open-page-views": [{ "w": 480, "h": 0 }]
+    }
+  },
+  "breakpoints": ["640px", "768px", "1024px", "1280px", "1536px"],
+  "frameworks": [
+    "docs",
+    "pg.svg.lib",
+    "pg.tree.painter",
+    "pg.tw.lib",
+    "pg.asset.manager",
+    "pg.project.items",
+    "pg.code-validator",
+    "pg.image.overlay",
+    "pg.css.grid",
+    "pg.ia",
+    "pg.ia.lib",
+    "pg.insight.events",
+    "tw",
+    "pg.html",
+    "pg.components"
+  ],
+  "tw-use-external-build": "1",
+  "active-design-provider": "tw",
+  "template_framework_id": "vue",
+  "design-settings": {
+    "mode": "external",
+    "external_source_url": "file:///Users/techakayy/Projects/pg/vite/tailwindcss/pg-vite-tailwindcss/src/assets/css/tailwind.css",
+    "external_config_path": "/Users/techakayy/Projects/pg/vite/tailwindcss/pg-vite-tailwindcss/tailwind.config.js",
+    "external_theme_path": "/Users/techakayy/Projects/pg/vite/tailwindcss/pg-vite-tailwindcss/themes/pg-tailwindcss/tokens.cjs",
+    "external_help": null
+  },
+  "recent-classes": [
+    "text-white",
+    "text-color3-500",
+    "text-secondary-500",
+    "text-red-700",
+    "text-3xl",
+    "text-4xl",
+    "text-secondary-200",
+    "text-green-800",
+    "text-green-700",
+    "text-green-600",
+    "text-purple-400",
+    "text-green-900",
+    "text-red-900",
+    "text-primary-900",
+    "text-primary-600",
+    "text-primary-400",
+    "text-yellow-300",
+    "text-pink-400",
+    "text-red-400",
+    "text-yellow-400",
+    "text-pink-500",
+    "text-red-500",
+    "text-purple-500",
+    "text-green-400",
+    "text-purple-600",
+    "text-indigo-600",
+    "text-red-600",
+    "text-pink-600",
+    "text-primary-800",
+    "text-primary-700",
+    "text-primary-500",
+    "text-indigo-700",
+    "text-indigo-50",
+    "text-blue-500",
+    "text-blue-400",
+    "text-green-500",
+    "text-indigo-500",
+    "text-indigo-400",
+    "py-4"
+  ],
+  "use-shortform-for-prop-binder": false,
+  "auto-reload-on-update": true,
+  "framework_directives": "alpinejs"
+}

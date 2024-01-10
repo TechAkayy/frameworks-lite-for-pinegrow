@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Pinegrow Vite Tailwind CSS - Quick start template</title>
+    <link href="/dist/tailwind.css" rel="stylesheet" />
+    <!-- <link rel="pg-require" href="projectdb.pgml" />
+    <link rel="pg-require" href="pinegrow.json" /> -->
+  </head>
+  <body>
+    <div
+      class="flex flex-col bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-50 min-h-screen"
+    >
+      <script type="module" src="./src/modules/tutorial-app.js"></script>
+      <div id="app1">
+        <p>{{ frameworksLiteState.theme }}</p>
+        <p>{{ frameworksLiteState.activeFramework }}</p>
+        <p>{{ frameworksLiteState.autoReloadOnUpdate }}</p>
+        <main></main>
+      </div>
+    </div>
+    <script src="/dist/js/main.js"></script>
+  </body>
+</html>

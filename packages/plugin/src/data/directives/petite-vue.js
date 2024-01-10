@@ -2,8 +2,8 @@
 import {
   propBinders as vuePropBinder,
   lifecycleHooks as vueLifecycleHooks,
-  directives as vueDirectives,
-} from './vue.js'
+  directives as standardVueDirectives,
+} from './standard-vue.js'
 
 const propBinders = vuePropBinder.filter(
   (binder) => binder.fullform !== 'v-slot',
@@ -20,7 +20,12 @@ const directives = [
   {
     label: 'v-scope',
     attribute: 'v-scope',
-    default_value: 'true',
+    default_value: '{}',
+  },
+  {
+    label: 'v-scope with state',
+    attribute: 'v-scope',
+    default_value: "{ msg: 'Happy Life!' }",
   },
   {
     label: 'v-effect',
@@ -28,7 +33,9 @@ const directives = [
     default_value: 'true',
   },
   // Filter out v-slot directives as petite-vue doesn't support them
-  ...vueDirectives.filter((directive) => !directive.label.startsWith('v-slot')),
+  ...standardVueDirectives.filter(
+    (directive) => !directive.label.startsWith('v-slot'),
+  ),
 ]
 
 export { propBinders, lifecycleHooks, directives }

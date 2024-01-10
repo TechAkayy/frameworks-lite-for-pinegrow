@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>A Petite Vue Page</title>
+    <link rel="pg-require" href="pinegrow.json" />
+  </head>
+  <body>
+    <main>
+      <script type="module" data-pg-name="Petite Vue App" id="hero-app">
+        import { createApp } from 'https://unpkg.com/petite-vue?module'
+
+        const state = {
+          // state exposed to all expressions within v-scope regions
+          count: 0,
+          get oddOrEven() {
+            return this.count % 2 === 0 ? 'even' : 'odd' // computed property
+          },
+          // methods
+          increment() {
+            this.count++
+          },
+          decrement() {
+            this.count--
+          },
+        }
+
+        createApp(state).mount('div#hero-section')
+      </script>
+      <div
+        style="
+          padding: 20px;
+          margin: 20px;
+          border-radius: 4px;
+          border-width: 2px;
+          outline: 1px solid #cccccc;
+        "
+        id="hero-section"
+        v-scope="{}"
+        data-pg-collapsed
+      >
+        <div
+          style="
+            display: flex;
+            margin: 8px;
+            padding: 8px;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <p style="text-align: center; width: 50%; min-width: 400px">
+            Hello, I&apos;m within an island, and the root tag of the island
+            div#hero-section has an exclusive app mounted by script#hero-app,
+            and marked as a v-scope region. Any sprinkles of interactions within
+            this v-scope region are managed by this exclusive app.
+          </p>
+        </div>
+        <div
+          style="
+            display: flex;
+            margin: 8px;
+            padding: 8px;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <button
+            v-on:click="decrement"
+            style="margin-left: 4px; margin-right: 4px"
+          >
+            ⬇️
+          </button>
+          <button
+            v-on:click="increment"
+            style="margin-left: 4px; margin-right: 4px"
+          >
+            ⬆️
+          </button>
+          <div style="text-align: left; width: 180px; margin-left: 4px">
+            <span>Count is: </span>
+            <span style="width: 30px; display: inline-block; text-align: center"
+              >{{count}}</span
+            ><span>({{oddOrEven}})</span>
+          </div>
+        </div>
+      </div>
+      <script type="module" data-pg-name="Petite Vue App" id="feature-app">
+        import { createApp } from 'https://unpkg.com/petite-vue?module'
+        const state = {
+          // state exposed to all expressions within v-scope regions
+          msg: 'Happy Life!',
+        }
+
+        createApp(state).mount('div#feature-section')
+      </script>
+      <div
+        style="
+          padding: 20px;
+          margin: 20px;
+          border-radius: 4px;
+          border-width: 2px;
+          outline: 1px solid #cccccc;
+        "
+        id="feature-section"
+        v-scope="{}"
+        data-pg-collapsed
+      >
+        <div
+          style="
+            display: flex;
+            margin: 8px;
+            padding: 8px;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <p style="text-align: center; width: 50%; min-width: 400px">
+            Hello, I&apos;m within an island, and the root tag of the island
+            div#feature-section has an exclusive app mounted by
+            script#feature-app, and marked as a v-scope region. Any sprinkles of
+            interactions within this v-scope region are managed by this
+            exclusive app.
+          </p>
+        </div>
+        <div
+          style="
+            display: flex;
+            margin: 8px;
+            padding: 8px;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+          "
+        >
+          <input v-model="msg" style="text-align: center" /><span
+            style="margin: 8px"
+            >{{msg}}</span
+          >
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
