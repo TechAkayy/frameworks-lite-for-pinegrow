@@ -52,7 +52,7 @@ export class TutorialPanelPgQuickWindow {
   constructor($target) {
     var _this = this
 
-    var uiComponent = new TutorialPanelUiComponent()
+    var uiComponent = new TutorialPanelUiComponent(null)
 
     var pw = window.outerWidth
     var ph = window.outerHeight
@@ -64,8 +64,8 @@ export class TutorialPanelPgQuickWindow {
       `Frameworks Lite Plugin - Quick Start` /* title */,
       uiComponent,
       'TutorialPanelPgQuickWindow' /* key */,
-      1024, // width
-      700, // height
+      window.outerWidth / 2, // width
+      window.outerHeight / 2, // height
       false, // pinned, Focused when opening project? Yes, so that user can escape and close it immediately
       true, // floatable - can move this outside into a separate window across multiple monitors, default false
       false, // static_win (true - can't move around), default false
@@ -79,7 +79,7 @@ export class TutorialPanelPgQuickWindow {
       }
     }
 
-    this.win.$element.css('transform', 'scale(0.95)')
+    // this.win.$element.css('transform', 'scale(0.95)')
     // this.win.noRightEdge()
     this.win.hideOnClose = true
 
@@ -104,9 +104,14 @@ export class TutorialPanelPgQuickWindow {
       uiComponent.destroy()
     }
 
+    this.win.onShow = function () {
+      // tutorialPanelState.openStatus = true
+    }
+
     this.win.onHide = function () {
+      // _this.destroy()
       // Do not destory on hide
-      // _this.win.destroy()
+      // _this.win && _this.win.destroy()
     }
 
     this.win.$element.find('.pg-close').off('click')
@@ -136,10 +141,6 @@ export class TutorialPanelUiComponent {
 
     var $element, $container
     if (this.view) {
-      tutorialPanelState.closeDialog = () => {
-        this.$modal.find('.modal-header > button').trigger('click')
-      }
-
       $element = this.view.get$Element()
       $container = $('<div class="pg-tutorial-container"></div>').appendTo(
         $element,
