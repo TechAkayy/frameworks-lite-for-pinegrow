@@ -17,6 +17,49 @@ const $menu = $(`
 </li>
 `)
 
+const processScriptInjection = (scriptArr) => {
+  const page = pinegrow.getSelectedPage()
+  if (page) {
+    const headNode = page.sourceNode.findOne('head')
+    const bodyNode = page.sourceNode.findOne('body')
+    if (!headNode || !bodyNode) {
+      pinegrow.showQuickMessage(
+        'Frameworks lite: Ensure that the page contains head and body tags!',
+      )
+    }
+
+    var api = new PgApi()
+
+    scriptArr.forEach((scriptObj) => {
+      let insertPosition = scriptObj.injectTo.endsWith('prepend')
+        ? 'prepend'
+        : 'append'
+      // 'insertBefore'
+      // 'insertAfter'
+      let dest = scriptObj.injectTo.startsWith('head') ? headNode : bodyNode
+
+      api.insertElements(scriptObj.code, dest, insertPosition, {
+        select: true,
+        highlight: true,
+        scroll: true,
+        repeater: true,
+        format_html: true,
+      })
+      pinegrow.showQuickMessage(
+        `Frameworks lite: Added script for ${frameworksLiteState.activeFramework.label} at ${scriptObj.injectTo} !`,
+      )
+    })
+
+    if (frameworksLiteState.autoReloadOnUpdate) {
+      setTimeout(() => {
+        page.refresh()
+      }, 500)
+    }
+  } else {
+    pinegrow.showQuickMessage('Frameworks lite: Open a page first!')
+  }
+}
+
 const onProjectLoaded = () => {
   $menu.remove()
 
@@ -111,6 +154,8 @@ const onProjectLoaded = () => {
       label: `Add CDN Script (choose one of below two options)`,
     })
 
+    const cdnScripts = frameworksLiteState.activeFramework.cdnScripts
+
     const addCdnScriptForglobalApp = []
 
     if (frameworksLiteState.activeFramework.name === 'petite-vue') {
@@ -130,14 +175,16 @@ const onProjectLoaded = () => {
           label: 'Manual init with an example',
           helptext: 'Added to start of body tag.',
           action: function () {
-            // Add script block to start of body tag
+            const scriptArr = cdnScripts.globalApp.scriptModuleWithExample
+            processScriptInjection(scriptArr)
           },
         },
         {
           label: 'Manual init only',
           helptext: 'Added to start of body tag.',
           action: function () {
-            // Add script block to start of body tag
+            const scriptArr = cdnScripts.globalApp.scriptModuleNoExample
+            processScriptInjection(scriptArr)
           },
         },
         {
@@ -151,14 +198,16 @@ const onProjectLoaded = () => {
           label: 'Manual init with an example',
           helptext: 'Added before closing of body tag.',
           action: function () {
-            // Add script block before closing body tag
+            const scriptArr = cdnScripts.globalApp.scriptClassicWithExample
+            processScriptInjection(scriptArr)
           },
         },
         {
           label: 'Manual init only',
           helptext: 'Added before closing of body tag.',
           action: function () {
-            // Add script block before closing body tag
+            const scriptArr = cdnScripts.globalApp.scriptClassicNoExample
+            processScriptInjection(scriptArr)
           },
         },
         {
@@ -168,7 +217,8 @@ const onProjectLoaded = () => {
           label: 'Auto init (simplest - added to head tag)',
           helptext: 'Added to head tag, includes defer and init attributes.',
           action: function () {
-            // Add script to head tag
+            const scriptArr = cdnScripts.globalApp.scriptClassicAutoInit
+            processScriptInjection(scriptArr)
           },
         },
       )
@@ -189,14 +239,16 @@ const onProjectLoaded = () => {
           label: 'Manual init with an example',
           helptext: 'Added before closing of body tag.',
           action: function () {
-            // Add script block before closing body tag
+            const scriptArr = cdnScripts.globalApp.scriptClassicWithExample
+            processScriptInjection(scriptArr)
           },
         },
         {
           label: 'Manual init only',
           helptext: 'Added before closing of body tag.',
           action: function () {
-            // Add script block before closing body tag
+            const scriptArr = cdnScripts.globalApp.scriptClassicNoExample
+            processScriptInjection(scriptArr)
           },
         },
         {
@@ -206,7 +258,8 @@ const onProjectLoaded = () => {
           label: 'Auto init (simplest - added to head tag)',
           helptext: 'Added to head tag, includes defer attribute.',
           action: function () {
-            // Add script to head tag
+            const scriptArr = cdnScripts.globalApp.scriptClassicAutoInit
+            processScriptInjection(scriptArr)
           },
         },
       )
@@ -258,7 +311,8 @@ const onProjectLoaded = () => {
           helptext:
             'Added to start of body tag, app mounted to the sample island.',
           action: function () {
-            // Add script block to start of body tag
+            const scriptArr = cdnScripts.islands.scriptModuleIsland
+            processScriptInjection(scriptArr)
           },
         },
         {
@@ -273,7 +327,8 @@ const onProjectLoaded = () => {
           helptext:
             'Added before closing of body tag, app mounted to the sample island.',
           action: function () {
-            // Add script block before closing body tag
+            const scriptArr = cdnScripts.islands.scriptClassicIsland
+            processScriptInjection(scriptArr)
           },
         },
       )
@@ -323,7 +378,8 @@ const onProjectLoaded = () => {
           helptext:
             'Added to start of body tag, app mounted to the sample island.',
           action: function () {
-            // Add script block to start of body tag
+            const scriptArr = cdnScripts.islands.scriptModuleIsland
+            processScriptInjection(scriptArr)
           },
         },
         {
@@ -338,7 +394,8 @@ const onProjectLoaded = () => {
           helptext:
             'Added before closing of body tag, app mounted to the sample island.',
           action: function () {
-            // Add script block before closing body tag
+            const scriptArr = cdnScripts.islands.scriptClassicIsland
+            processScriptInjection(scriptArr)
           },
         },
       )

@@ -20,7 +20,12 @@ const directives = [
   {
     label: 'v-scope',
     attribute: 'v-scope',
-    default_value: 'true',
+    default_value: '{}',
+  },
+  {
+    label: 'v-scope with state',
+    attribute: 'v-scope',
+    default_value: "{ msg: 'Happy Life!' }",
   },
   {
     label: 'v-effect',

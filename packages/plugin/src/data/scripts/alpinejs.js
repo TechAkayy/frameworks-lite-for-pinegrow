@@ -1,0 +1,83 @@
+const emptyState = `const globalState = {
+  // state exposed to all expressions across the page
+}
+`
+
+const sampleState = `const globalState = {
+  // state exposed to all expressions across the page
+  count: 0, 
+  msg: 'Happy Life!',
+  get oddOrEven() { 
+      return this.count%2===0? 'even' : 'odd' // computed property
+  },
+  // methods
+  increment() {
+      this.count++
+  },
+  decrement() {
+      this.count--
+  }
+}
+`
+
+const sampleScope = `<div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;" data-pg-collapsed>
+    <button x-on:click="decrement" style="margin-left: 4px; margin-right: 4px;">⬇️</button>
+    <button x-on:click="increment" style="margin-left: 4px; margin-right: 4px;">⬆️</button>
+    <div style="text-align: left; width: 180px; margin-left: 4px;"><span>Count is: </span><span style="width: 30px; display: inline-block; text-align: center;" x-text="count"></span>
+        <span x-text="\`(\${oddOrEven})\`"></span>
+    </div>
+</div><div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center; flex-direction: column;">
+    <input x-model="msg" style="text-align: center;">
+    <span style="margin: 8px;" x-text="msg"></span>
+</div>
+`
+
+const sampleScopesForGlobal = `<div x-data="state" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
+  <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
+      <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within a x-data region, and it's state is accessible anywhere within this x-data region. Also, any sprinkles of interactions are managed by a global app (loaded for the entire page).</p>
+  </div>
+  ${sampleScope}
+</div>`
+
+const scriptClassicGlobal = (withState = false) => {
+  return `<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" data-pg-name="Alpinejs App"></script>
+<script>
+  ${withState ? sampleState : emptyState}
+  document.addEventListener('alpine:init', () => {
+    Alpine.data('state', () => (globalState))
+  })
+</script>`
+}
+
+// 'head' | 'body' | 'head-prepend' | 'body-prepend'
+const cdnScripts = {
+  globalApp: {
+    scriptClassicWithExample: [
+      {
+        injectTo: 'body-prepend',
+        code: `${sampleScopesForGlobal}`,
+      },
+      {
+        injectTo: 'body',
+        code: `${scriptClassicGlobal(true)}`,
+      },
+    ],
+
+    scriptClassicNoExample: [
+      {
+        injectTo: 'body',
+        code: `${scriptClassicGlobal(false)}`,
+      },
+    ],
+
+    scriptClassicAutoInit: [
+      {
+        injectTo: 'head',
+        code: `<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" data-pg-name="Alpinejs App"></script>`,
+      },
+    ],
+  },
+}
+
+export { cdnScripts }
+export default cdnScripts

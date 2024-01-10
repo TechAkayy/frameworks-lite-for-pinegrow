@@ -56,7 +56,7 @@ Currently supported frameworks - [Petite-Vue](https://github.com/vuejs/petite-vu
   ```html
   <body>
     <div id="app">
-      <span> {{ message }}</span>
+      <span> {{ msg }}</span>
       <!-- rest of the body -->
     </div>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -64,9 +64,9 @@ Currently supported frameworks - [Petite-Vue](https://github.com/vuejs/petite-vu
       const { createApp, ref } = Vue
       createApp({
         setup() {
-          const message = ref('A Fresh Start!')
+          const msg = ref('A Fresh Start!')
           return {
-            message,
+            msg,
           }
         },
       }).mount('#app')

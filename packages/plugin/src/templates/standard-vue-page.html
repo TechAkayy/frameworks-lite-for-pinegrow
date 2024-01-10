@@ -11,32 +11,153 @@
   </head>
   <body>
     <main>
-      <div id="app">
+      <script type="module" data-pg-name="Standard Vue App" id="hero-app">
+        import {
+          createApp,
+          ref,
+        } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+        const setup = {
+          props: {
+            title: String,
+          },
+          data() {
+            return {
+              count: 0,
+            }
+          },
+          computed: {
+            oddOrEven() {
+              return this.count % 2 === 0 ? 'even' : 'odd'
+            },
+          },
+          methods: {
+            increment() {
+              this.count++
+            },
+            decrement() {
+              this.count--
+            },
+          },
+        }
+
+        createApp(setup).mount('div#hero-section')
+      </script>
+      <div
+        style="
+          padding: 20px;
+          margin: 20px;
+          border-radius: 4px;
+          border-width: 2px;
+          outline: 1px solid #cccccc;
+        "
+        id="hero-section"
+        data-pg-collapsed
+      >
         <div
           style="
             display: flex;
-            flex-direction: row;
-            align-items: center;
+            margin: 8px;
+            padding: 8px;
             justify-content: center;
-            padding-top: 1.5rem;
-            padding-bottom: 1.5rem;
+            align-items: center;
           "
         >
-          <span style="margin-left: 1rem; /* 16px */">{{message}}</span>
+          <p style="text-align: center; width: 50%; min-width: 400px">
+            Hello, I&apos;m within an island, and the root tag of the island
+            div#hero-section has an exclusive app mounted by script#hero-app.
+            Any sprinkles of interactions within this island are managed by this
+            exclusive app.
+          </p>
+        </div>
+        <div
+          style="
+            display: flex;
+            margin: 8px;
+            padding: 8px;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <button
+            v-on:click="decrement"
+            style="margin-left: 4px; margin-right: 4px"
+          >
+            ⬇️
+          </button>
+          <button
+            v-on:click="increment"
+            style="margin-left: 4px; margin-right: 4px"
+          >
+            ⬆️
+          </button>
+          <div style="text-align: left; width: 180px; margin-left: 4px">
+            <span>Count is: </span>
+            <span style="width: 30px; display: inline-block; text-align: center"
+              >{{count}}</span
+            ><span>({{oddOrEven}})</span>
+          </div>
+        </div>
+      </div>
+      <script type="module" data-pg-name="Standard Vue App" id="feature-app">
+        import {
+          createApp,
+          ref,
+        } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+        const setup = {
+          data() {
+            return {
+              msg: 'Happy Life!',
+            }
+          },
+        }
+
+        createApp(setup).mount('div#feature-section')
+      </script>
+      <div
+        style="
+          padding: 20px;
+          margin: 20px;
+          border-radius: 4px;
+          border-width: 2px;
+          outline: 1px solid #cccccc;
+        "
+        id="feature-section"
+        data-pg-collapsed
+      >
+        <div
+          style="
+            display: flex;
+            margin: 8px;
+            padding: 8px;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <p style="text-align: center; width: 50%; min-width: 400px">
+            Hello, I&apos;m within an island, and the root tag of the island
+            div#feature-section has an exclusive app mounted by
+            script#feature-app. Any sprinkles of interactions within this island
+            are managed by this exclusive app.
+          </p>
+        </div>
+        <div
+          style="
+            display: flex;
+            margin: 8px;
+            padding: 8px;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+          "
+        >
+          <input v-model="msg" style="text-align: center" /><span
+            style="margin: 8px"
+            >{{msg}}</span
+          >
         </div>
       </div>
     </main>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script>
-      const { createApp, ref } = Vue
-      createApp({
-        setup() {
-          const message = ref('A Fresh Start!')
-          return {
-            message,
-          }
-        },
-      }).mount('#app')
-    </script>
   </body>
 </html>

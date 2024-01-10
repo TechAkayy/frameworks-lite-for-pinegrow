@@ -197,18 +197,18 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
     //go through attributes and list all directivesList
     pgel.getAttrList().forEach(function (a) {
       let attrName = a.name
-      if (isShortform) {
-        const activeDirectiveGroup = frameworks.find(
-          (fx) => fx.name === activeFramework.name,
-        )
-        activeDirectiveGroup.directives.propBinders.forEach(
-          ({ fullform, shortform }) => {
-            if (attrName.startsWith(fullform)) {
-              attrName = attrName.replace(fullform, shortform)
-            }
-          },
-        )
-      }
+      // if (isShortform) {
+      //   const activeDirectiveGroup = frameworks.find(
+      //     (fx) => fx.name === activeFramework.name,
+      //   )
+      //   activeDirectiveGroup.directives.propBinders.forEach(
+      //     ({ fullform, shortform }) => {
+      //       if (attrName.startsWith(fullform)) {
+      //         attrName = attrName.replace(fullform, shortform)
+      //       }
+      //     },
+      //   )
+      // }
 
       if (directivesAttributes.includes(attrName)) {
         const field_key = key + '.' + attrName
@@ -273,7 +273,14 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
             // fdef.name = "maxHeight", then fieldDefnPropKebabized would be 'max-height'
             // Look for 'max-height'
             var attr = findSingleAttr(fdef.name, pgel)
+            if (!attr) {
+              return
+            }
 
+            const content_col = pinegrow.getCollection().getList()
+            if (content_col.length > 1) {
+              return
+            }
             // Remove existing msg if the props panel msg is binded (:msg)
             // if ((!value || value === 'false') && attr) {
             // 	// if control has ':maxHeight' or 'v-bind:maxHeight', and pgel has 'max-height', then remove the unbounded attr from pgel
@@ -298,18 +305,18 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
             }
 
             let attrName = attr.name
-            if (isShortform) {
-              const activeDirectiveGroup = frameworks.find(
-                (fx) => fx.name === activeFramework.name,
-              )
-              activeDirectiveGroup.directives.propBinders.forEach(
-                ({ fullform, shortform }) => {
-                  if (attrName.startsWith(fullform)) {
-                    attrName = attrName.replace(fullform, shortform)
-                  }
-                },
-              )
-            }
+            // if (isShortform) {
+            //   const activeDirectiveGroup = frameworks.find(
+            //     (fx) => fx.name === activeFramework.name,
+            //   )
+            //   activeDirectiveGroup.directives.propBinders.forEach(
+            //     ({ fullform, shortform }) => {
+            //       if (attrName.startsWith(fullform)) {
+            //         attrName = attrName.replace(fullform, shortform)
+            //       }
+            //     },
+            //   )
+            // }
 
             pgel.setAttr(attrName, value)
 

@@ -67,7 +67,7 @@ const directives = [
   {
     label: 'v-model',
     attribute: 'v-model',
-    default_value: 'message',
+    default_value: 'msg',
   },
   {
     label: 'v-text',
