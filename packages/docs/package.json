@@ -1,5 +1,5 @@
 {
-  "name": "@pinegrow/tutorial",
+  "name": "@pinegrow/docs",
   "version": "0.0.0",
   "description": "Pinegrow external build with tailwindcss plugin",
   "homepage": "https://pg-vite-tailwindcss.netlify.app",

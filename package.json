@@ -1,7 +1,7 @@
 {
   "name": "frameworks-lite-for-pinegrow",
   "version": "0.0.1",
-  "description": "Pinegrow Plugin for Vue, Petite-Vue and AlpineJS",
+  "description": "Pinegrow Plugin for Petite-Vue, Alpinejs and Standard-Vue",
   "type": "module",
   "workspaces": [
     "./packages/*"
@@ -12,7 +12,8 @@
     "pinegrow",
     "vue",
     "petite-vue",
-    "alpinejs"
+    "alpinejs",
+    "standard-vue"
   ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -23,9 +24,9 @@
     }
   },
   "scripts": {
-    "build": "npm-run-all --serial build:tutorial build:plugin",
-    "build:dev": "npm-run-all --serial build:tutorial build:plugin:dev",
-    "build:tutorial": "npm run build -w @pinegrow/tutorial",
+    "build": "npm-run-all --serial build:docs build:plugin",
+    "build:dev": "npm-run-all --serial build:docs build:plugin:dev",
+    "build:docs": "npm run build -w @pinegrow/docs",
     "build:plugin": "npm run build -w @pinegrow/plugin",
     "build:plugin:dev": "npm run dev:build -w @pinegrow/plugin",
     "lint": "npm run format",

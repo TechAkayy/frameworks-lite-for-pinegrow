@@ -2,7 +2,7 @@
   "files": {
     "index.html": {
       "frameworks": [
-        "tutorial",
+        "docs",
         "pg.svg.lib",
         "pg.tree.painter",
         "pg.tw.lib",
@@ -84,7 +84,7 @@
   },
   "breakpoints": ["640px", "768px", "1024px", "1280px", "1536px"],
   "frameworks": [
-    "tutorial",
+    "docs",
     "pg.svg.lib",
     "pg.tree.painter",
     "pg.tw.lib",

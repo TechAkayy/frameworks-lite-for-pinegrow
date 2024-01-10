@@ -1,9 +1,9 @@
 import { createApp, reactive } from 'https://unpkg.com/petite-vue?module'
 
-export const tutorialPanelState = reactive({
+export const frameworksLiteState = reactive({
   // state
   theme: 'dark',
-  activeFramework: { name: 'petite-vue', label: 'Petite vue' },
+  activeFramework: { name: 'petite-vue', label: 'Petite Vue' },
   isShortform: false,
   autoReloadOnUpdate: false,
 
@@ -22,7 +22,7 @@ export const tutorialPanelState = reactive({
 })
 
 const store = {
-  tutorialPanelState,
+  frameworksLiteState,
   // exposed to all expressions
   count: 0,
   // getters
@@ -38,10 +38,10 @@ const store = {
 createApp(store).mount('div#app1')
 
 // if (import.meta.env.DEV) {
-//   tutorialPanelState.config = dataRaw.config
-//   tutorialPanelState.tutorials = dataRaw.tutorials
+//   frameworksLiteState.config = dataRaw.config
+//   frameworksLiteState.tutorials = dataRaw.tutorials
 // }
 
-if (!window.tutorialPanelState) {
-  window.tutorialPanelState = tutorialPanelState
+if (!window.frameworksLiteState) {
+  window.frameworksLiteState = frameworksLiteState
 }

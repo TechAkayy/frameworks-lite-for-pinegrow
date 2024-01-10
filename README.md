@@ -2,7 +2,7 @@
 
 A [Pinegrow](https://pinegrow.com/) Plugin that provides the ability to [progressively enhance](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement) your HTML with light-weight framework directives via the Props Panel.
 
-Currently supported frameworks - [Petite Vue](https://github.com/vuejs/petite-vue), [Vue](https://vuejs.org/guide/quick-start.html#using-the-global-build) and [AlpineJS](https://alpinejs.dev/start-here). To add a new framework, refer to the [Development & Contribution](#development--contribution) section.
+Currently supported frameworks - [Petite-Vue](https://github.com/vuejs/petite-vue), [AlpineJS](https://alpinejs.dev/start-here) and [Standard-Vue](https://vuejs.org/guide/quick-start.html#using-the-global-build). To add a new framework, refer to the [Development & Contribution](#development--contribution) section.
 
 ❗Note: This is not an official plugin by the Pinegrow team, rather a personal contribution for the community. Follow me on twitter - [@techakayy](https://twitter.com/techakayy)
 
@@ -32,7 +32,7 @@ Currently supported frameworks - [Petite Vue](https://github.com/vuejs/petite-vu
 ## Common Gotchas
 
 - Don't mix frameworks, it can be hard to debug the behaviour.
-- When using v-for of Petite-Vue or Vue, ensure you also add the key directive.
+- When using v-for of Petite-Vue or Standard-Vue, ensure you also add the key directive.
 - When using x-for of Alpinejs, it must be added only to a `template` tag. So, create a new template tag, and enclose your loopable content within it.
 - Make sure your page includes the cdn script tags.
 
@@ -51,7 +51,7 @@ Currently supported frameworks - [Petite Vue](https://github.com/vuejs/petite-vu
   ></script>
   ```
 
-  - Vue (add before closing `body` tag, ensure you have a div with id="app")
+  - Standard-Vue (add before closing `body` tag, ensure you have a div with id="app")
 
   ```html
   <body>
@@ -82,10 +82,13 @@ Currently supported frameworks - [Petite Vue](https://github.com/vuejs/petite-vu
 
 ## Improvement opportunities
 
-- Use the actions panel instead of props panel.
-- Add examples via library panel to drag-and-drop.
-- Auto-refresh page on updating the directives.
-- Anything else you can think of?
+- [x] Support both simple HTML page only (Pinegrow free version) & projects (Pinegrow pro).
+- [x] Add cdn script of different flavours to an existing page.
+- [x] Auto-reload page when adding or updating directives.
+- [ ] Add examples via library panel to drag-and-drop.
+- [ ] In-app quick-start - Should we use Pinegrow tutorials api or a separate dialog for this?
+- [ ] Use the actions panel instead of props panel.
+- [ ] Anything else you can think of?
 
 ## Vue with Pinegrow (or) Vue Designer?
 
@@ -148,10 +151,6 @@ $(function () {
 ### `packages/plugin/src/data` folder
 
 - Each framework's directives are maintained in a separate file. `index.js` imports them all and exports them together as a single object.
-
-## Tutorial Package (`packages/tutorial`)
-
-- Onboarding dialog using petite-vue and tailwindcss, designed with Pinegrow and this plugin.
 
 ## To add a new framework
 

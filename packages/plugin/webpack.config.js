@@ -9,7 +9,7 @@ import webpack from 'webpack'
 import CopyPlugin from 'copy-webpack-plugin'
 
 export default (env, argv) => {
-  const framework = argv.framework || env.framework || 'vue'
+  const framework = argv.framework || env.framework || 'standard-vue'
   const mode = argv.mode || env.mode || 'production'
 
   try {
@@ -71,7 +71,7 @@ export default (env, argv) => {
           new CopyPlugin({
             patterns: [
               { from: './src/templates', to: 'templates' },
-              { from: '../tutorial/dist', to: 'tutorial' },
+              { from: '../docs/dist', to: 'docs' },
             ],
           }),
           new webpack.DefinePlugin({

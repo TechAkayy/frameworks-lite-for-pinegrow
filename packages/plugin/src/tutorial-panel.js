@@ -1,38 +1,5 @@
-import { reactive } from 'vue'
-import { $menu } from './menu.js'
 import { pluginUrl } from './helpers.js'
-
-// VERY IMPORTANT - tutorialPanelState is used reactively by the Tutorial app, so any changes to this object has to be retrofitted in that project
-export let tutorialPanelState = reactive({
-  // state
-  theme: 'dark',
-  activeFramework: { name: 'petite-vue', label: 'Petite vue' },
-  isShortform: false,
-  autoReloadOnUpdate: false,
-
-  openMenu: function () {
-    $menu.trigger('click')
-  },
-
-  copyToClipboard: function (content) {
-    copyCodeToClipboard(content)
-  },
-
-  // state used to trigger actions in Pinegrow
-  openUrl: function (url) {
-    const isValidUrl = (urlString) => {
-      try {
-        return Boolean(new URL(urlString))
-      } catch (err) {
-        console.log(err)
-        return false
-      }
-    }
-    if (isValidUrl(url)) {
-      pinegrow.openExternalUrl(url)
-    }
-  },
-})
+import { frameworksLiteState } from './shared-state.js'
 
 export class TutorialPanel {
   openPanel = () => {
@@ -47,6 +14,8 @@ export class TutorialPanel {
     }
   }
 }
+
+export const tutorialPanel = new TutorialPanel()
 
 export class TutorialPanelPgQuickWindow {
   constructor($target) {
@@ -73,7 +42,7 @@ export class TutorialPanelPgQuickWindow {
     this.win = win
     this.uiComponent = uiComponent
 
-    tutorialPanelState.closeDialog = () => {
+    frameworksLiteState.closeDialog = () => {
       if (this.win?.visible) {
         this.win.hide()
       }
@@ -105,7 +74,7 @@ export class TutorialPanelPgQuickWindow {
     }
 
     this.win.onShow = function () {
-      // tutorialPanelState.openStatus = true
+      // frameworksLiteState.openStatus = true
     }
 
     this.win.onHide = function () {
@@ -197,30 +166,30 @@ export class TutorialPanelUiComponent {
         // 	console.log(tutorialPanelContainerWindow.componentStore)
         //   console.log(tutorialPanelContainerWindow.selectedComponentStore)
         // }
-        if (tutorialPanelContainerWindow?.tutorialPanelState) {
+        if (tutorialPanelContainerWindow?.frameworksLiteState) {
           clearInterval(loopRun)
           // console.log(timesRun)
           const theme = pinegrow.getWorkspaceTheme()
-          tutorialPanelContainerWindow.tutorialPanelState.theme =
+          tutorialPanelContainerWindow.frameworksLiteState.theme =
             theme === 'gray' ? 'dark' : theme
-          tutorialPanelContainerWindow.tutorialPanelState.activeFramework =
-            tutorialPanelState.activeFramework
-          tutorialPanelContainerWindow.tutorialPanelState.autoReloadOnUpdate =
-            tutorialPanelState.autoReloadOnUpdate
+          tutorialPanelContainerWindow.frameworksLiteState.activeFramework =
+            frameworksLiteState.activeFramework
+          tutorialPanelContainerWindow.frameworksLiteState.autoReloadOnUpdate =
+            frameworksLiteState.autoReloadOnUpdate
 
-          tutorialPanelContainerWindow.tutorialPanelState.openMenu =
-            tutorialPanelState.openMenu
+          tutorialPanelContainerWindow.frameworksLiteState.openMenu =
+            frameworksLiteState.openMenu
 
-          tutorialPanelContainerWindow.tutorialPanelState.copyToClipboard =
-            tutorialPanelState.copyToClipboard
+          tutorialPanelContainerWindow.frameworksLiteState.copyToClipboard =
+            frameworksLiteState.copyToClipboard
 
-          tutorialPanelContainerWindow.tutorialPanelState.openUrl =
-            tutorialPanelState.openUrl
+          tutorialPanelContainerWindow.frameworksLiteState.openUrl =
+            frameworksLiteState.openUrl
 
-          tutorialPanelContainerWindow.tutorialPanelState.closeDialog =
-            tutorialPanelState.closeDialog
+          tutorialPanelContainerWindow.frameworksLiteState.closeDialog =
+            frameworksLiteState.closeDialog
 
-          tutorialPanelState = tutorialPanelContainerWindow.tutorialPanelState
+          frameworksLiteState = tutorialPanelContainerWindow.frameworksLiteState
           // _this.tutorialPanelLoaded = true
           _this.init()
         }
@@ -247,14 +216,14 @@ export class TutorialPanelUiComponent {
   }
 
   init = () => {
-    window.tutorialPanelState = tutorialPanelState
+    window.frameworksLiteState = frameworksLiteState
 
     const onSetWorkspaceTheme = (theme) => {
       const newTheme = theme === 'gray' ? 'dark' : theme
-      const oldTheme = tutorialPanelState.theme
+      const oldTheme = frameworksLiteState.theme
 
       if (newTheme !== oldTheme) {
-        tutorialPanelState.theme = newTheme
+        frameworksLiteState.theme = newTheme
       }
     }
 

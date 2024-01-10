@@ -20,10 +20,10 @@ try {
       image_direct: thumbs_url + 'alpinejs-page.jpg',
     },
     {
-      name: 'vue-page.html',
-      desc_name: 'Vue Page',
-      url: templates_url + 'vue-page.html',
-      image_direct: thumbs_url + 'vue-page.jpg',
+      name: 'standard-vue-page.html',
+      desc_name: 'Standard Vue Page',
+      url: templates_url + 'standard-vue-page.html',
+      image_direct: thumbs_url + 'standard-vue-page.jpg',
     },
   )
 

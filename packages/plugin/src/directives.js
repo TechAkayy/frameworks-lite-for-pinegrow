@@ -1,10 +1,10 @@
 import { key, framework, addLibSection } from './helpers.js'
-import { directiveGroups } from './data/index.js'
-import { tutorialPanelState } from './tutorial-panel.js'
+import { frameworks } from './data/index.js'
+import { frameworksLiteState } from './shared-state.js'
 
 const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
   const { activeFramework, isShortform, autoReloadOnUpdate } =
-    tutorialPanelState
+    frameworksLiteState
 
   if (!showPropertiesView.showCustomSections) {
     //custom sections should not be shown in this panel (for example, TW bottom props).
@@ -198,12 +198,16 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
     pgel.getAttrList().forEach(function (a) {
       let attrName = a.name
       if (isShortform) {
-        const activeDirectiveGroup = directiveGroups[activeFramework.name]
-        activeDirectiveGroup.propBinders.forEach(({ fullform, shortform }) => {
-          if (attrName.startsWith(fullform)) {
-            attrName = attrName.replace(fullform, shortform)
-          }
-        })
+        const activeDirectiveGroup = frameworks.find(
+          (fx) => fx.name === activeFramework.name,
+        )
+        activeDirectiveGroup.directives.propBinders.forEach(
+          ({ fullform, shortform }) => {
+            if (attrName.startsWith(fullform)) {
+              attrName = attrName.replace(fullform, shortform)
+            }
+          },
+        )
       }
 
       if (directivesAttributes.includes(attrName)) {
@@ -229,14 +233,16 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
 
           // From attribute editor to this prop defn (Into Control)
           get_value: function (pgel, field_key, values, fdef) {
-            const activeDirectiveGroup = directiveGroups[activeFramework.name]
+            const activeDirectiveGroup = frameworks.find(
+              (fx) => fx.name === activeFramework.name,
+            )
 
             let attrName = fdef.name
 
             // Look for 'client:load' in pgel
             var attr = findSingleAttr(attrName, pgel)
 
-            activeDirectiveGroup.propBinders.forEach(
+            activeDirectiveGroup.directives.propBinders.forEach(
               ({ fullform, shortform }) => {
                 if (attrName.startsWith(fullform)) {
                   attrName = attrName.replace(fullform, shortform)
@@ -293,8 +299,10 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
 
             let attrName = attr.name
             if (isShortform) {
-              const activeDirectiveGroup = directiveGroups[activeFramework.name]
-              activeDirectiveGroup.propBinders.forEach(
+              const activeDirectiveGroup = frameworks.find(
+                (fx) => fx.name === activeFramework.name,
+              )
+              activeDirectiveGroup.directives.propBinders.forEach(
                 ({ fullform, shortform }) => {
                   if (attrName.startsWith(fullform)) {
                     attrName = attrName.replace(fullform, shortform)
@@ -405,11 +413,11 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
     sections.unshift(directives_section)
   }
 
-  Object.entries(directiveGroups).forEach(([frameworkName, directiveGroup]) => {
-    const { directives, lifecycleHooks } = directiveGroup
+  frameworks.forEach((fx) => {
+    const { directives, lifecycleHooks } = fx.directives
     const directivesList = [...directives, ...lifecycleHooks]
-    if (frameworkName === activeFramework.name) {
-      addDirectives(frameworkName, 'Add directive', directivesList)
+    if (fx.name === activeFramework.name) {
+      addDirectives(fx.label, 'Add directive', directivesList)
     }
   })
 
