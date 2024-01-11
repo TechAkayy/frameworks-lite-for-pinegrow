@@ -3,9 +3,9 @@ export const pgFrameworkConfig = {
   plugin_path: './plugin.cjs',
   templates_path: './templates',
 
-  version: '1.0.0',
+  version: '1.1.0',
   major_version: '1',
-  minor_version: '1.0',
+  minor_version: '1.1',
 
   //Optional, add a badge to the framework list notify user of new or updated status
   info_badge: '',

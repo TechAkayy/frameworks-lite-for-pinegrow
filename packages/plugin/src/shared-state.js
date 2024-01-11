@@ -1,8 +1,6 @@
 import { reactive } from 'vue'
 import { $menu } from './menu.js'
 
-// VERY IMPORTANT - frameworksLiteState is used reactively by the Tutorial app, so any changes to this object has to be retrofitted in that project
-
 export let frameworksLiteState = reactive({
   // state
   theme: 'dark',

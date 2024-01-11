@@ -24,7 +24,8 @@
     }
   },
   "scripts": {
-    "build": "npm-run-all --serial build:docs build:plugin",
+    "build": "npm run build:plugin",
+    "build:test": "npm-run-all --serial build:docs build:plugin",
     "build:dev": "npm-run-all --serial build:docs build:plugin:dev",
     "build:docs": "npm run build -w @pinegrow/docs",
     "build:plugin": "npm run build -w @pinegrow/plugin",

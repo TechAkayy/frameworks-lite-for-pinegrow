@@ -71,7 +71,7 @@ export default (env, argv) => {
           new CopyPlugin({
             patterns: [
               { from: './src/templates', to: 'templates' },
-              { from: '../docs/dist', to: 'docs' },
+              // { from: '../docs/dist', to: 'docs' },
             ],
           }),
           new webpack.DefinePlugin({
