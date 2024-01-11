@@ -12,6 +12,10 @@ Currently supported frameworks - [Petite-Vue](https://github.com/vuejs/petite-vu
 
 👏 Frameworks via cdn can be used with other Pinegrow Pro features like components, master pages, and also with Wordpress. Any contribution to the documentation showcasing such usage are welcomed.
 
+## Quick Demo
+
+[![Watch the video](/screenshots/demo.png)](https://www.youtube.com/watch?v=TyS7RpsQX_w)
+
 ## Usage
 
 1. Download the latest plugin from [here](https://github.com/techakayy/frameworks-lite-for-pinegrow/releases/latest) (`frameworks-lite-for-pinegrow.zip`). Extract the zip file. The extracted folder contains:
