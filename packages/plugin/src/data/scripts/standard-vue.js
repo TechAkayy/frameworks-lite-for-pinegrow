@@ -62,9 +62,7 @@ const scriptIslandsModule = `<script type="module" data-pg-name="Standard Vue Ap
 </script>
 <div style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;" id="hero-section">
   <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
-      <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag
-          of the island div#hero-section has an exclusive app mounted by script#hero-app. Any
-          sprinkles of interactions within this island are managed by this exclusive app.</p>
+      <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#hero-section</code> has an exclusive app mounted by <code>script#hero-app</code>. Any sprinkles of interactions within this island are managed by this exclusive app.</p>
   </div>
   ${sampleScopeCount}
 </div>
@@ -77,9 +75,7 @@ const scriptIslandsModule = `<script type="module" data-pg-name="Standard Vue Ap
 </script>
 <div style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;" id="feature-section">
   <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
-      <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag
-          of the island div#feature-section has an exclusive app mounted by script#feature-app. Any
-          sprinkles of interactions within this island are managed by this exclusive app.</p>
+      <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#feature-section</code> has an exclusive app mounted by <code>script#feature-app</code>. Any sprinkles of interactions within this island are managed by this exclusive app.</p>
   </div>
   ${sampleScopeMsg}
 </div>`
@@ -103,17 +99,13 @@ data-pg-name="Standard Vue App"></script>
 
 const scriptIslandsClassic_Scopes = `<div style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;" id="hero-section">
     <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
-        <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag
-            of the island div#hero-section has an exclusive app mounted by script#hero-app. Any
-            sprinkles of interactions within this island are managed by this exclusive app.</p>
+        <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#hero-section</code> has an exclusive app mounted by <code>script#hero-app</code>. Any sprinkles of interactions within this island are managed by this exclusive app.</p>
     </div>
     ${sampleScopeCount}
 </div>
 <div style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;" id="feature-section">
     <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
-        <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag
-            of the island div#feature-section has an exclusive app mounted by script#feature-app. Any
-            sprinkles of interactions within this island are managed by this exclusive app.</p>
+        <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#feature-section</code> has an exclusive app mounted by <code>script#feature-app</code>. Any sprinkles of interactions within this island are managed by this exclusive app.</p>
     </div>
     ${sampleScopeMsg}
 </div>

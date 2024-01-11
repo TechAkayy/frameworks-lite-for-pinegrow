@@ -42,7 +42,7 @@ const sampleScopeMsg = `<div style="display: flex; margin: 8px; padding: 8px; ju
 
 const sampleScopesForGlobal = `<div v-scope="{ msg: 'Happy Life!' }" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
     <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
-        <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within a v-scope region. Any sprinkles of interactions within this v-scope region are managed by a global app (loaded for the entire page).</p>
+    <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within a <code>v-scope</code> region. Any sprinkles of interactions within this <code>v-scope</code> region are managed by a global app (loaded for the entire page).</p>
     </div>
     ${sampleScopeCount}
     ${sampleScopeMsg}
@@ -77,9 +77,7 @@ const scriptIslandsModule = `<script type="module" data-pg-name="Petite Vue App"
 </script>
 <div style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;" id="hero-section" v-scope="{}">
     <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
-        <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag
-            of the island div#hero-section has an exclusive app mounted by script#hero-app, and marked as a v-scope region. Any
-            sprinkles of interactions within this v-scope region are managed by this exclusive app.</p>
+      <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#hero-section</code> has an exclusive app mounted by <code>script#hero-app</code>, and marked as a <code>v-scope</code> region. Any sprinkles of interactions within this <code>v-scope</code> region are managed by this exclusive app.</p>
     </div>
     ${sampleScopeCount}
 </div>
@@ -91,9 +89,7 @@ const scriptIslandsModule = `<script type="module" data-pg-name="Petite Vue App"
 </script>
 <div style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;" id="feature-section" v-scope="{}">
     <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
-        <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag
-            of the island div#feature-section has an exclusive app mounted by script#feature-app, and marked as a v-scope region. Any
-            sprinkles of interactions within this v-scope region are managed by this exclusive app.</p>
+        <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#feature-section</code> has an exclusive app mounted by <code>script#feature-app</code>, and marked as a <code>v-scope</code> region. Any sprinkles of interactions within this <code>v-scope</code> region are managed by this exclusive app.</p>
     </div>
     ${sampleScopeMsg}
 </div>`
@@ -112,17 +108,13 @@ const scriptIslandsClassic_Apps = `<script src="https://unpkg.com/petite-vue" da
 
 const scriptIslandsClassic_Scopes = `<div style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;" id="hero-section" v-scope="{}">
     <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
-        <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag
-            of the island div#hero-section has an exclusive app mounted by script#hero-app, and marked as a v-scope region. Any
-            sprinkles of interactions within this v-scope region are managed by this exclusive app.</p>
+        <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#hero-section</code> has an exclusive app mounted by <code>script#hero-app</code>, and marked as a <code>v-scope</code> region. Any sprinkles of interactions within this <code>v-scope</code> region are managed by this exclusive app.</p>
     </div>
     ${sampleScopeCount}
 </div>
 <div style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;" id="feature-section" v-scope="{}">
     <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
-        <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag
-            of the island div#feature-section has an exclusive app mounted by script#feature-app, and marked as a v-scope region. Any
-            sprinkles of interactions within this v-scope region are managed by this exclusive app.</p>
+        <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#feature-section</code> has an exclusive app mounted by <code>script#feature-app</code>, and marked as a <code>v-scope</code> region. Any sprinkles of interactions within this <code>v-scope</code> region are managed by this exclusive app.</p>
     </div>
     ${sampleScopeMsg}
 </div>

@@ -34,7 +34,7 @@ const sampleScope = `<div style="display: flex; margin: 8px; padding: 8px; justi
 
 const sampleScopesForGlobal = `<div x-data="state" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
   <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
-      <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within a x-data region, and it's state is accessible anywhere within this x-data region. Also, any sprinkles of interactions are managed by a global app (loaded for the entire page).</p>
+      <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within a <code>x-data</code> region, and it's state is accessible anywhere within this <code>x-data</code> region. Also, any sprinkles of interactions are managed by a global app (loaded for the entire page).</p>
   </div>
   ${sampleScope}
 </div>`

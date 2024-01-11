@@ -1,4 +1,5 @@
 import { framework } from './helpers.js'
+import { pgFrameworkConfig as config } from './config.js'
 import { frameworks } from './data/index.js'
 import { frameworksLiteState } from './shared-state.js'
 // import { tutorialPanel } from './tutorial-panel.js'
@@ -151,7 +152,7 @@ const onProjectLoaded = () => {
     // Add cdn script
     menu.add({
       type: 'header',
-      label: `Add CDN Script (choose one of below two options)`,
+      label: `Add CDN Script (choose one of below two options, don't mix them up)`,
     })
 
     const cdnScripts = frameworksLiteState.activeFramework.cdnScripts
@@ -168,22 +169,33 @@ const onProjectLoaded = () => {
           type: 'divider',
         },
         {
-          type: 'header',
-          label: `App with Script (module) - Recommended`,
-        },
-        {
-          label: 'Manual init with an example',
-          helptext: 'Added to start of body tag.',
+          label: 'Auto init (simplest - added to head tag)',
+          helptext: 'Added to head tag, includes defer and init attributes.',
           action: function () {
-            const scriptArr = cdnScripts.globalApp.scriptModuleWithExample
+            const scriptArr = cdnScripts.globalApp.scriptClassicAutoInit
             processScriptInjection(scriptArr)
           },
         },
         {
-          label: 'Manual init only',
+          type: 'divider',
+        },
+        {
+          type: 'header',
+          label: `App with Script (module) - Recommended`,
+        },
+        {
+          label: 'Manual init with empty state',
           helptext: 'Added to start of body tag.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptModuleNoExample
+            processScriptInjection(scriptArr)
+          },
+        },
+        {
+          label: 'Manual init with state & example',
+          helptext: 'Added to start of body tag.',
+          action: function () {
+            const scriptArr = cdnScripts.globalApp.scriptModuleWithExample
             processScriptInjection(scriptArr)
           },
         },
@@ -195,15 +207,7 @@ const onProjectLoaded = () => {
           label: `App with Script (classic)`,
         },
         {
-          label: 'Manual init with an example',
-          helptext: 'Added before closing of body tag.',
-          action: function () {
-            const scriptArr = cdnScripts.globalApp.scriptClassicWithExample
-            processScriptInjection(scriptArr)
-          },
-        },
-        {
-          label: 'Manual init only',
+          label: 'Manual init with empty state',
           helptext: 'Added before closing of body tag.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptClassicNoExample
@@ -211,13 +215,10 @@ const onProjectLoaded = () => {
           },
         },
         {
-          type: 'divider',
-        },
-        {
-          label: 'Auto init (simplest - added to head tag)',
-          helptext: 'Added to head tag, includes defer and init attributes.',
+          label: 'Manual init with state & example',
+          helptext: 'Added before closing of body tag.',
           action: function () {
-            const scriptArr = cdnScripts.globalApp.scriptClassicAutoInit
+            const scriptArr = cdnScripts.globalApp.scriptClassicWithExample
             processScriptInjection(scriptArr)
           },
         },
@@ -232,22 +233,10 @@ const onProjectLoaded = () => {
           type: 'divider',
         },
         {
-          type: 'header',
-          label: `App with Script (classic)`,
-        },
-        {
-          label: 'Manual init with an example',
-          helptext: 'Added before closing of body tag.',
+          label: 'Auto init (simplest - added to head tag)',
+          helptext: 'Added to head tag, includes defer attribute.',
           action: function () {
-            const scriptArr = cdnScripts.globalApp.scriptClassicWithExample
-            processScriptInjection(scriptArr)
-          },
-        },
-        {
-          label: 'Manual init only',
-          helptext: 'Added before closing of body tag.',
-          action: function () {
-            const scriptArr = cdnScripts.globalApp.scriptClassicNoExample
+            const scriptArr = cdnScripts.globalApp.scriptClassicAutoInit
             processScriptInjection(scriptArr)
           },
         },
@@ -255,10 +244,22 @@ const onProjectLoaded = () => {
           type: 'divider',
         },
         {
-          label: 'Auto init (simplest - added to head tag)',
-          helptext: 'Added to head tag, includes defer attribute.',
+          type: 'header',
+          label: `App with Script (classic)`,
+        },
+        {
+          label: 'Manual init with empty state',
+          helptext: 'Added before closing of body tag.',
           action: function () {
-            const scriptArr = cdnScripts.globalApp.scriptClassicAutoInit
+            const scriptArr = cdnScripts.globalApp.scriptClassicNoExample
+            processScriptInjection(scriptArr)
+          },
+        },
+        {
+          label: 'Manual init with state & example',
+          helptext: 'Added before closing of body tag.',
+          action: function () {
+            const scriptArr = cdnScripts.globalApp.scriptClassicWithExample
             processScriptInjection(scriptArr)
           },
         },
@@ -460,6 +461,17 @@ const onProjectLoaded = () => {
     //     tutorialPanel.openPanel()
     //   },
     // })
+
+    menu.add({
+      type: 'divider',
+    })
+
+    menu.add({
+      label: `Github Docs`,
+      action: function () {
+        pinegrow.openExternalUrl(config.author_link)
+      },
+    })
   }
 }
 

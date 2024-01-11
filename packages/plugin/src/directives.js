@@ -404,8 +404,9 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
           action: addDirective,
         }))
 
-        const m = new CrsaContextMenu(actions, $b)
-        m.showForElement($b, null, 4)
+        const contextMenu = new CrsaContextMenu(actions, $b)
+        contextMenu.addSmartInput()
+        contextMenu.showForElement($b, null, 4)
       },
     }
 
