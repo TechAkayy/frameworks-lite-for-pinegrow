@@ -2,9 +2,12 @@ import { key, framework, addLibSection } from './helpers.js'
 import { frameworks } from './data/index.js'
 import { frameworksLiteState } from './shared-state.js'
 
+let activeFramework, isShortform, autoReloadOnUpdate
+
 const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
-  const { activeFramework, isShortform, autoReloadOnUpdate } =
-    frameworksLiteState
+  activeFramework = frameworksLiteState.activeFramework
+  isShortform = frameworksLiteState.isShortform
+  autoReloadOnUpdate = frameworksLiteState.autoReloadOnUpdate
 
   if (!showPropertiesView.showCustomSections) {
     //custom sections should not be shown in this panel (for example, TW bottom props).
@@ -197,6 +200,7 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
     //go through attributes and list all directivesList
     pgel.getAttrList().forEach(function (a) {
       let attrName = a.name
+      // TODO: Shortform
       // if (isShortform) {
       //   const activeDirectiveGroup = frameworks.find(
       //     (fx) => fx.name === activeFramework.name,
@@ -242,19 +246,23 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
             // Look for 'client:load' in pgel
             var attr = findSingleAttr(attrName, pgel)
 
-            activeDirectiveGroup.directives.propBinders.forEach(
-              ({ fullform, shortform }) => {
-                if (attrName.startsWith(fullform)) {
-                  attrName = attrName.replace(fullform, shortform)
-                }
-                if (!attr) {
-                  attr = findSingleAttr(attrName, pgel)
-                }
-              },
-            )
+            // TODO: Shortform
+            // activeDirectiveGroup.directives.propBinders.forEach(
+            //   ({ fullform, shortform }) => {
+            //     if (attrName.startsWith(fullform)) {
+            //       attrName = attrName.replace(fullform, shortform)
+            //     }
+            //     if (!attr) {
+            //       attr = findSingleAttr(attrName, pgel)
+            //     }
+            //   },
+            // )
 
             if (attr) {
               var value = attr.value
+              if (value === 'true') {
+                pgel.setAttr(attr.name, null)
+              }
               return value || 'true'
             }
           },
@@ -273,14 +281,15 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
             // fdef.name = "maxHeight", then fieldDefnPropKebabized would be 'max-height'
             // Look for 'max-height'
             var attr = findSingleAttr(fdef.name, pgel)
-            if (!attr) {
-              return
-            }
+            // if (!attr) {
+            //   return
+            // }
 
-            const content_col = pinegrow.getCollection().getList()
-            if (content_col.length > 1) {
-              return
-            }
+            // const content_col = pinegrow.getCollection().getList()
+            // if (content_col.length > 1) {
+            //   return
+            // }
+
             // Remove existing msg if the props panel msg is binded (:msg)
             // if ((!value || value === 'false') && attr) {
             // 	// if control has ':maxHeight' or 'v-bind:maxHeight', and pgel has 'max-height', then remove the unbounded attr from pgel
@@ -289,22 +298,23 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
             // 	return
             // }
 
-            if (value === null) {
-              const api = new PgApi()
-              const attrName = attr.name
-              api.removeAttribute(null /* to all sel elements */, attrName)
-              if (autoReloadOnUpdate) {
-                setTimeout(() => {
-                  pgel.getPage()?.refresh()
-                }, 500)
-              } else {
-                //a quick and dumb way to refresh the prop panel
-                pinegrow.selectedElements.reselect()
-              }
-              return
-            }
+            // if (value === null) {
+            //   const api = new PgApi()
+            //   const attrName = attr.name
+            //   api.removeAttribute(null /* to all sel elements */, attrName)
+            //   if (autoReloadOnUpdate) {
+            //     setTimeout(() => {
+            //       pgel.getPage()?.refresh()
+            //     }, 500)
+            //   } else {
+            //     //a quick and dumb way to refresh the prop panel
+            //     pinegrow.selectedElements.reselect()
+            //   }
+            //   return
+            // }
 
             let attrName = attr.name
+            // TODO: Shortform
             // if (isShortform) {
             //   const activeDirectiveGroup = frameworks.find(
             //     (fx) => fx.name === activeFramework.name,
@@ -318,12 +328,18 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
             //   )
             // }
 
-            pgel.setAttr(attrName, value)
+            // pgel.setAttr(attrName, value)
+
+            if (value === 'true') {
+              pgel.setAttr(attrName, null)
+            } else {
+              pgel.setAttr(attrName, value)
+            }
 
             if (eventType === 'change') {
               const currentAttrList = getAttrList(pgel)
               const currentAttr = currentAttrList.find(
-                (attr) => attr.name === attrName,
+                (curr_attr) => curr_attr.name === attrName,
               )
               if (currentAttr) {
                 const currentAttrValue = currentAttr.value || 'true'
