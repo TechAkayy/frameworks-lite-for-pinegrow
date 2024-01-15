@@ -8,6 +8,11 @@
     />
     <title>An AlpineJS Page</title>
     <link rel="pg-require" href="pinegrow.json" />
+    <style>
+      [x-cloak] {
+        display: none !important;
+      }
+    </style>
   </head>
   <body>
     <main>
@@ -20,7 +25,6 @@
           border-width: 2px;
           outline: 1px solid #cccccc;
         "
-        data-pg-collapsed
       >
         <div
           style="
@@ -46,7 +50,6 @@
             justify-content: center;
             align-items: center;
           "
-          data-pg-collapsed
         >
           <button
             x-on:click="decrement"
@@ -89,7 +92,7 @@
     <script
       defer
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
-      data-pg-name="Alpinejs App"
+      data-pg-name="App-Alpinejs"
     ></script>
     <script>
       const globalState = {

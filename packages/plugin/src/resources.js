@@ -8,22 +8,64 @@ try {
 
   pages.push(
     {
-      name: 'petite-vue-page.html',
-      desc_name: 'Petite Vue Page',
-      url: templates_url + 'petite-vue-page.html',
-      image_direct: thumbs_url + 'petite-vue-page.jpg',
+      name: 'petite-vue-global-app.html',
+      desc_name: 'Petite Vue - Global App',
+      url: templates_url + 'petite-vue-global-app.html',
+      image_direct: thumbs_url + 'petite-vue-global-app.jpg',
     },
     {
-      name: 'alpinejs-page.html',
-      desc_name: 'Alpinejs Page',
-      url: templates_url + 'alpinejs-page.html',
-      image_direct: thumbs_url + 'alpinejs-page.jpg',
+      name: 'petite-vue-islands.html',
+      desc_name: 'Petite Vue - Islands',
+      url: templates_url + 'petite-vue-islands.html',
+      image_direct: thumbs_url + 'petite-vue-islands.jpg',
     },
     {
-      name: 'standard-vue-page.html',
-      desc_name: 'Standard Vue Page',
-      url: templates_url + 'standard-vue-page.html',
-      image_direct: thumbs_url + 'standard-vue-page.jpg',
+      name: 'alpinejs-global-app.html',
+      desc_name: 'Alpinejs - Global App',
+      url: templates_url + 'alpinejs-global-app.html',
+      image_direct: thumbs_url + 'alpinejs-global-app.jpg',
+    },
+    {
+      name: 'standard-vue-islands.html',
+      desc_name: 'Standard Vue - Islands',
+      url: templates_url + 'standard-vue-islands.html',
+      image_direct: thumbs_url + 'standard-vue-islands.jpg',
+    },
+    {
+      name: 'example-commits.html',
+      desc_name: 'example-commits',
+      url: templates_url + 'example-commits.html',
+      image_direct: thumbs_url + 'example-commits.jpg',
+    },
+    {
+      name: 'example-grid.html',
+      desc_name: 'example-grid',
+      url: templates_url + 'example-grid.html',
+      image_direct: thumbs_url + 'example-grid.jpg',
+    },
+    {
+      name: 'example-markdown.html',
+      desc_name: 'example-markdown',
+      url: templates_url + 'example-markdown.html',
+      image_direct: thumbs_url + 'example-markdown.jpg',
+    },
+    {
+      name: 'example-svg.html',
+      desc_name: 'example-svg',
+      url: templates_url + 'example-svg.html',
+      image_direct: thumbs_url + 'example-svg.jpg',
+    },
+    {
+      name: 'example-todomvc.html',
+      desc_name: 'example-todomvc',
+      url: templates_url + 'example-todomvc.html',
+      image_direct: thumbs_url + 'example-todomvc.jpg',
+    },
+    {
+      name: 'example-tree.html',
+      desc_name: 'example-tree',
+      url: templates_url + 'example-tree.html',
+      image_direct: thumbs_url + 'example-tree.jpg',
     },
   )
 

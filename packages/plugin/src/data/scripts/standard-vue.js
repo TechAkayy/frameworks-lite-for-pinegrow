@@ -1,4 +1,4 @@
-const emptyState = `const setup = {
+const emptyState = `const rootComponent = {
   data() {
     return {
       // count: 0
@@ -6,7 +6,7 @@ const emptyState = `const setup = {
   },
 }`
 
-const sampleStateCount = `const setup = {
+const sampleStateCount = `const rootComponent = {
   props: {
     title: String,
   },
@@ -30,7 +30,7 @@ const sampleStateCount = `const setup = {
   }
 }`
 
-const sampleStateMsg = `const setup = {
+const sampleStateMsg = `const rootComponent = {
   data() {
     return {
       msg: 'Happy Life!',
@@ -53,59 +53,58 @@ const sampleScopeMsg = `<div style="display: flex; margin: 8px; padding: 8px; ju
   </div>
 `
 
-const scriptIslandsModule = `<script type="module" data-pg-name="Standard Vue App" id="hero-app">
+const scriptIslandsModule = `<script type="module" data-pg-name="App-Hero" id="hero-app">
   import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 
   ${sampleStateCount}
 
-  createApp(setup).mount('div#hero-section')
+  createApp(rootComponent).mount('div#hero-island')
 </script>
-<div style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;" id="hero-section">
+<div id="hero-island" data-pg-name="Island-Hero" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
   <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
-      <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#hero-section</code> has an exclusive app mounted by <code>script#hero-app</code>. Any sprinkles of interactions within this island are managed by this exclusive app.</p>
+      <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#hero-island</code> has an exclusive app mounted by <code>script#hero-app</code>. Any sprinkles of interactions within this island are managed by this exclusive app.</p>
   </div>
   ${sampleScopeCount}
 </div>
-<script type="module" data-pg-name="Standard Vue App" id="feature-app">
+<script type="module" data-pg-name="App-Feature" id="feature-app">
   import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 
   ${sampleStateMsg}
 
-  createApp(setup).mount('div#feature-section')
+  createApp(rootComponent).mount('div#feature-island')
 </script>
-<div style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;" id="feature-section">
+<div id="feature-island" data-pg-name="Island-Feature" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
   <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
-      <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#feature-section</code> has an exclusive app mounted by <code>script#feature-app</code>. Any sprinkles of interactions within this island are managed by this exclusive app.</p>
+      <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#feature-island</code> has an exclusive app mounted by <code>script#feature-app</code>. Any sprinkles of interactions within this island are managed by this exclusive app.</p>
   </div>
   ${sampleScopeMsg}
 </div>`
 
-const scriptIslandsClassic_Apps = `<script src="https://unpkg.com/vue@3/dist/vue.global.js" data-pg-name="Standard Vue App"></script>
-<script id="hero-app">
+const scriptIslandsClassic_Apps = `<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script id="hero-app" data-pg-name="App-Hero">
   var { createApp } = Vue
 
-  ${sampleStateCount.replace('const setup', 'var setup')}
+  ${sampleStateCount.replace('const rootComponent', 'var rootComponent')}
 
-  createApp(setup).mount('div#hero-section')
+  createApp(rootComponent).mount('div#hero-island')
 </script>
-data-pg-name="Standard Vue App"></script>
-<script id="feature-app">
+<script id="feature-app" data-pg-name="App-Feature">
   var { createApp } = Vue
 
-  ${sampleStateMsg.replace('const setup', 'var setup')}
+  ${sampleStateMsg.replace('const rootComponent', 'var rootComponent')}
 
-  createApp(setup).mount('div#feature-section')
+  createApp(rootComponent).mount('div#feature-island')
 </script>`
 
-const scriptIslandsClassic_Scopes = `<div style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;" id="hero-section">
+const scriptIslandsClassic_Scopes = `<div id="hero-island" data-pg-name="Island-Hero" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
     <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
-        <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#hero-section</code> has an exclusive app mounted by <code>script#hero-app</code>. Any sprinkles of interactions within this island are managed by this exclusive app.</p>
+        <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#hero-island</code> has an exclusive app mounted by <code>script#hero-app</code>. Any sprinkles of interactions within this island are managed by this exclusive app.</p>
     </div>
     ${sampleScopeCount}
 </div>
-<div style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;" id="feature-section">
+<div id="feature-island" data-pg-name="Island-Feature" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
     <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
-        <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#feature-section</code> has an exclusive app mounted by <code>script#feature-app</code>. Any sprinkles of interactions within this island are managed by this exclusive app.</p>
+        <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#feature-island</code> has an exclusive app mounted by <code>script#feature-app</code>. Any sprinkles of interactions within this island are managed by this exclusive app.</p>
     </div>
     ${sampleScopeMsg}
 </div>

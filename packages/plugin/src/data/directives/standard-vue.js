@@ -15,6 +15,11 @@ const propBinders = [
 
 const lifecycleHooks = [
   {
+    label: 'ref',
+    attribute: 'ref',
+    default_value: 'elref',
+  },
+  {
     label: '@vue:mounted',
     attribute: 'v-on:vue:mounted',
     default_value: 'myFunc()',
@@ -158,7 +163,22 @@ const directives = [
     default_value: 'myFunc()',
   },
   {
+    label: 'v-on:mouseover',
+    attribute: 'v-on:mouseover',
+    default_value: 'myFunc()',
+  },
+  {
+    label: 'v-on:mouseleave',
+    attribute: 'v-on:mouseleave',
+    default_value: 'myFunc()',
+  },
+  {
     label: 'v-on:keyup.enter',
+    attribute: 'v-on:keyup.enter',
+    default_value: 'myFunc()',
+  },
+  {
+    label: 'v-on:keydown.enter',
     attribute: 'v-on:keyup.enter',
     default_value: 'myFunc()',
   },

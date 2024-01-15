@@ -99,9 +99,9 @@ Currently supported frameworks - [Petite-Vue](https://github.com/vuejs/petite-vu
 - [x] Support both simple HTML page only (Pinegrow free version) & projects (Pinegrow pro).
 - [x] Add cdn script of different flavours to an existing page.
 - [x] Auto-reload page when adding or updating directives.
-- [ ] Add examples via library panel to drag-and-drop.
-- [ ] In-app quick-start tutorial - Should we use Pinegrow tutorials api or a separate dialog for this? Or may be just a simple vitepress docs site on netlify?
-- [ ] Use the actions panel instead of props panel.
+- [ ] Add examples via page templates from docs.
+- [ ] In-app quick-start tutorial? - Should we use Pinegrow tutorials api or a separate dialog for this? Or may be just a simple vitepress docs site on netlify?
+- [ ] Use the actions panel instead of props panel?
 - [ ] Anything else you can think of?
 
 ## Vue with Pinegrow (or) Vue Designer?

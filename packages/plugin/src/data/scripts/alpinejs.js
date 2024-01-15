@@ -20,7 +20,7 @@ const sampleState = `const globalState = {
 }
 `
 
-const sampleScope = `<div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;" data-pg-collapsed>
+const sampleScope = `<div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;" >
     <button x-on:click="decrement" style="margin-left: 4px; margin-right: 4px;">⬇️</button>
     <button x-on:click="increment" style="margin-left: 4px; margin-right: 4px;">⬆️</button>
     <div style="text-align: left; width: 180px; margin-left: 4px;"><span>Count is: </span><span style="width: 30px; display: inline-block; text-align: center;" x-text="count"></span>
@@ -40,7 +40,7 @@ const sampleScopesForGlobal = `<div x-data="state" style="padding: 20px; margin:
 </div>`
 
 const scriptClassicGlobal = (withState = false) => {
-  return `<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" data-pg-name="Alpinejs App"></script>
+  return `<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" data-pg-name="App-Alpinejs"></script>
 <script>
   ${withState ? sampleState : emptyState}
   document.addEventListener('alpine:init', () => {
@@ -73,7 +73,7 @@ const cdnScripts = {
     scriptClassicAutoInit: [
       {
         injectTo: 'head',
-        code: `<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" data-pg-name="Alpinejs App"></script>`,
+        code: `<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" data-pg-name="App-Alpinejs"></script>`,
       },
     ],
   },

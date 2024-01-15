@@ -6,44 +6,40 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>A Standard Vue Page</title>
+    <title>A Petite Vue Page</title>
     <link rel="pg-require" href="pinegrow.json" />
+    <style>
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
   </head>
   <body>
     <main>
-      <script type="module" data-pg-name="Standard Vue App" id="hero-app">
-        import {
-          createApp,
-          ref,
-        } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+      <script type="module" data-pg-name="App-Hero" id="hero-app">
+        import { createApp } from 'https://unpkg.com/petite-vue?module'
 
-        const setup = {
-          props: {
-            title: String,
+        const state = {
+          // state exposed to all expressions within v-scope regions
+          count: 0,
+          get oddOrEven() {
+            return this.count % 2 === 0 ? 'even' : 'odd' // computed property
           },
-          data() {
-            return {
-              count: 0,
-            }
+          // methods
+          increment() {
+            this.count++
           },
-          computed: {
-            oddOrEven() {
-              return this.count % 2 === 0 ? 'even' : 'odd'
-            },
-          },
-          methods: {
-            increment() {
-              this.count++
-            },
-            decrement() {
-              this.count--
-            },
+          decrement() {
+            this.count--
           },
         }
 
-        createApp(setup).mount('div#hero-section')
+        createApp(state).mount('div#hero-island')
       </script>
       <div
+        id="hero-island"
+        data-pg-name="Island-Hero"
+        v-scope="{}"
         style="
           padding: 20px;
           margin: 20px;
@@ -51,8 +47,6 @@
           border-width: 2px;
           outline: 1px solid #cccccc;
         "
-        id="hero-section"
-        data-pg-collapsed
       >
         <div
           style="
@@ -65,9 +59,10 @@
         >
           <p style="text-align: center; width: 50%; min-width: 400px">
             Hello, I&apos;m within an island, and the root tag of the island
-            <code>div#hero-section</code> has an exclusive app mounted by
-            <code>script#hero-app</code>. Any sprinkles of interactions within
-            this island are managed by this exclusive app.
+            <code>div#hero-island</code> has an exclusive app mounted by
+            <code>script#hero-app</code>, and marked as a
+            <code>v-scope</code> region. Any sprinkles of interactions within
+            this <code>v-scope</code> region are managed by this exclusive app.
           </p>
         </div>
         <div
@@ -93,29 +88,27 @@
           </button>
           <div style="text-align: left; width: 180px; margin-left: 4px">
             <span>Count is: </span>
-            <span style="width: 30px; display: inline-block; text-align: center"
+            <span
+              v-cloak
+              style="width: 30px; display: inline-block; text-align: center"
               >{{count}}</span
-            ><span>({{oddOrEven}})</span>
+            ><span v-cloak>({{oddOrEven}})</span>
           </div>
         </div>
       </div>
-      <script type="module" data-pg-name="Standard Vue App" id="feature-app">
-        import {
-          createApp,
-          ref,
-        } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
-
-        const setup = {
-          data() {
-            return {
-              msg: 'Happy Life!',
-            }
-          },
+      <script type="module" data-pg-name="App-Feature" id="feature-app">
+        import { createApp } from 'https://unpkg.com/petite-vue?module'
+        const state = {
+          // state exposed to all expressions within v-scope regions
+          msg: 'Happy Life!',
         }
 
-        createApp(setup).mount('div#feature-section')
+        createApp(state).mount('div#feature-island')
       </script>
       <div
+        id="feature-island"
+        data-pg-name="Island-Feature"
+        v-scope="{}"
         style="
           padding: 20px;
           margin: 20px;
@@ -123,8 +116,6 @@
           border-width: 2px;
           outline: 1px solid #cccccc;
         "
-        id="feature-section"
-        data-pg-collapsed
       >
         <div
           style="
@@ -137,9 +128,10 @@
         >
           <p style="text-align: center; width: 50%; min-width: 400px">
             Hello, I&apos;m within an island, and the root tag of the island
-            <code>div#feature-section</code> has an exclusive app mounted by
-            <code>script#feature-app</code>. Any sprinkles of interactions
-            within this island are managed by this exclusive app.
+            <code>div#feature-island</code> has an exclusive app mounted by
+            <code>script#feature-app</code>, and marked as a
+            <code>v-scope</code> region. Any sprinkles of interactions within
+            this <code>v-scope</code> region are managed by this exclusive app.
           </p>
         </div>
         <div
@@ -153,6 +145,7 @@
           "
         >
           <input v-model="msg" style="text-align: center" /><span
+            v-cloak
             style="margin: 8px"
             >{{msg}}</span
           >

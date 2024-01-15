@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Github Commits</title>
+    <link rel="pg-require" href="pinegrow.json" />
+    <style>
+      [v-cloak] {
+        display: none !important;
+      }
+    </style>
+    <style>
+      body {
+        font-family: 'Helvetica', Arial, sans-serif;
+      }
+      a {
+        text-decoration: none;
+        color: #f66;
+      }
+      li {
+        line-height: 1.5em;
+        margin-bottom: 20px;
+      }
+      .author,
+      .date {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <script type="module">
+        import {
+          createApp,
+          reactive,
+        } from 'https://unpkg.com/petite-vue?module'
+
+        const API_URL = `https://api.github.com/repos/TechAkayy/frameworks-lite-for-pinegrow/commits?per_page=10&sha=`
+
+        createApp({
+          branches: ['main', 'next'],
+          currentBranch: 'main',
+          commits: null,
+
+          truncate(v) {
+            const newline = v.indexOf('\n')
+            return newline > 0 ? v.slice(0, newline) : v
+          },
+
+          formatDate(v) {
+            return v.replace(/T|Z/g, ' ')
+          },
+
+          fetchData() {
+            fetch(`${API_URL}${this.currentBranch}`)
+              .then((res) => res.json())
+              .then((data) => {
+                this.commits = data
+              })
+          },
+        }).mount()
+      </script>
+
+      <div v-scope v-effect="fetchData()">
+        <h1>Latest frameworks-lite-for-pinegrow commits</h1>
+        <template v-for="branch in branches">
+          <input
+            type="radio"
+            :id="branch"
+            :value="branch"
+            name="branch"
+            v-model="currentBranch"
+          />
+          <label :for="branch">{{ branch }}</label>
+        </template>
+        <p>TechAkayy/frameworks-lite-for-pinegrow@{{ currentBranch }}</p>
+        <ul v-if="commits?.length">
+          <li v-for="{ html_url, sha, author, commit } in commits">
+            <a :href="html_url" target="_blank" class="commit"
+              >{{ sha.slice(0, 7) }}</a
+            >
+            - <span class="message">{{ truncate(commit.message) }}</span><br />
+            by
+            <span class="author"
+              ><a :href="author.html_url" target="_blank"
+                >{{ commit.author.name }}</a
+              ></span
+            >
+            at <span class="date">{{ formatDate(commit.author.date) }}</span>
+          </li>
+        </ul>
+      </div>
+    </main>
+  </body>
+</html>
