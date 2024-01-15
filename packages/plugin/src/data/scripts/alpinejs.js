@@ -28,7 +28,7 @@ const sampleScope = `<div style="display: flex; margin: 8px; padding: 8px; justi
     </div>
 </div><div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center; flex-direction: column;">
     <input x-model="msg" style="text-align: center;">
-    <span style="margin: 8px;" x-text="msg"></span>
+    <span x-cloak style="margin: 8px;" x-text="msg"></span>
 </div>
 `
 

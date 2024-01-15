@@ -28,15 +28,15 @@ const sampleStateMsg = `const state = {
 const sampleScopeCount = `<div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
         <button v-on:click="decrement" style="margin-left: 4px; margin-right: 4px;">⬇️</button>
         <button v-on:click="increment" style="margin-left: 4px; margin-right: 4px;">⬆️</button>
-        <div style="text-align: left; width: 180px; margin-left: 4px;"><span>Count is: </span><span style="width: 30px; display: inline-block; text-align: center;">{{count}}</span>
-            <span>({{oddOrEven}})</span>
+        <div v-cloak style="text-align: left; width: 180px; margin-left: 4px;"><span>Count is: </span><span style="width: 30px; display: inline-block; text-align: center;">{{count}}</span>
+            <span v-cloak>({{oddOrEven}})</span>
         </div>
     </div>
 `
 
 const sampleScopeMsg = `<div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center; flex-direction: column;">
         <input v-model="msg" style="text-align: center;">
-        <span style="margin: 8px;">{{msg}}</span>
+        <span v-cloak style="margin: 8px;">{{msg}}</span>
     </div>
 `
 
