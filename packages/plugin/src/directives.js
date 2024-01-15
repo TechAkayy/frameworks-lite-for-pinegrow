@@ -450,3 +450,26 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
 }
 
 pinegrow.addEventHandler('on_show_properties', onShowProperties)
+
+const removeCloakTag = (page) => {
+  try {
+    let styleTags = page.activeView
+      .getWindow()
+      .document.querySelectorAll('style')
+
+    for (let i = 0; i < styleTags.length; i++) {
+      const styleTag = styleTags[i]
+      if (
+        styleTag.textContent.includes('[v-cloak]') ||
+        styleTag.textContent.includes('[x-cloak]')
+      ) {
+        styleTag.remove()
+      }
+    }
+  } catch (err) {
+    // console.log(err)
+  }
+}
+
+pinegrow.addEventHandler('on_page_refreshed', removeCloakTag)
+pinegrow.addEventHandler('on_page_loaded', removeCloakTag)
