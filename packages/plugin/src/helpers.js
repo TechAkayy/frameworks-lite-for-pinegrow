@@ -25,7 +25,12 @@ var getCurrentScript = function () {
     return document.currentScript.src
   } else {
     var scripts = document.getElementsByTagName('script')
-    return scripts[scripts.length - 1].src
+    for (let i = 0; i < scripts.length; i++) {
+      const script = scripts[i]
+      if (script.src.includes(config.type)) {
+        return script.src
+      }
+    }
   }
 }
 
