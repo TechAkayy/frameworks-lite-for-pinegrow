@@ -23,8 +23,8 @@ const sampleState = `const globalState = {
 const sampleScope = `<div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;" >
     <button x-on:click="decrement" style="margin-left: 4px; margin-right: 4px;">⬇️</button>
     <button x-on:click="increment" style="margin-left: 4px; margin-right: 4px;">⬆️</button>
-    <div style="text-align: left; width: 180px; margin-left: 4px;"><span>Count is: </span><span style="width: 30px; display: inline-block; text-align: center;" x-text="count"></span>
-        <span x-text="\`(\${oddOrEven})\`"></span>
+    <div style="text-align: left; width: 180px; margin-left: 4px;"><span>Count is: </span><span x-cloak style="width: 30px; display: inline-block; text-align: center;" x-text="count"></span>
+        <span x-cloak x-text="\`(\${oddOrEven})\`"></span>
     </div>
 </div><div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center; flex-direction: column;">
     <input x-model="msg" style="text-align: center;">

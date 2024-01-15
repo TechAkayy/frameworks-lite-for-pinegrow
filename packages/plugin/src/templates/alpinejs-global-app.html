@@ -66,10 +66,11 @@
           <div style="text-align: left; width: 180px; margin-left: 4px">
             <span>Count is: </span>
             <span
+              x-cloak
               style="width: 30px; display: inline-block; text-align: center"
               x-text="count"
             ></span
-            ><span x-text="`(${oddOrEven})`"></span>
+            ><span x-cloak x-text="`(${oddOrEven})`"></span>
           </div>
         </div>
         <div
@@ -83,6 +84,7 @@
           "
         >
           <input x-model="msg" style="text-align: center" /><span
+            x-cloak
             style="margin: 8px"
             x-text="msg"
           ></span>
