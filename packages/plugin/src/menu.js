@@ -1,8 +1,9 @@
-import { framework } from './helpers.js'
+import { framework, dependencyRoot, isExistsAndDirectory } from './helpers.js'
 import { pgFrameworkConfig as config } from './config.js'
 import { frameworks } from './data/index.js'
 import { frameworksLiteState } from './shared-state.js'
 // import { tutorialPanel } from './tutorial-panel.js'
+import { island } from './island/index.js'
 
 // let activeFramework = frameworks[0]
 frameworksLiteState.activeFramework = frameworks[0]
@@ -17,6 +18,69 @@ const $menu = $(`
     <a href="#" class="aadropdown-toggle" data-toggle="aadropdown"><span>Frameworks</span></a>
 </li>
 `)
+
+const copyDir = (src, dest, callback) => {
+  const copy = (copySrc, copyDest) => {
+    fs.readdir(copySrc, (err, list) => {
+      if (err) {
+        callback(err)
+        return
+      }
+      list.forEach((item) => {
+        const ss = path.resolve(copySrc, item)
+        fs.stat(ss, (err, stat) => {
+          if (err) {
+            callback(err)
+          } else {
+            const curSrc = path.resolve(copySrc, item)
+            const curDest = path.resolve(copyDest, item)
+
+            if (stat.isFile()) {
+              // file, copy directly
+              fs.createReadStream(curSrc).pipe(fs.createWriteStream(curDest))
+            } else if (stat.isDirectory()) {
+              // directory, recursively
+              fs.mkdirSync(curDest, { recursive: true })
+              copy(curSrc, curDest)
+            }
+          }
+        })
+      })
+    })
+  }
+
+  fs.access(dest, (err) => {
+    if (err) {
+      // If the target directory does not exist, create it
+      fs.mkdirSync(dest, { recursive: true })
+    }
+    copy(src, dest)
+  })
+}
+
+const addPackages = (projectRoot, dependency) => {
+  const packageFolderName = dependency.packageFolderName
+
+  try {
+    const sourcePackagePath = path.resolve(
+      dependencyRoot,
+      packageFolderName,
+      island.packageRoot,
+    )
+    if (isExistsAndDirectory(sourcePackagePath)) {
+      const destPackagePath = path.resolve(projectRoot, island.packageRoot)
+      if (isExistsAndDirectory(destPackagePath)) {
+        //   pinegrow.showQuickMessage(
+        //     `Frameworks lite: ${dependency.label} package already exists!`,
+        //   )
+        // } else {
+        copyDir(sourcePackagePath, destPackagePath)
+      }
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
 
 const processScriptInjection = (scriptArr) => {
   const page = pinegrow.getSelectedPage()
@@ -405,6 +469,35 @@ const onProjectLoaded = () => {
     menu.add({
       label: `Individual Islands`,
       submenu: addCdnScriptForIndividualIslands,
+    })
+
+    menu.add({
+      type: 'divider',
+    })
+
+    menu.add({
+      type: 'header',
+      label: `How/when to hydrate islands?`,
+    })
+
+    menu.add({
+      label: `Add ${island.label}`,
+      helptext:
+        'Package added to project, and import added to start of body tag.',
+      action: function () {
+        const projectRoot =
+          pinegrow.getCurrentProject() && pinegrow.getCurrentProject().getDir()
+        if (projectRoot) {
+          addPackages(projectRoot, island)
+
+          const scriptArr = island.cdnScripts.globalApp.scriptModuleNoExample
+          processScriptInjection(scriptArr)
+        } else {
+          pinegrow.showQuickMessage(
+            `Frameworks lite: Open a project first. ${island.label} can be added only to Pinegrow projects!`,
+          )
+        }
+      },
     })
 
     menu.add({
