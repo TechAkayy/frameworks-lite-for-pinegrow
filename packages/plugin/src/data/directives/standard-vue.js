@@ -168,6 +168,11 @@ const directives = [
     default_value: 'myFunc()',
   },
   {
+    label: 'v-on:mouseenter',
+    attribute: 'v-on:mouseenter',
+    default_value: 'myFunc()',
+  },
+  {
     label: 'v-on:mouseleave',
     attribute: 'v-on:mouseleave',
     default_value: 'myFunc()',
