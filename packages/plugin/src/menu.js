@@ -169,7 +169,7 @@ const onProjectLoaded = () => {
           type: 'divider',
         },
         {
-          label: 'Auto init (simplest - added to head tag)',
+          label: 'Auto hydrated/init (simplest - added to head)',
           helptext: 'Added to head tag, includes defer and init attributes.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptClassicAutoInit
@@ -184,7 +184,7 @@ const onProjectLoaded = () => {
           label: `App with Script (module) - Recommended`,
         },
         {
-          label: 'Manual init with empty state',
+          label: 'Manually hydrated/init, with empty state',
           helptext: 'Added to start of body tag.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptModuleNoExample
@@ -192,7 +192,7 @@ const onProjectLoaded = () => {
           },
         },
         {
-          label: 'Manual init with state & example',
+          label: 'Manually hydrated/init, with sample state',
           helptext: 'Added to start of body tag.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptModuleWithExample
@@ -207,7 +207,7 @@ const onProjectLoaded = () => {
           label: `App with Script (classic)`,
         },
         {
-          label: 'Manual init with empty state',
+          label: 'Manually hydrated/init, with empty state',
           helptext: 'Added before closing of body tag.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptClassicNoExample
@@ -215,7 +215,7 @@ const onProjectLoaded = () => {
           },
         },
         {
-          label: 'Manual init with state & example',
+          label: 'Manually hydrated/init, with sample state',
           helptext: 'Added before closing of body tag.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptClassicWithExample
@@ -233,7 +233,7 @@ const onProjectLoaded = () => {
           type: 'divider',
         },
         {
-          label: 'Auto init (simplest - added to head tag)',
+          label: 'Auto hydrated/init (simplest - added to head)',
           helptext: 'Added to head tag, includes defer attribute.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptClassicAutoInit
@@ -248,7 +248,7 @@ const onProjectLoaded = () => {
           label: `App with Script (classic)`,
         },
         {
-          label: 'Manual init with empty state',
+          label: 'Manually hydrated/init, with empty state',
           helptext: 'Added before closing of body tag.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptClassicNoExample
@@ -256,7 +256,7 @@ const onProjectLoaded = () => {
           },
         },
         {
-          label: 'Manual init with state & example',
+          label: 'Manually hydrated/init, with sample state',
           helptext: 'Added before closing of body tag.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptClassicWithExample
