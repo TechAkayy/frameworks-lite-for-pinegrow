@@ -6,6 +6,32 @@ const emptyState = `const rootComponent = {
   },
 }`
 
+export const __SLOT2__ = `
+<form>
+  <div class="flex items-center justify-center">
+    <div class="p-1">
+      <input
+        class="appearance-none border px-4 py-2 rounded-full text-gray-600 w-full"
+        type="text"
+        placeholder="Click to select a date"
+        v-model="date"
+        v-datepicker
+      />
+    </div>
+    <div class="p-1">
+      <button
+        href="#"
+        class="bg-primary-600 hover:bg-primary-700 inline-block px-6 py-2 rounded-full text-center text-white"
+        type="button"
+        v-on:click="bookAppointment"
+      >
+        <span class="align-middle">Book An Appointment</span>
+      </button>
+    </div>
+  </div>
+</form>
+`
+
 const sampleStateOptionsApi = `const rootComponent = {
   props: {
     title: String,
@@ -155,49 +181,63 @@ const cdnScripts = {
     pikadayIntegrationsScripts: [
       {
         label: 'Options API',
-        code: `
-import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+        __SLOT1__: `
+<script
+  type="module"
+  data-pg-name="Vue-App-Appointment"
+>
+  import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 
-const rootComponent = {
-  data() {
-    return {
-      date: '', // v-model won't work
-      datePicker: null,
-    }
-  },
+  const rootComponent = {
+    data() {
+      return {
+        date: '', // v-model won't work
+        datePicker: null,
+      }
+    },
 
-  directives: {
-    // enables v-datepicker in template
-    datepicker: {
-        mounted(el, binding) {
+    directives: {
+      // enables v-datepicker in template
+      datepicker: {
+          mounted(el, binding) {
+              binding.instance.addPikaday(el)
+          },
+          mounted(el, binding) {
             binding.instance.addPikaday(el)
-        },
-        mounted(el, binding) {
-          binding.instance.addPikaday(el)
-        },
-    }
-  },
-
-  methods: {
-    addPikaday($el) {
-      this.datePicker = new Pikaday({
-        field: $el,
-        theme: 'dark-theme',
-      })
+          },
+      }
     },
-    bookAppointment() {
-      console.log(this.date) // v-model won't work
-      console.log(this.datePicker.getDate())
-    },
-  },
-}
 
-createApp(rootComponent).mount('div#appointment')
-        `,
+    methods: {
+      addPikaday($el) {
+        this.datePicker = new Pikaday({
+          field: $el,
+          theme: 'dark-theme',
+        })
+      },
+      bookAppointment() {
+        console.log(this.date) // v-model won't work
+        console.log(this.datePicker.getDate())
+      },
+    },
+  }
+
+  createApp(rootComponent).mount('div#appointment')
+</script>
+`,
+        __SLOT2__: `
+<div id="appointment" data-pg-name="Vue-Island-Appointment" class="p-4">
+${__SLOT2__}
+</div>
+`,
       },
       {
         label: 'Composition API',
-        code: `
+        __SLOT1__: `
+<script
+  type="module"
+  data-pg-name="Vue-App-Appointment"
+>
 import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 
 const rootComponent = {
@@ -212,7 +252,7 @@ const rootComponent = {
     }
     const removePikaday = () => {
       datePicker.value = null
-    },
+    }
     const bookAppointment = () => {
       console.log(date.value) // v-model won't work
       console.log(datePicker.value.getDate())
@@ -237,6 +277,12 @@ const rootComponent = {
 }
 
 createApp(rootComponent).mount('div#appointment')
+</script>
+`,
+        __SLOT2__: `
+<div id="appointment" data-pg-name="Vue-Island-Appointment" class="p-4">
+${__SLOT2__}
+</div>
 `,
       },
     ],

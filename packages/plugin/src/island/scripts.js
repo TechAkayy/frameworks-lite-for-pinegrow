@@ -8,10 +8,9 @@ const cdnScripts = {
       },
     ],
   },
-  pikadayIntegrationIsland: [
-    {
-      injectTo: 'body',
-      code: `<is-land data-pg-name="11ty-Island" on:visible>
+  pikadayIntegrationIsland: {
+    injectTo: 'body',
+    code: `<is-land data-pg-name="11ty-Island" on:visible>
   <template data-island>
     <link
       rel="stylesheet"
@@ -132,39 +131,11 @@ const cdnScripts = {
         color: rgb(255 255 255);
       }
     </style>
-    <script
-      type="module"
-      data-pg-name="App-Appointment"
-    >__SLOT__ </script>
+    __SLOT1__
   </template>
-  <div id="appointment" data-pg-name="Island-Appointment" class="p-4">
-    <form>
-      <div class="flex items-center justify-center">
-        <div class="p-1">
-          <input
-            class="appearance-none border px-4 py-2 rounded-full text-gray-600 w-full"
-            type="text"
-            placeholder="Click to select a date"
-            v-model="date"
-            v-datepicker
-          />
-        </div>
-        <div class="p-1">
-          <button
-            href="#"
-            class="bg-primary-600 hover:bg-primary-700 inline-block px-6 py-2 rounded-full text-center text-white"
-            type="button"
-            v-on:click="bookAppointment"
-          >
-            <span class="align-middle">Book An Appointment</span>
-          </button>
-        </div>
-      </div>
-    </form>
-  </div>
+  __SLOT2__
 </is-land>`,
-    },
-  ],
+  },
 }
 
 export { cdnScripts }

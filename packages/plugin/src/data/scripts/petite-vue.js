@@ -1,3 +1,5 @@
+import { __SLOT2__ } from './standard-vue.js'
+
 const emptyState = `const state = {
     // state exposed to all expressions within v-scope regions
   }
@@ -184,37 +186,47 @@ ${sampleScopesForGlobal}`,
     ],
     pikadayIntegrationsScripts: [
       {
-        code: `
-import { createApp } from 'https://unpkg.com/petite-vue?module'
+        __SLOT1__: `
+<script
+  type="module"
+  data-pg-name="Pt-App-Appointment"
+>
+  import { createApp } from 'https://unpkg.com/petite-vue?module'
 
-const state = {
-  // state exposed to all expressions within v-scope regions
-  date: '', // v-model won't work
-  datePicker: null,
-  addPikaday($el) {
-    this.datePicker = new Pikaday({
-      field: $el,
-      theme: 'dark-theme',
-    })
-  },
-  removePikaday() {
-    this.datePicker = null
-  },
-  bookAppointment() {
-    console.log(this.date) // v-model won't work
-    console.log(this.datePicker.getDate())
-  },
-}
-
-const datepickerDirective = (ctx) => {
-  ctx.ctx.scope.addPikaday(ctx.el)
-  return () => {
-    ctx.ctx.scope.removePikaday()
+  const state = {
+    // state exposed to all expressions within v-scope regions
+    date: '', // v-model won't work
+    datePicker: null,
+    addPikaday($el) {
+      this.datePicker = new Pikaday({
+        field: $el,
+        theme: 'dark-theme',
+      })
+    },
+    removePikaday() {
+      this.datePicker = null
+    },
+    bookAppointment() {
+      console.log(this.date) // v-model won't work
+      console.log(this.datePicker.getDate())
+    },
   }
-}
 
-createApp(state).directive('datepicker', datepickerDirective).mount('div#appointment')
-        `,
+  const datepickerDirective = (ctx) => {
+    ctx.ctx.scope.addPikaday(ctx.el)
+    return () => {
+      ctx.ctx.scope.removePikaday()
+    }
+  }
+
+  createApp(state).directive('datepicker', datepickerDirective).mount('div#appointment')
+</script>
+`,
+        __SLOT2__: `
+<div id="appointment" data-pg-name="Pt-Island-Appointment" class="p-4">
+${__SLOT2__}
+</div>
+`,
       },
     ],
   },
