@@ -281,14 +281,14 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
             // fdef.name = "maxHeight", then fieldDefnPropKebabized would be 'max-height'
             // Look for 'max-height'
             var attr = findSingleAttr(fdef.name, pgel)
-            // if (!attr) {
-            //   return
-            // }
+            if (!attr) {
+              return
+            }
 
-            // const content_col = pinegrow.getCollection().getList()
-            // if (content_col.length > 1) {
-            //   return
-            // }
+            const content_col = pinegrow.getCollection().getList()
+            if (content_col.length > 1) {
+              return
+            }
 
             // Remove existing msg if the props panel msg is binded (:msg)
             // if ((!value || value === 'false') && attr) {

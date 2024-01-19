@@ -70,10 +70,10 @@ const addPackages = (projectRoot, dependency) => {
     if (isExistsAndDirectory(sourcePackagePath)) {
       const destPackagePath = path.resolve(projectRoot, island.packageRoot)
       if (isExistsAndDirectory(destPackagePath)) {
-        //   pinegrow.showQuickMessage(
-        //     `Frameworks lite: ${dependency.label} package already exists!`,
-        //   )
-        // } else {
+        pinegrow.showQuickMessage(
+          `Frameworks lite: ${dependency.label} package already exists!`,
+        )
+      } else {
         copyDir(sourcePackagePath, destPackagePath)
       }
     }
@@ -111,7 +111,7 @@ const processScriptInjection = (scriptArr) => {
         format_html: true,
       })
       pinegrow.showQuickMessage(
-        `Frameworks lite: Added script for ${frameworksLiteState.activeFramework.label} at ${scriptObj.injectTo} !`,
+        `Frameworks lite: Added tags for ${frameworksLiteState.activeFramework.label} at ${scriptObj.injectTo} !`,
       )
     })
 
@@ -122,6 +122,40 @@ const processScriptInjection = (scriptArr) => {
     }
   } else {
     pinegrow.showQuickMessage('Frameworks lite: Open a page first!')
+  }
+}
+
+const addCloakTag = (attribute) => {
+  try {
+    const page = pinegrow.getSelectedPage()
+    if (!page) {
+      return
+    }
+
+    const styleTags = page.sourceNode.find('style')
+    for (let i = 0; i < styleTags.length; i++) {
+      const styleTag = styleTags[i]
+      const vCloakExists = styleTag.content.includes('[v-cloak]')
+      const xCloakExists = styleTag.content.includes('[x-cloak]')
+
+      if (vCloakExists || xCloakExists) {
+        pinegrow.showQuickMessage(
+          `Frameworks lite: ${
+            vCloakExists ? 'v-cloak' : 'x-cloak'
+          }'s inline style already exists.`,
+        )
+        return
+      }
+    }
+
+    processScriptInjection([
+      {
+        injectTo: 'head',
+        code: `<style>[${attribute}] { display: none !important; } </style>`,
+      },
+    ])
+  } catch (err) {
+    console.log(err)
   }
 }
 
@@ -474,6 +508,33 @@ const onProjectLoaded = () => {
     menu.add({
       type: 'divider',
     })
+
+    const cloakAttr =
+      frameworksLiteState.activeFramework.name === 'alpinejs'
+        ? 'x-cloak'
+        : frameworksLiteState.activeFramework.name.includes('vue')
+        ? 'v-cloak'
+        : ''
+
+    if (cloakAttr) {
+      menu.add({
+        type: 'header',
+        label: `Cloak inline style`,
+      })
+
+      menu.add({
+        label: `Add ${cloakAttr} inline style`,
+        action: function () {
+          addCloakTag(cloakAttr)
+          return
+        },
+        helptext: 'Added to head tag',
+      })
+
+      menu.add({
+        type: 'divider',
+      })
+    }
 
     menu.add({
       type: 'header',

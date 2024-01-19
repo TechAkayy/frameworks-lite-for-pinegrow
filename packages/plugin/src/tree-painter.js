@@ -14,7 +14,8 @@ f.getActionTag = function (pgel, for_search, short) {
     if (
       a.name.startsWith('v-') ||
       a.name.startsWith('x-') ||
-      a.name.startsWith('data-island')
+      a.name.startsWith('data-island') ||
+      a.name.startsWith('on:')
     ) {
       if (a.name === 'v-slot') {
         at += `<span title="Named slot #${a.value}" style="margin-right:6px;">#${a.value}</span>`
