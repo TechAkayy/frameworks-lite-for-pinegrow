@@ -75,6 +75,7 @@ const addPackages = (projectRoot, dependency) => {
         )
       } else {
         copyDir(sourcePackagePath, destPackagePath)
+        pinegrow.refreshCurrentProject(null, false, true /* no restore tags */)
       }
     }
   } catch (err) {
