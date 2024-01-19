@@ -55,6 +55,8 @@ export const pgFrameworkConfig = {
 
   //Add a website "https://techakayy.com" or mailto "mailto:info@techakayy.com" link for redirect on author name click
   author_link: 'http://github.com/techakayy/frameworks-lite-for-pinegrow',
+  video_tutorial:
+    'https://github.com/techakayy/frameworks-lite-for-pinegrow#frameworks-lite-for-pinegrow---a-community-plugin',
 
   // get pgf_type() {
   // 	return pgf[this.type]

@@ -115,11 +115,9 @@ const processScriptInjection = (scriptArr) => {
       )
     })
 
-    if (frameworksLiteState.autoReloadOnUpdate) {
-      setTimeout(() => {
-        page.refresh()
-      }, 500)
-    }
+    setTimeout(() => {
+      page.refresh()
+    }, 500)
   } else {
     pinegrow.showQuickMessage('Frameworks lite: Open a page first!')
   }
@@ -206,6 +204,17 @@ const onProjectLoaded = () => {
   var menuView = new PgDropdownMenu($('.menu-addon'))
 
   menuView.onGetActions = function (menu) {
+    menu.add({
+      label: `Video Tutorial & Docs`,
+      action: function () {
+        pinegrow.openExternalUrl(config.video_tutorial)
+      },
+    })
+
+    menu.add({
+      type: 'divider',
+    })
+
     frameworks_menu.forEach((framework) => {
       menu.add(framework)
     })
@@ -250,7 +259,7 @@ const onProjectLoaded = () => {
     // Add cdn script
     menu.add({
       type: 'header',
-      label: `Add CDN Script (choose one of below two options, don't mix them up)`,
+      label: `Progressive Enhancement (choose between either to add cdn scripts, don't mix them up)`,
     })
 
     const cdnScripts = frameworksLiteState.activeFramework.cdnScripts
@@ -386,7 +395,7 @@ const onProjectLoaded = () => {
     }
 
     menu.add({
-      label: `Global App`,
+      label: `Global App (full hydration)`,
       submenu: addCdnScriptForglobalApp,
     })
 
@@ -501,7 +510,7 @@ const onProjectLoaded = () => {
     }
 
     menu.add({
-      label: `Individual Islands`,
+      label: `Islands Architecture (partial hydration)`,
       submenu: addCdnScriptForIndividualIslands,
     })
 
@@ -538,11 +547,20 @@ const onProjectLoaded = () => {
 
     menu.add({
       type: 'header',
-      label: `How/when to hydrate islands?`,
+      label: `Progressive Hydration - How/when to hydrate islands (advanced)`,
     })
 
     menu.add({
-      label: `Add ${island.label}`,
+      label: `Learn ${island.label} (official docs)`,
+      action: function () {
+        pinegrow.openExternalUrl(
+          'https://www.11ty.dev/docs/plugins/partial-hydration/',
+        )
+      },
+    })
+
+    menu.add({
+      label: `Add ${island.label} package`,
       helptext:
         'Package added to project, and import added to start of body tag.',
       action: function () {
@@ -559,6 +577,31 @@ const onProjectLoaded = () => {
           )
         }
       },
+    })
+
+    const pikadayIntegrationIsland = island.cdnScripts.pikadayIntegrationIsland
+    const pikadayIntegrationsScripts =
+      frameworksLiteState.activeFramework.cdnScripts.islands
+        ?.pikadayIntegrationsScripts
+
+    pikadayIntegrationsScripts?.forEach((pikadayIntegrationsScript) => {
+      menu.add({
+        label: `Add Pikaday Integration${
+          pikadayIntegrationsScript.label
+            ? ` (${pikadayIntegrationsScript.label})`
+            : ''
+        }`,
+        helptext:
+          'Added before closing of body tag, hydrates when entering viewport.',
+        action: function () {
+          pikadayIntegrationIsland[0].code =
+            pikadayIntegrationIsland[0].code.replace(
+              '__SLOT__',
+              pikadayIntegrationsScript.code,
+            )
+          processScriptInjection(pikadayIntegrationIsland)
+        },
+      })
     })
 
     menu.add({
@@ -615,17 +658,6 @@ const onProjectLoaded = () => {
     //     tutorialPanel.openPanel()
     //   },
     // })
-
-    menu.add({
-      type: 'divider',
-    })
-
-    menu.add({
-      label: `Github Docs`,
-      action: function () {
-        pinegrow.openExternalUrl(config.author_link)
-      },
-    })
   }
 }
 

@@ -5,7 +5,7 @@ const emptyState = `const state = {
 
 const sampleStateCount = `const state = {
     // state exposed to all expressions within v-scope regions
-    count: 0, 
+    count: 0,
     get oddOrEven() { 
         return this.count%2===0? 'even' : 'odd' // computed property
     },
@@ -180,6 +180,41 @@ ${sampleScopesForGlobal}`,
       {
         injectTo: 'body',
         code: `${scriptIslandsClassic_Apps}`,
+      },
+    ],
+    pikadayIntegrationsScripts: [
+      {
+        code: `
+import { createApp } from 'https://unpkg.com/petite-vue?module'
+
+const state = {
+  // state exposed to all expressions within v-scope regions
+  date: '', 
+  datePicker: null,
+  addPikaday($el) {
+    this.datePicker = new Pikaday({
+      field: $el,
+      theme: 'dark-theme',
+    })
+  },
+  removePikaday() {
+    this.datePicker = null
+  },
+  bookAppointment() {
+    console.log(this.date) 
+    console.log(this.datePicker.getDate())
+  },
+}
+
+const datepickerDirective = (ctx) => {
+  ctx.ctx.scope.addPikaday(ctx.el)
+  return () => {
+    ctx.ctx.scope.removePikaday()
+  }
+}
+
+createApp(state).directive('datepicker', datepickerDirective).mount('div#appointment')
+        `,
       },
     ],
   },

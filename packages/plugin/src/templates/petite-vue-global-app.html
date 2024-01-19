@@ -15,7 +15,7 @@
     </style>
   </head>
   <body>
-    <script type="module" data-pg-name="App-Petite Vue">
+    <script type="module" data-pg-name="Pt-App">
       import { createApp } from 'https://unpkg.com/petite-vue?module'
       const state = {
         // state exposed to all expressions within v-scope regions
@@ -35,7 +35,7 @@
       createApp(state).mount()
     </script>
     <div
-      data-pg-name="Scope-Petite Vue"
+      data-pg-name="Pt-Scope-Counter"
       v-scope="{ msg: 'Happy Life!' }"
       style="
         padding: 20px;
@@ -85,7 +85,8 @@
           <span>Count is: </span>
           <span style="width: 30px; display: inline-block; text-align: center"
             >{{count}}</span
-          ><span v-cloak>({{oddOrEven}})</span>
+          >
+          <span v-cloak>({{oddOrEven}})</span>
         </div>
       </div>
       <div
@@ -98,11 +99,8 @@
           flex-direction: column;
         "
       >
-        <input v-model="msg" style="text-align: center" /><span
-          v-cloak
-          style="margin: 8px"
-          >{{msg}}</span
-        >
+        <input v-model="msg" style="text-align: center" />
+        <span v-cloak style="margin: 8px">{{msg}}</span>
       </div>
     </div>
     <main></main>

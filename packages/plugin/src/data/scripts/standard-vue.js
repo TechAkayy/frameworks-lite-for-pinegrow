@@ -6,34 +6,53 @@ const emptyState = `const rootComponent = {
   },
 }`
 
-const sampleStateCount = `const rootComponent = {
+const sampleStateOptionsApi = `const rootComponent = {
   props: {
     title: String,
   },
   data() {
     return {
-      count: 0
+      count: 0,
+      msg: 'Happy Life!',
     }
   },
   computed: {
     oddOrEven() {
-      return this.count%2===0? 'even' : 'odd'
-    }
+      return this.count % 2 === 0 ? 'even' : 'odd'
+    },
   },
   methods: {
     increment() {
       this.count++
     },
     decrement() {
-        this.count--
-    }
-  }
+      this.count--
+    },
+  },
 }`
 
-const sampleStateMsg = `const rootComponent = {
-  data() {
+const sampleStateCompositionApi = `const rootComponent = {
+  setup(props) {
+    const { title } = toRefs(props) // turn 'props' into an object of refs, then destructure
+    // console.log(title.value) // 'title' is a ref that tracks 'props.title'
+    const count = ref(0)
+    const msg = ref('Happy Life!')
+    const oddOrEven = computed(() => {
+      return count.value % 2 === 0 ? 'even' : 'odd'
+    })
+    const increment = () => {
+      count.value++
+    }
+    const decrement = () => {
+      count.value--
+    }
     return {
-      msg: 'Happy Life!',
+      title,
+      count,
+      msg,
+      oddOrEven,
+      increment,
+      decrement,
     }
   },
 }`
@@ -56,7 +75,7 @@ const sampleScopeMsg = `<div style="display: flex; margin: 8px; padding: 8px; ju
 const scriptIslandsModule = `<script type="module" data-pg-name="App-Hero" id="hero-app">
   import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 
-  ${sampleStateCount}
+  ${sampleStateOptionsApi}
 
   createApp(rootComponent).mount('div#hero-island')
 </script>
@@ -67,9 +86,9 @@ const scriptIslandsModule = `<script type="module" data-pg-name="App-Hero" id="h
   ${sampleScopeCount}
 </div>
 <script type="module" data-pg-name="App-Feature" id="feature-app">
-  import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+  import { createApp, ref, computed, toRefs } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 
-  ${sampleStateMsg}
+  ${sampleStateCompositionApi}
 
   createApp(rootComponent).mount('div#feature-island')
 </script>
@@ -84,14 +103,17 @@ const scriptIslandsClassic_Apps = `<script src="https://unpkg.com/vue@3/dist/vue
 <script id="hero-app" data-pg-name="App-Hero">
   var { createApp } = Vue
 
-  ${sampleStateCount.replace('const rootComponent', 'var rootComponent')}
+  ${sampleStateOptionsApi.replace('const rootComponent', 'var rootComponent')}
 
   createApp(rootComponent).mount('div#hero-island')
 </script>
 <script id="feature-app" data-pg-name="App-Feature">
   var { createApp } = Vue
 
-  ${sampleStateMsg.replace('const rootComponent', 'var rootComponent')}
+  ${sampleStateCompositionApi.replace(
+    'const rootComponent',
+    'var rootComponent',
+  )}
 
   createApp(rootComponent).mount('div#feature-island')
 </script>`
@@ -128,6 +150,94 @@ const cdnScripts = {
       {
         injectTo: 'body',
         code: `${scriptIslandsClassic_Apps}`,
+      },
+    ],
+    pikadayIntegrationsScripts: [
+      {
+        label: 'Options API',
+        code: `
+import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+const rootComponent = {
+  data() {
+    return {
+      date: '',
+      datePicker: null,
+    }
+  },
+
+  directives: {
+    // enables v-datepicker in template
+    datepicker: {
+        mounted(el, binding) {
+            binding.instance.addPikaday(el)
+        },
+        mounted(el, binding) {
+          binding.instance.addPikaday(el)
+        },
+    }
+  },
+
+  methods: {
+    addPikaday($el) {
+      this.datePicker = new Pikaday({
+        field: $el,
+        theme: 'dark-theme',
+      })
+    },
+    bookAppointment() {
+      console.log(this.date) 
+      console.log(this.datePicker.getDate())
+    },
+  },
+}
+
+createApp(rootComponent).mount('div#appointment')
+        `,
+      },
+      {
+        label: 'Composition API',
+        code: `
+import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+const rootComponent = {
+  setup() {
+    const date = ref('') 
+    const datePicker = ref(null)
+    const addPikaday = ($el) => {
+      datePicker.value = new Pikaday({
+        field: $el,
+        theme: 'dark-theme',
+      })
+    }
+    const removePikaday = () => {
+      datePicker.value = null
+    },
+    const bookAppointment = () => {
+      console.log(date.value) 
+      console.log(datePicker.value.getDate())
+    }
+    return {
+      date,
+      addPikaday,
+      bookAppointment,
+    }
+  },
+  directives: {
+    // enables v-datepicker in template
+    datepicker: {
+      mounted(el, binding) {
+        binding.instance.addPikaday(el)
+      },
+      unmounted() {
+        binding.instance.removePikaday()
+      },
+    }
+  },
+}
+
+createApp(rootComponent).mount('div#appointment')
+`,
       },
     ],
   },
