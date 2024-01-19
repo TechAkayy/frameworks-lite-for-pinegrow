@@ -72,27 +72,27 @@ const sampleScopeMsg = `<div style="display: flex; margin: 8px; padding: 8px; ju
   </div>
 `
 
-const scriptIslandsModule = `<script type="module" data-pg-name="App-Hero" id="hero-app">
+const scriptIslandsModule = `<script type="module" data-pg-name="Vue-App-Hero" id="hero-app">
   import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 
   ${sampleStateOptionsApi}
 
   createApp(rootComponent).mount('div#hero-island')
 </script>
-<div id="hero-island" data-pg-name="Island-Hero" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
+<div id="hero-island" data-pg-name="Vue-Island-Hero" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
   <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
       <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#hero-island</code> has an exclusive app mounted by <code>script#hero-app</code>. Any sprinkles of interactions within this island are managed by this exclusive app.</p>
   </div>
   ${sampleScopeCount}
 </div>
-<script type="module" data-pg-name="App-Feature" id="feature-app">
+<script type="module" data-pg-name="Vue-App-Feature" id="feature-app">
   import { createApp, ref, computed, toRefs } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 
   ${sampleStateCompositionApi}
 
   createApp(rootComponent).mount('div#feature-island')
 </script>
-<div id="feature-island" data-pg-name="Island-Feature" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
+<div id="feature-island" data-pg-name="Vue-Island-Feature" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
   <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
       <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#feature-island</code> has an exclusive app mounted by <code>script#feature-app</code>. Any sprinkles of interactions within this island are managed by this exclusive app.</p>
   </div>
@@ -100,14 +100,14 @@ const scriptIslandsModule = `<script type="module" data-pg-name="App-Hero" id="h
 </div>`
 
 const scriptIslandsClassic_Apps = `<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<script id="hero-app" data-pg-name="App-Hero">
+<script id="hero-app" data-pg-name="Vue-App-Hero">
   var { createApp } = Vue
 
   ${sampleStateOptionsApi.replace('const rootComponent', 'var rootComponent')}
 
   createApp(rootComponent).mount('div#hero-island')
 </script>
-<script id="feature-app" data-pg-name="App-Feature">
+<script id="feature-app" data-pg-name="Vue-App-Feature">
   var { createApp } = Vue
 
   ${sampleStateCompositionApi.replace(
@@ -118,13 +118,13 @@ const scriptIslandsClassic_Apps = `<script src="https://unpkg.com/vue@3/dist/vue
   createApp(rootComponent).mount('div#feature-island')
 </script>`
 
-const scriptIslandsClassic_Scopes = `<div id="hero-island" data-pg-name="Island-Hero" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
+const scriptIslandsClassic_Scopes = `<div id="hero-island" data-pg-name="Vue-Island-Hero" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
     <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
         <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#hero-island</code> has an exclusive app mounted by <code>script#hero-app</code>. Any sprinkles of interactions within this island are managed by this exclusive app.</p>
     </div>
     ${sampleScopeCount}
 </div>
-<div id="feature-island" data-pg-name="Island-Feature" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
+<div id="feature-island" data-pg-name="Vue-Island-Feature" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
     <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
         <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#feature-island</code> has an exclusive app mounted by <code>script#feature-app</code>. Any sprinkles of interactions within this island are managed by this exclusive app.</p>
     </div>

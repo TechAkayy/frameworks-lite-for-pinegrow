@@ -583,6 +583,7 @@ const onProjectLoaded = () => {
     const pikadayIntegrationsScripts =
       frameworksLiteState.activeFramework.cdnScripts.islands
         ?.pikadayIntegrationsScripts
+    const activeFxPrefix = frameworksLiteState.activeFramework.prefix || ''
 
     pikadayIntegrationsScripts?.forEach((pikadayIntegrationsScript) => {
       menu.add({
@@ -594,10 +595,12 @@ const onProjectLoaded = () => {
         helptext:
           'Added before closing of body tag, hydrates when entering viewport.',
         action: function () {
-          pikadayIntegrationIsland[0].code =
-            pikadayIntegrationIsland[0].code.replace(
-              '__SLOT__',
-              pikadayIntegrationsScript.code,
+          pikadayIntegrationIsland[0].code = pikadayIntegrationIsland[0].code
+            .replace('__SLOT__', pikadayIntegrationsScript.code)
+            .replace('App-Appointment', `${activeFxPrefix}-App-Appointment`)
+            .replace(
+              'Island-Appointment',
+              `${activeFxPrefix}-Island-Appointment`,
             )
           processScriptInjection(pikadayIntegrationIsland)
         },

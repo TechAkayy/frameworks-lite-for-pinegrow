@@ -4,14 +4,14 @@ const cdnScripts = {
     scriptModuleNoExample: [
       {
         injectTo: 'body-prepend',
-        code: `<script type="module" src="/@11ty/is-land/is-land.js" data-pg-name="App-11ty-Island"></script>`,
+        code: `<script type="module" src="/@11ty/is-land/is-land.js" data-pg-name="11ty-Island"></script>`,
       },
     ],
   },
   pikadayIntegrationIsland: [
     {
       injectTo: 'body',
-      code: `<is-land data-pg-name="Island-Appointment" on:visible>
+      code: `<is-land data-pg-name="11ty-Island-Appointment" on:visible>
   <template data-island>
     <link
       rel="stylesheet"
@@ -141,7 +141,7 @@ const cdnScripts = {
       data-pg-name="App-Appointment"
     >__SLOT__ </script>
   </template>
-  <div id="appointment" class="p-4">
+  <div id="appointment" data-pg-name="Island-Appointment" class="p-4">
     <form>
       <div class="flex items-center justify-center">
         <div class="p-1">

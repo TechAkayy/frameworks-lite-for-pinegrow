@@ -40,7 +40,7 @@ const sampleScopesForGlobal = `<div x-data="state" style="padding: 20px; margin:
 </div>`
 
 const scriptClassicGlobal = (withState = false) => {
-  return `<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" data-pg-name="App-Alpinejs"></script>
+  return `<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" data-pg-name="Alpinejs-App"></script>
 <script>
   ${withState ? sampleState : emptyState}
   document.addEventListener('alpine:init', () => {
@@ -73,7 +73,7 @@ const cdnScripts = {
     scriptClassicAutoInit: [
       {
         injectTo: 'head',
-        code: `<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" data-pg-name="App-Alpinejs"></script>`,
+        code: `<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" data-pg-name="Alpinejs-App"></script>`,
       },
     ],
   },

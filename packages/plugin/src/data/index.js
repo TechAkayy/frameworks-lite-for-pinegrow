@@ -10,6 +10,7 @@ export const frameworks = [
   {
     name: 'petite-vue',
     label: 'Petite Vue',
+    prefix: 'Pt',
     directives: petiteVueDirectives,
     cdnScripts: petiteVueInjectScripts,
     helptext: `Petite-Vue is DOM-based (doesn't use Virtual-DOM like Standard Vue), small, and optimized for progressive enhancement.`,
@@ -17,6 +18,7 @@ export const frameworks = [
   {
     name: 'alpinejs',
     label: 'Alpinejs',
+    prefix: 'Alpinejs',
     directives: alpinejsDirectives,
     cdnScripts: alpinejsInjectScripts,
     helptext:
@@ -25,6 +27,7 @@ export const frameworks = [
   {
     name: 'standard-vue',
     label: 'Standard Vue',
+    prefix: 'Vue',
     directives: standardVueDirectives,
     cdnScripts: standardVueInjectScripts,
     helptext: `Unlike Petite-Vue, Standard-Vue ships a template compiler, uses a Virtual-DOM, has vue-devtools support, optimized for next-level progressive enhancement.`,
