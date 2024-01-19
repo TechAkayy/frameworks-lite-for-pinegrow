@@ -189,7 +189,7 @@ import { createApp } from 'https://unpkg.com/petite-vue?module'
 
 const state = {
   // state exposed to all expressions within v-scope regions
-  date: '', 
+  date: '', // v-model won't work
   datePicker: null,
   addPikaday($el) {
     this.datePicker = new Pikaday({
@@ -201,7 +201,7 @@ const state = {
     this.datePicker = null
   },
   bookAppointment() {
-    console.log(this.date) 
+    console.log(this.date) // v-model won't work
     console.log(this.datePicker.getDate())
   },
 }

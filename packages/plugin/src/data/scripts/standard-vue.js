@@ -161,7 +161,7 @@ import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 const rootComponent = {
   data() {
     return {
-      date: '',
+      date: '', // v-model won't work
       datePicker: null,
     }
   },
@@ -186,7 +186,7 @@ const rootComponent = {
       })
     },
     bookAppointment() {
-      console.log(this.date) 
+      console.log(this.date) // v-model won't work
       console.log(this.datePicker.getDate())
     },
   },
@@ -202,7 +202,7 @@ import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 
 const rootComponent = {
   setup() {
-    const date = ref('') 
+    const date = ref('') // v-model won't work
     const datePicker = ref(null)
     const addPikaday = ($el) => {
       datePicker.value = new Pikaday({
@@ -214,7 +214,7 @@ const rootComponent = {
       datePicker.value = null
     },
     const bookAppointment = () => {
-      console.log(date.value) 
+      console.log(date.value) // v-model won't work
       console.log(datePicker.value.getDate())
     }
     return {

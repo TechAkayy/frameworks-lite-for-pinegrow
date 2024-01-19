@@ -551,15 +551,6 @@ const onProjectLoaded = () => {
     })
 
     menu.add({
-      label: `Learn ${island.label} (official docs)`,
-      action: function () {
-        pinegrow.openExternalUrl(
-          'https://www.11ty.dev/docs/plugins/partial-hydration/',
-        )
-      },
-    })
-
-    menu.add({
       label: `Add ${island.label} package`,
       helptext:
         'Package added to project, and import added to start of body tag.',
@@ -583,7 +574,6 @@ const onProjectLoaded = () => {
     const pikadayIntegrationsScripts =
       frameworksLiteState.activeFramework.cdnScripts.islands
         ?.pikadayIntegrationsScripts
-    const activeFxPrefix = frameworksLiteState.activeFramework.prefix || ''
 
     pikadayIntegrationsScripts?.forEach((pikadayIntegrationsScript) => {
       menu.add({
@@ -595,16 +585,30 @@ const onProjectLoaded = () => {
         helptext:
           'Added before closing of body tag, hydrates when entering viewport.',
         action: function () {
+          const activeFxPrefix =
+            frameworksLiteState.activeFramework.prefix || ''
           pikadayIntegrationIsland[0].code = pikadayIntegrationIsland[0].code
             .replace('__SLOT__', pikadayIntegrationsScript.code)
-            .replace('App-Appointment', `${activeFxPrefix}-App-Appointment`)
             .replace(
-              'Island-Appointment',
-              `${activeFxPrefix}-Island-Appointment`,
+              'data-pg-name="App-Appointment"',
+              `data-pg-name="${activeFxPrefix}-App-Appointment"`,
+            )
+            .replace(
+              'data-pg-name="Island-Appointment"',
+              `data-pg-name="${activeFxPrefix}-Island-Appointment"`,
             )
           processScriptInjection(pikadayIntegrationIsland)
         },
       })
+    })
+
+    menu.add({
+      label: `Learn ${island.label} (official docs)`,
+      action: function () {
+        pinegrow.openExternalUrl(
+          'https://www.11ty.dev/docs/plugins/partial-hydration/',
+        )
+      },
     })
 
     menu.add({

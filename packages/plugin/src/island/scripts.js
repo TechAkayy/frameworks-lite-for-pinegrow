@@ -4,14 +4,14 @@ const cdnScripts = {
     scriptModuleNoExample: [
       {
         injectTo: 'body-prepend',
-        code: `<script type="module" src="/@11ty/is-land/is-land.js" data-pg-name="11ty-Island"></script>`,
+        code: `<script type="module" src="/@11ty/is-land/is-land.js" data-pg-name="11ty-Package"></script>`,
       },
     ],
   },
   pikadayIntegrationIsland: [
     {
       injectTo: 'body',
-      code: `<is-land data-pg-name="11ty-Island-Appointment" on:visible>
+      code: `<is-land data-pg-name="11ty-Island" on:visible>
   <template data-island>
     <link
       rel="stylesheet"
@@ -99,10 +99,6 @@ const cdnScripts = {
       .border {
         border-width: 1px;
       }
-      .px-5 {
-        padding-left: 1.25rem;
-        padding-right: 1.25rem;
-      }
       .py-2 {
         padding-top: 0.5rem;
         padding-bottom: 0.5rem;
@@ -146,7 +142,7 @@ const cdnScripts = {
       <div class="flex items-center justify-center">
         <div class="p-1">
           <input
-            class="appearance-none border px-5 py-2 rounded-full text-gray-600 w-full"
+            class="appearance-none border px-4 py-2 rounded-full text-gray-600 w-full"
             type="text"
             placeholder="Click to select a date"
             v-model="date"
