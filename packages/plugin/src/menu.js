@@ -75,7 +75,14 @@ const addPackages = (projectRoot, dependency) => {
         )
       } else {
         copyDir(sourcePackagePath, destPackagePath)
-        pinegrow.refreshCurrentProject(null, false, true /* no restore tags */)
+        setTimeout(() => {
+          // Delay refresh just to make sure any other file changes are included.
+          pinegrow.refreshCurrentProject(
+            null,
+            false,
+            true /* no restore tags */,
+          )
+        }, 1000)
       }
     }
   } catch (err) {

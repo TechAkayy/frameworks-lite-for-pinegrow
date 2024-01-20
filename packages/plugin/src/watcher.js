@@ -1,3 +1,5 @@
+// Unused
+
 import chokidar from 'chokidar'
 
 let projectWatcher, lastProjectRefresh
@@ -15,7 +17,10 @@ const watchProject = () => {
 
     if (!prevTimeStamp || currentTimeStamp - prevTimeStamp > 2000) {
       lastProjectRefresh = currentTimeStamp
-      pinegrow.refreshCurrentProject(null, false, true /* no restore tags */)
+      setTimeout(() => {
+        // Delay refresh just to make sure any other file changes are included.
+        pinegrow.refreshCurrentProject(null, false, true /* no restore tags */)
+      }, 1000)
     }
   }
 
