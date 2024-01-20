@@ -1,3 +1,5 @@
+import { __SLOT2__ } from './standard-vue.js'
+
 const emptyState = `const globalState = {
   // state exposed to all expressions across the page
 }
@@ -40,7 +42,7 @@ const sampleScopesForGlobal = `<div x-data="state" style="padding: 20px; margin:
 </div>`
 
 const scriptClassicGlobal = (withState = false) => {
-  return `<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" data-pg-name="App-Alpinejs"></script>
+  return `<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" data-pg-name="Alpinejs-App"></script>
 <script>
   ${withState ? sampleState : emptyState}
   document.addEventListener('alpine:init', () => {
@@ -73,7 +75,57 @@ const cdnScripts = {
     scriptClassicAutoInit: [
       {
         injectTo: 'head',
-        code: `<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" data-pg-name="App-Alpinejs"></script>`,
+        code: `<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" data-pg-name="Alpinejs-App"></script>`,
+      },
+    ],
+  },
+  islands: {
+    pikadayIntegrationsScripts: [
+      {
+        __SLOT1__: `
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<script
+  type="module"
+  data-pg-name="Alpinejs-App-Appointment"
+>
+const globalState = {
+  date: '', // x-model won't work
+  datePicker: null,
+  addPikaday($el) {
+    this.datePicker = new Pikaday({
+      field: $el,
+      theme: 'dark-theme',
+    })
+  },
+  removePikaday() {
+    this.datePicker = null
+  },
+  bookAppointment() {
+    console.log(this.date) // x-model won't work
+    console.log(this.datePicker.getDate())
+  },
+}
+
+const datepickerDirective = (el, {}, {cleanup}) => {
+  globalState.addPikaday(el)
+  cleanup(() => globalState.removePikaday())
+}
+
+document.addEventListener('alpine:init', () => {
+  Alpine.data('state', () => globalState)
+  Alpine.directive('datepicker', datepickerDirective)
+})
+</script>
+`,
+        __SLOT2__: `
+<div
+  x-data="state"
+  id="appointment"
+  data-pg-name="Alpinejs-Island-Appointment"
+  class="p-4">
+${__SLOT2__.replaceAll('v-', 'x-')}
+</div>
+`,
       },
     ],
   },

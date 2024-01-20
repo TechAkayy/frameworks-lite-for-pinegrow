@@ -69,8 +69,8 @@
               x-cloak
               style="width: 30px; display: inline-block; text-align: center"
               x-text="count"
-            ></span
-            ><span x-cloak x-text="`(${oddOrEven})`"></span>
+            ></span>
+            <span x-cloak x-text="`(${oddOrEven})`"></span>
           </div>
         </div>
         <div
@@ -83,18 +83,15 @@
             flex-direction: column;
           "
         >
-          <input x-model="msg" style="text-align: center" /><span
-            x-cloak
-            style="margin: 8px"
-            x-text="msg"
-          ></span>
+          <input x-model="msg" style="text-align: center" />
+          <span x-cloak style="margin: 8px" x-text="msg"></span>
         </div>
       </div>
     </main>
     <script
       defer
       src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
-      data-pg-name="App-Alpinejs"
+      data-pg-name="Alpinejs-App"
     ></script>
     <script>
       const globalState = {

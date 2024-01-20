@@ -11,7 +11,12 @@ f.getActionTag = function (pgel, for_search, short) {
   var v_slot_done = false
 
   pgel.getAttrList().forEach(function (a) {
-    if (a.name.startsWith('v-') || a.name.startsWith('x-')) {
+    if (
+      a.name.startsWith('v-') ||
+      a.name.startsWith('x-') ||
+      a.name.startsWith('data-island') ||
+      a.name.startsWith('on:')
+    ) {
       if (a.name === 'v-slot') {
         at += `<span title="Named slot #${a.value}" style="margin-right:6px;">#${a.value}</span>`
         v_slot_done = true

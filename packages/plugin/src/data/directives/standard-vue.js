@@ -105,6 +105,11 @@ const directives = [
     default_value: 'true',
   },
   {
+    label: 'v-bind attr',
+    attribute: 'v-bind:attr',
+    default_value: '{}',
+  },
+  {
     label: 'v-bind object',
     attribute: 'v-bind',
     default_value: '{}',
@@ -150,6 +155,11 @@ const directives = [
   {
     label: 'v-on:click.stop',
     attribute: 'v-on:click.stop',
+    default_value: 'myFunc()',
+  },
+  {
+    label: 'v-on:blur',
+    attribute: 'v-on:blur',
     default_value: 'myFunc()',
   },
   {

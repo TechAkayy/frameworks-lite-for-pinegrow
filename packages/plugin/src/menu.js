@@ -1,8 +1,9 @@
-import { framework } from './helpers.js'
+import { framework, dependencyRoot, isExistsAndDirectory } from './helpers.js'
 import { pgFrameworkConfig as config } from './config.js'
 import { frameworks } from './data/index.js'
 import { frameworksLiteState } from './shared-state.js'
 // import { tutorialPanel } from './tutorial-panel.js'
+import { island } from './island/index.js'
 
 // let activeFramework = frameworks[0]
 frameworksLiteState.activeFramework = frameworks[0]
@@ -17,6 +18,77 @@ const $menu = $(`
     <a href="#" class="aadropdown-toggle" data-toggle="aadropdown"><span>Frameworks</span></a>
 </li>
 `)
+
+const copyDir = (src, dest, callback) => {
+  const copy = (copySrc, copyDest) => {
+    fs.readdir(copySrc, (err, list) => {
+      if (err) {
+        callback(err)
+        return
+      }
+      list.forEach((item) => {
+        const ss = path.resolve(copySrc, item)
+        fs.stat(ss, (err, stat) => {
+          if (err) {
+            callback(err)
+          } else {
+            const curSrc = path.resolve(copySrc, item)
+            const curDest = path.resolve(copyDest, item)
+
+            if (stat.isFile()) {
+              // file, copy directly
+              fs.createReadStream(curSrc).pipe(fs.createWriteStream(curDest))
+            } else if (stat.isDirectory()) {
+              // directory, recursively
+              fs.mkdirSync(curDest, { recursive: true })
+              copy(curSrc, curDest)
+            }
+          }
+        })
+      })
+    })
+  }
+
+  fs.access(dest, (err) => {
+    if (err) {
+      // If the target directory does not exist, create it
+      fs.mkdirSync(dest, { recursive: true })
+    }
+    copy(src, dest)
+  })
+}
+
+const addPackages = (projectRoot, dependency) => {
+  const packageFolderName = dependency.packageFolderName
+
+  try {
+    const sourcePackagePath = path.resolve(
+      dependencyRoot,
+      packageFolderName,
+      island.packageRoot,
+    )
+    if (isExistsAndDirectory(sourcePackagePath)) {
+      const destPackagePath = path.resolve(projectRoot, island.packageRoot)
+      if (isExistsAndDirectory(destPackagePath)) {
+        pinegrow.showQuickMessage(
+          `Frameworks lite: ${dependency.label} package already exists!`,
+        )
+      } else {
+        copyDir(sourcePackagePath, destPackagePath)
+        setTimeout(() => {
+          // Delay refresh just to make sure any other file changes are included.
+          pinegrow.refreshCurrentProject(
+            null,
+            false,
+            true /* no restore tags */,
+          )
+        }, 1000)
+      }
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
 
 const processScriptInjection = (scriptArr) => {
   const page = pinegrow.getSelectedPage()
@@ -47,17 +119,49 @@ const processScriptInjection = (scriptArr) => {
         format_html: true,
       })
       pinegrow.showQuickMessage(
-        `Frameworks lite: Added script for ${frameworksLiteState.activeFramework.label} at ${scriptObj.injectTo} !`,
+        `Frameworks lite: Added tags for ${frameworksLiteState.activeFramework.label} at ${scriptObj.injectTo} !`,
       )
     })
 
-    if (frameworksLiteState.autoReloadOnUpdate) {
-      setTimeout(() => {
-        page.refresh()
-      }, 500)
-    }
+    setTimeout(() => {
+      page.refresh()
+    }, 500)
   } else {
     pinegrow.showQuickMessage('Frameworks lite: Open a page first!')
+  }
+}
+
+const addCloakTag = (attribute) => {
+  try {
+    const page = pinegrow.getSelectedPage()
+    if (!page) {
+      return
+    }
+
+    const styleTags = page.sourceNode.find('style')
+    for (let i = 0; i < styleTags.length; i++) {
+      const styleTag = styleTags[i]
+      const vCloakExists = styleTag.content.includes('[v-cloak]')
+      const xCloakExists = styleTag.content.includes('[x-cloak]')
+
+      if (vCloakExists || xCloakExists) {
+        pinegrow.showQuickMessage(
+          `Frameworks lite: ${
+            vCloakExists ? 'v-cloak' : 'x-cloak'
+          }'s inline style already exists.`,
+        )
+        return
+      }
+    }
+
+    processScriptInjection([
+      {
+        injectTo: 'head',
+        code: `<style>[${attribute}] { display: none !important; } </style>`,
+      },
+    ])
+  } catch (err) {
+    console.log(err)
   }
 }
 
@@ -108,6 +212,17 @@ const onProjectLoaded = () => {
   var menuView = new PgDropdownMenu($('.menu-addon'))
 
   menuView.onGetActions = function (menu) {
+    menu.add({
+      label: `Video Tutorial & Docs`,
+      action: function () {
+        pinegrow.openExternalUrl(config.video_tutorial)
+      },
+    })
+
+    menu.add({
+      type: 'divider',
+    })
+
     frameworks_menu.forEach((framework) => {
       menu.add(framework)
     })
@@ -152,7 +267,7 @@ const onProjectLoaded = () => {
     // Add cdn script
     menu.add({
       type: 'header',
-      label: `Add CDN Script (choose one of below two options, don't mix them up)`,
+      label: `Progressive Enhancement (choose between either to add cdn scripts, don't mix both)`,
     })
 
     const cdnScripts = frameworksLiteState.activeFramework.cdnScripts
@@ -184,7 +299,7 @@ const onProjectLoaded = () => {
           label: `App with Script (module) - Recommended`,
         },
         {
-          label: 'Manually hydrated/init, with empty state',
+          label: 'Hydrated/init with empty state',
           helptext: 'Added to start of body tag.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptModuleNoExample
@@ -192,7 +307,7 @@ const onProjectLoaded = () => {
           },
         },
         {
-          label: 'Manually hydrated/init, with sample state',
+          label: 'Hydrated/init, with sample state & template',
           helptext: 'Added to start of body tag.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptModuleWithExample
@@ -207,7 +322,7 @@ const onProjectLoaded = () => {
           label: `App with Script (classic)`,
         },
         {
-          label: 'Manually hydrated/init, with empty state',
+          label: 'Hydrated/init with empty state',
           helptext: 'Added before closing of body tag.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptClassicNoExample
@@ -215,7 +330,7 @@ const onProjectLoaded = () => {
           },
         },
         {
-          label: 'Manually hydrated/init, with sample state',
+          label: 'Hydrated/init, with sample state & template',
           helptext: 'Added before closing of body tag.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptClassicWithExample
@@ -248,7 +363,7 @@ const onProjectLoaded = () => {
           label: `App with Script (classic)`,
         },
         {
-          label: 'Manually hydrated/init, with empty state',
+          label: 'Hydrated/init with empty state',
           helptext: 'Added before closing of body tag.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptClassicNoExample
@@ -256,7 +371,7 @@ const onProjectLoaded = () => {
           },
         },
         {
-          label: 'Manually hydrated/init, with sample state',
+          label: 'Hydrated/init, with sample state & template',
           helptext: 'Added before closing of body tag.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptClassicWithExample
@@ -288,7 +403,7 @@ const onProjectLoaded = () => {
     }
 
     menu.add({
-      label: `Global App`,
+      label: `Global App (top-down hydration)`,
       submenu: addCdnScriptForglobalApp,
     })
 
@@ -403,8 +518,130 @@ const onProjectLoaded = () => {
     }
 
     menu.add({
-      label: `Individual Islands`,
+      label: `Islands (independent hydration)`,
       submenu: addCdnScriptForIndividualIslands,
+    })
+
+    menu.add({
+      type: 'divider',
+    })
+
+    const cloakAttr =
+      frameworksLiteState.activeFramework.name === 'alpinejs'
+        ? 'x-cloak'
+        : frameworksLiteState.activeFramework.name.includes('vue')
+        ? 'v-cloak'
+        : ''
+
+    if (cloakAttr) {
+      menu.add({
+        type: 'header',
+        label: `Cloak inline style`,
+      })
+
+      menu.add({
+        label: `Add ${cloakAttr} inline style`,
+        action: function () {
+          addCloakTag(cloakAttr)
+          return
+        },
+        helptext: 'Added to head tag',
+      })
+
+      menu.add({
+        type: 'divider',
+      })
+    }
+
+    menu.add({
+      type: 'header',
+      label: `Progressive Hydration - How/when to hydrate islands (advanced)`,
+    })
+
+    menu.add({
+      label: `Add ${island.label} package`,
+      helptext:
+        'Package added to project, and import added to start of body tag.',
+      action: function () {
+        const projectRoot =
+          pinegrow.getCurrentProject() && pinegrow.getCurrentProject().getDir()
+        if (projectRoot) {
+          addPackages(projectRoot, island)
+
+          const scriptArr = island.cdnScripts.globalApp.scriptModuleNoExample
+          processScriptInjection(scriptArr)
+        } else {
+          pinegrow.showQuickMessage(
+            `Frameworks lite: Open a project first. ${island.label} can be added only to Pinegrow projects!`,
+          )
+        }
+      },
+    })
+
+    const add11tyIntegrations = [
+      {
+        type: 'header',
+        label: `Ensure that the ${island.label} package has already been added to the page`,
+      },
+      {
+        type: 'divider',
+      },
+    ]
+
+    const pikadayIntegrationIsland = island.cdnScripts.pikadayIntegrationIsland
+    const pikadayIntegrationsScripts =
+      frameworksLiteState.activeFramework.cdnScripts.islands
+        ?.pikadayIntegrationsScripts
+
+    pikadayIntegrationsScripts?.forEach((pikadayIntegrationsScript) => {
+      const localPikadayIntegrationIsland = [
+        {
+          ...pikadayIntegrationIsland,
+          code: pikadayIntegrationIsland.code
+            .replace('__SLOT1__', pikadayIntegrationsScript.__SLOT1__)
+            .replace('__SLOT2__', pikadayIntegrationsScript.__SLOT2__),
+        },
+      ]
+
+      add11tyIntegrations.push({
+        label: `Add Pikaday Datepicker${
+          pikadayIntegrationsScript.label
+            ? ` (${pikadayIntegrationsScript.label})`
+            : ''
+        }`,
+        helptext:
+          'Added before closing of body tag, hydrates when entering viewport.',
+        action: function () {
+          processScriptInjection(localPikadayIntegrationIsland)
+        },
+      })
+    })
+
+    add11tyIntegrations.push({
+      type: 'divider',
+    })
+
+    add11tyIntegrations.push({
+      type: 'header',
+      label: `Refer to official docs for detailed usage`,
+    })
+
+    add11tyIntegrations.push({
+      type: 'divider',
+    })
+
+    add11tyIntegrations.push({
+      label: `Learn ${island.label} (official docs)`,
+      action: function () {
+        pinegrow.openExternalUrl(
+          'https://www.11ty.dev/docs/plugins/partial-hydration/',
+        )
+      },
+    })
+
+    menu.add({
+      label: `Sample Integrations`,
+      submenu: add11tyIntegrations,
     })
 
     menu.add({
@@ -461,17 +698,6 @@ const onProjectLoaded = () => {
     //     tutorialPanel.openPanel()
     //   },
     // })
-
-    menu.add({
-      type: 'divider',
-    })
-
-    menu.add({
-      label: `Github Docs`,
-      action: function () {
-        pinegrow.openExternalUrl(config.author_link)
-      },
-    })
   }
 }
 

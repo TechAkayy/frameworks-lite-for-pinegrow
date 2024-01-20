@@ -71,6 +71,7 @@ export default (env, argv) => {
           new CopyPlugin({
             patterns: [
               { from: './src/templates', to: 'templates' },
+              { from: './src/island/packages', to: 'packages' },
               // { from: '../docs/dist', to: 'docs' },
             ],
           }),

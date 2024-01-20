@@ -12,7 +12,8 @@
     "format": "prettier --write . !public"
   },
   "dependencies": {
-    "vue": "^3.4.7"
+    "vue": "^3.4.7",
+    "chokidar": "^3.5.3"
   },
   "devDependencies": {
     "@babel/core": "^7.23.6",

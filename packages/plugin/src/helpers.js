@@ -45,9 +45,12 @@ if (f.pluginUrl) {
 export { pluginUrl }
 
 export const pluginPath = crsaMakeFileFromUrl(pluginUrl)
-const dependencyRoot = path.dirname(pluginPath)
+export const dependencyRoot = path.dirname(pluginPath)
 
 export const templatesPath = path.resolve(dependencyRoot, config.templates_path)
 // .replace('src', 'dist')
 export const templatesUrl = crsaMakeUrlFromFile(templatesPath)
 f.templatesUrl = templatesUrl
+
+export const isExistsAndDirectory = (filePath) =>
+  !!(fs.existsSync(filePath) && fs.statSync(filePath).isDirectory())
