@@ -42,7 +42,7 @@ const sampleScopesForGlobal = `<div x-data="state" style="padding: 20px; margin:
 </div>`
 
 const scriptClassicGlobal = (withState = false) => {
-  return `<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" data-pg-name="Alpinejs-App"></script>
+  return `<script defer src="https://unpkg.com/alpinejs" data-pg-name="Alpinejs-App"></script>
 <script>
   ${withState ? sampleState : emptyState}
   document.addEventListener('alpine:init', () => {
@@ -75,7 +75,7 @@ const cdnScripts = {
     scriptClassicAutoInit: [
       {
         injectTo: 'head',
-        code: `<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" data-pg-name="Alpinejs-App"></script>`,
+        code: `<script defer src="https://unpkg.com/alpinejs" data-pg-name="Alpinejs-App"></script>`,
       },
     ],
   },
@@ -83,7 +83,7 @@ const cdnScripts = {
     pikadayIntegrationsScripts: [
       {
         __SLOT1__: `
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<script src="https://unpkg.com/alpinejs"></script>
 <script
   type="module"
   data-pg-name="Alpinejs-App-Appointment"
