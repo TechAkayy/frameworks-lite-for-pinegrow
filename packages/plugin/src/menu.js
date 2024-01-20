@@ -75,6 +75,7 @@ const addPackages = (projectRoot, dependency) => {
         )
       } else {
         copyDir(sourcePackagePath, destPackagePath)
+        pinegrow.refreshCurrentProject(null, false, true /* no restore tags */)
       }
     }
   } catch (err) {
@@ -259,7 +260,7 @@ const onProjectLoaded = () => {
     // Add cdn script
     menu.add({
       type: 'header',
-      label: `Progressive Enhancement (choose between either to add cdn scripts, don't mix them up)`,
+      label: `Progressive Enhancement (choose between either to add cdn scripts, don't mix both)`,
     })
 
     const cdnScripts = frameworksLiteState.activeFramework.cdnScripts
@@ -570,14 +571,33 @@ const onProjectLoaded = () => {
       },
     })
 
+    const add11tyIntegrations = [
+      {
+        type: 'header',
+        label: `Ensure that the ${island.label} package has already been added to the page`,
+      },
+      {
+        type: 'divider',
+      },
+    ]
+
     const pikadayIntegrationIsland = island.cdnScripts.pikadayIntegrationIsland
     const pikadayIntegrationsScripts =
       frameworksLiteState.activeFramework.cdnScripts.islands
         ?.pikadayIntegrationsScripts
 
     pikadayIntegrationsScripts?.forEach((pikadayIntegrationsScript) => {
-      menu.add({
-        label: `Add Pikaday Integration${
+      const localPikadayIntegrationIsland = [
+        {
+          ...pikadayIntegrationIsland,
+          code: pikadayIntegrationIsland.code
+            .replace('__SLOT1__', pikadayIntegrationsScript.__SLOT1__)
+            .replace('__SLOT2__', pikadayIntegrationsScript.__SLOT2__),
+        },
+      ]
+
+      add11tyIntegrations.push({
+        label: `Add Pikaday Datepicker${
           pikadayIntegrationsScript.label
             ? ` (${pikadayIntegrationsScript.label})`
             : ''
@@ -585,30 +605,36 @@ const onProjectLoaded = () => {
         helptext:
           'Added before closing of body tag, hydrates when entering viewport.',
         action: function () {
-          const activeFxPrefix =
-            frameworksLiteState.activeFramework.prefix || ''
-          pikadayIntegrationIsland[0].code = pikadayIntegrationIsland[0].code
-            .replace('__SLOT__', pikadayIntegrationsScript.code)
-            .replace(
-              'data-pg-name="App-Appointment"',
-              `data-pg-name="${activeFxPrefix}-App-Appointment"`,
-            )
-            .replace(
-              'data-pg-name="Island-Appointment"',
-              `data-pg-name="${activeFxPrefix}-Island-Appointment"`,
-            )
-          processScriptInjection(pikadayIntegrationIsland)
+          processScriptInjection(localPikadayIntegrationIsland)
         },
       })
     })
 
-    menu.add({
+    add11tyIntegrations.push({
+      type: 'divider',
+    })
+
+    add11tyIntegrations.push({
+      type: 'header',
+      label: `Refer to official docs for detailed usage`,
+    })
+
+    add11tyIntegrations.push({
+      type: 'divider',
+    })
+
+    add11tyIntegrations.push({
       label: `Learn ${island.label} (official docs)`,
       action: function () {
         pinegrow.openExternalUrl(
           'https://www.11ty.dev/docs/plugins/partial-hydration/',
         )
       },
+    })
+
+    menu.add({
+      label: `Sample Integrations`,
+      submenu: add11tyIntegrations,
     })
 
     menu.add({

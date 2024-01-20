@@ -1,6 +1,7 @@
 import { key, framework, addLibSection } from './helpers.js'
 import { frameworks } from './data/index.js'
 import { frameworksLiteState } from './shared-state.js'
+import { ClearDeleteActions } from './clear-delete-actions.js'
 
 let activeFramework, isShortform, autoReloadOnUpdate
 
@@ -222,18 +223,18 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
           name: attrName,
           action: 'custom',
           // attribute: attrName,
-          with_clear_icon: function () {
-            const api = new PgApi()
-            api.removeAttribute(null /* to all sel elements */, attrName)
-            if (autoReloadOnUpdate) {
-              setTimeout(() => {
-                pgel.getPage()?.refresh()
-              }, 500)
-            } else {
-              //a quick and dumb way to refresh the prop panel
-              pinegrow.selectedElements.reselect()
-            }
-          },
+          // with_clear_icon: function () {
+          //   const api = new PgApi()
+          //   api.removeAttribute(null /* to all sel elements */, attrName)
+          //   if (autoReloadOnUpdate) {
+          //     setTimeout(() => {
+          //       pgel.getPage()?.refresh()
+          //     }, 500)
+          //   } else {
+          //     //a quick and dumb way to refresh the prop panel
+          //     pinegrow.selectedElements.reselect()
+          //   }
+          // },
 
           // From attribute editor to this prop defn (Into Control)
           get_value: function (pgel, field_key, values, fdef) {
@@ -258,12 +259,17 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
             //   },
             // )
 
+            // if (attr) {
+            //   var value = attr.value
+            //   if (value === 'true') {
+            //     pgel.setAttr(attr.name, null)
+            //   }
+            //   return value || 'true'
+            // }
+
             if (attr) {
               var value = attr.value
-              if (value === 'true') {
-                pgel.setAttr(attr.name, null)
-              }
-              return value || 'true'
+              return value
             }
           },
 
@@ -328,13 +334,13 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
             //   )
             // }
 
-            // pgel.setAttr(attrName, value)
+            pgel.setAttr(attrName, value)
 
-            if (value === 'true') {
-              pgel.setAttr(attrName, null)
-            } else {
-              pgel.setAttr(attrName, value)
-            }
+            // if (value === 'true') {
+            //   pgel.setAttr(attrName, null)
+            // } else {
+            //   pgel.setAttr(attrName, value)
+            // }
 
             if (eventType === 'change') {
               const currentAttrList = getAttrList(pgel)
@@ -342,7 +348,8 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
                 (curr_attr) => curr_attr.name === attrName,
               )
               if (currentAttr) {
-                const currentAttrValue = currentAttr.value || 'true'
+                // const currentAttrValue = currentAttr.value || 'true'
+                const currentAttrValue = currentAttr.value
                 if (currentAttrValue !== value) {
                   if (autoReloadOnUpdate) {
                     setTimeout(() => {
@@ -364,6 +371,25 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
             recycled,
           ) => {
             // console.log('Field Created')
+
+            var $inputContainer = $field.find('div.crsa-input')
+            var $input = $inputContainer.find('input.crsa-input')
+            if (!$input.length) {
+              // In case of a select dropdown
+              $input = $inputContainer.data('pgAutocomplete')
+            }
+
+            // Add clear and delete icons
+            if (!$field.data('clear_delete_actions')) {
+              var clear_delete_actions = new ClearDeleteActions(
+                field_key,
+                fdef,
+                $inputContainer,
+                $input,
+                pgel,
+              )
+              $field.data('clear_delete_actions', clear_delete_actions)
+            }
           },
           on_field_updated: (pgel, $field, fdef, control, field_key, field) => {
             // console.log('Field Updated')
