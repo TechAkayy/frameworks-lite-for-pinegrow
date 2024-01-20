@@ -291,7 +291,7 @@ const onProjectLoaded = () => {
           label: `App with Script (module) - Recommended`,
         },
         {
-          label: 'Manually hydrated/init, with empty state',
+          label: 'Hydrated/init with empty state',
           helptext: 'Added to start of body tag.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptModuleNoExample
@@ -299,7 +299,7 @@ const onProjectLoaded = () => {
           },
         },
         {
-          label: 'Manually hydrated/init, with sample state',
+          label: 'Hydrated/init, with sample state & template',
           helptext: 'Added to start of body tag.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptModuleWithExample
@@ -314,7 +314,7 @@ const onProjectLoaded = () => {
           label: `App with Script (classic)`,
         },
         {
-          label: 'Manually hydrated/init, with empty state',
+          label: 'Hydrated/init with empty state',
           helptext: 'Added before closing of body tag.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptClassicNoExample
@@ -322,7 +322,7 @@ const onProjectLoaded = () => {
           },
         },
         {
-          label: 'Manually hydrated/init, with sample state',
+          label: 'Hydrated/init, with sample state & template',
           helptext: 'Added before closing of body tag.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptClassicWithExample
@@ -355,7 +355,7 @@ const onProjectLoaded = () => {
           label: `App with Script (classic)`,
         },
         {
-          label: 'Manually hydrated/init, with empty state',
+          label: 'Hydrated/init with empty state',
           helptext: 'Added before closing of body tag.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptClassicNoExample
@@ -363,7 +363,7 @@ const onProjectLoaded = () => {
           },
         },
         {
-          label: 'Manually hydrated/init, with sample state',
+          label: 'Hydrated/init, with sample state & template',
           helptext: 'Added before closing of body tag.',
           action: function () {
             const scriptArr = cdnScripts.globalApp.scriptClassicWithExample
@@ -395,7 +395,7 @@ const onProjectLoaded = () => {
     }
 
     menu.add({
-      label: `Global App (full hydration)`,
+      label: `Global App (top-down hydration)`,
       submenu: addCdnScriptForglobalApp,
     })
 
@@ -510,7 +510,7 @@ const onProjectLoaded = () => {
     }
 
     menu.add({
-      label: `Islands Architecture (partial hydration)`,
+      label: `Islands (independent hydration)`,
       submenu: addCdnScriptForIndividualIslands,
     })
 
