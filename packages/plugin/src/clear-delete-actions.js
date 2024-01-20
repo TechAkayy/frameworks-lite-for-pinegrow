@@ -16,8 +16,8 @@ export class ClearDeleteActions {
     //called when setting the value into the field
     this.onSetValue = (val) => {
       if (!val) {
-        pg$Hide($delete_icon)
         pg$Hide($clear_icon)
+        $delete_icon.css('color', '#95938f')
       }
       return val
     }
@@ -54,11 +54,11 @@ export class ClearDeleteActions {
     $input.on('input change updateclearicon', function () {
       var val = $input.val()
       if (val.length) {
-        pg$Show($delete_icon)
         pg$Show($clear_icon)
+        $delete_icon.css('color', '#2d2d2e')
       } else {
-        pg$Hide($delete_icon)
         pg$Hide($clear_icon)
+        $delete_icon.css('color', '#95938f')
       }
     })
   }
