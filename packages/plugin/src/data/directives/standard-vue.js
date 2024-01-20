@@ -87,12 +87,12 @@ const directives = [
   {
     label: 'v-cloak',
     attribute: 'v-cloak',
-    default_value: 'true',
+    default_value: '',
   },
   {
     label: 'v-pre',
     attribute: 'v-pre',
-    default_value: 'true',
+    default_value: '',
   },
   {
     label: 'v-memo',
@@ -102,7 +102,7 @@ const directives = [
   {
     label: 'v-once',
     attribute: 'v-once',
-    default_value: 'true',
+    default_value: '',
   },
   {
     label: 'v-bind attr',
@@ -200,12 +200,12 @@ const directives = [
   {
     label: 'v-slot default',
     attribute: 'v-slot:default',
-    default_value: 'true',
+    default_value: '',
   },
   {
     label: 'v-slot with slotName',
     attribute: 'v-slot:slotName',
-    default_value: 'true',
+    default_value: '',
   },
   {
     label: 'v-slot with props',

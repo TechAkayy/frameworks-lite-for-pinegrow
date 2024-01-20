@@ -77,17 +77,17 @@ const directives = [
   {
     label: 'x-cloak',
     attribute: 'x-cloak',
-    default_value: 'true',
+    default_value: '',
   },
   {
     label: 'x-transition',
     attribute: 'x-transition',
-    default_value: 'true',
+    default_value: '',
   },
   {
     label: 'x-ignore',
     attribute: 'x-ignore',
-    default_value: 'true',
+    default_value: '',
   },
   {
     label: 'x-ref',
