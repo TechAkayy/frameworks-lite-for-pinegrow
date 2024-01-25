@@ -6,7 +6,7 @@ export class ClearAction {
     $input.css('padding-right', '35px')
 
     var $clear_icon = $(
-      '<i class="icon field-icon-infield icon-close" style="color:#2d2d2e;top:7px;right:17px;"></i>',
+      '<i class="icon field-icon-infield icon-close" style="color:#2d2d2e;top:7px;right:20px;"></i>',
     ).appendTo($input.parent())
 
     //called when setting the value into the field
