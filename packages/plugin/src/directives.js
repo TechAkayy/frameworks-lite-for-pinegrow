@@ -224,18 +224,18 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
           name: attrName,
           action: 'custom',
           // attribute: attrName,
-          // with_clear_icon: function () {
-          //   const api = new PgApi()
-          //   api.removeAttribute(null /* to all sel elements */, attrName)
-          //   if (autoReloadOnUpdate) {
-          //     setTimeout(() => {
-          //       pgel.getPage()?.refresh()
-          //     }, 500)
-          //   } else {
-          //     //a quick and dumb way to refresh the prop panel
-          //     pinegrow.selectedElements.reselect()
-          //   }
-          // },
+          with_clear_icon: function () {
+            const api = new PgApi()
+            api.removeAttribute(null /* to all sel elements */, attrName)
+            if (autoReloadOnUpdate) {
+              setTimeout(() => {
+                pgel.getPage()?.refresh()
+              }, 500)
+            } else {
+              //a quick and dumb way to refresh the prop panel
+              pinegrow.selectedElements.reselect()
+            }
+          },
 
           // From attribute editor to this prop defn (Into Control)
           get_value: function (pgel, field_key, values, fdef) {
@@ -380,17 +380,27 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
               $input = $inputContainer.data('pgAutocomplete')
             }
 
-            // Add clear icon
-            if (!$field.data('clear_action')) {
-              var clear_action = new ClearAction(
-                field_key,
-                fdef,
-                $inputContainer,
-                $input,
-                pgel,
-              )
-              $field.data('clear_action', clear_action)
+            var $clearIcon = $inputContainer.find('i.icon-close')
+            if ($clearIcon.length) {
+              $input.css('padding-right', '35px')
+              $clearIcon.css('top', '7px')
+              $clearIcon.css('right', '20px')
+              if (value) {
+                $clearIcon.css('display', 'block')
+              }
             }
+
+            // Add clear icon
+            // if (!$field.data('clear_action')) {
+            //   var clear_action = new ClearAction(
+            //     field_key,
+            //     fdef,
+            //     $inputContainer,
+            //     $input,
+            //     pgel,
+            //   )
+            //   $field.data('clear_action', clear_action)
+            // }
 
             // Add delete action
             if (!$field.data('delete_action')) {
@@ -404,15 +414,15 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
               $field.data('delete_action', delete_action)
             }
           },
-          on_field_updated: (pgel, $field, fdef, control, field_key, field) => {
-            // console.log('Field Updated')
-            // Nudge so that clear-icon shows up
-            var $inputContainer = $field.find('div.crsa-input')
-            var $input = $inputContainer.find('input.crsa-input')
-            if ($input.length) {
-              $input.trigger('change')
-            }
-          },
+          // on_field_updated: (pgel, $field, fdef, control, field_key, field) => {
+          //   // console.log('Field Updated')
+          //   // Nudge so that clear-icon shows up
+          //   var $inputContainer = $field.find('div.crsa-input')
+          //   var $input = $inputContainer.find('input.crsa-input')
+          //   if ($input.length) {
+          //     $input.trigger('change')
+          //   }
+          // },
         }
       }
     })
