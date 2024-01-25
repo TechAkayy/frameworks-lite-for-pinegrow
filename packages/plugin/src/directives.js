@@ -313,7 +313,20 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
               if (value) {
                 $clearIcon.css('display', 'block')
               }
+              // $clearIcon.css('color', '#95938f')
+              $clearIcon.css('color', '#2d2d2e')
+              $clearIcon.css('opacity', '0.5')
+
+              $clearIcon.hover(
+                function () {
+                  $(this).css('opacity', '1')
+                },
+                function () {
+                  $(this).css('opacity', '0.5')
+                },
+              )
             }
+            fdef.$clearIcon = $clearIcon
 
             // Add clear icon
             // if (!$field.data('clear_action')) {
