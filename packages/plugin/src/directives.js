@@ -205,13 +205,19 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
           action: 'custom',
           // attribute: attrName,
           with_clear_icon: function () {
-            const api = new PgApi()
-            api.removeAttribute(null /* to all sel elements */, attrName)
+            const $input = this.$input
+            if ($input.length) {
+              $input.val('').trigger('input')
+            } else {
+              const api = new PgApi()
+              api.removeAttribute(null /* to all sel elements */, attrName)
+            }
+
             if (autoReloadOnUpdate) {
               setTimeout(() => {
                 pgel.getPage()?.refresh()
               }, 500)
-            } else {
+            } else if (!$input.length) {
               //a quick and dumb way to refresh the prop panel
               pinegrow.selectedElements.reselect()
             }
@@ -296,6 +302,8 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
               // In case of a select dropdown
               $input = $inputContainer.data('pgAutocomplete')
             }
+
+            fdef.$input = $input
 
             var $clearIcon = $inputContainer.find('i.icon-close')
             if ($clearIcon.length) {
