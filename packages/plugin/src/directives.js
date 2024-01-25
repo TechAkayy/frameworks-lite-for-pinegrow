@@ -165,13 +165,6 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
           cur_name += r + si.close
           if (r.length) i--
         }
-        /*
-             if(cur_name === '<?php' || cur_name === '<?=') {
-             i++;
-             var r = attrReadUntil('?>');
-             cur_name +=  r + '?>';
-             if(r.length) i--;
-             }*/
       }
       i++
     }
@@ -202,19 +195,6 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
     //go through attributes and list all directivesList
     pgel.getAttrList().forEach(function (a) {
       let attrName = a.name
-      // TODO: Shortform
-      // if (isShortform) {
-      //   const activeDirectiveGroup = frameworks.find(
-      //     (fx) => fx.name === activeFramework.name,
-      //   )
-      //   activeDirectiveGroup.directives.propBinders.forEach(
-      //     ({ fullform, shortform }) => {
-      //       if (attrName.startsWith(fullform)) {
-      //         attrName = attrName.replace(fullform, shortform)
-      //       }
-      //     },
-      //   )
-      // }
 
       if (directivesAttributes.includes(attrName)) {
         const field_key = key + '.' + attrName
@@ -248,26 +228,6 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
             // Look for 'client:load' in pgel
             var attr = findSingleAttr(attrName, pgel)
 
-            // TODO: Shortform
-            // activeDirectiveGroup.directives.propBinders.forEach(
-            //   ({ fullform, shortform }) => {
-            //     if (attrName.startsWith(fullform)) {
-            //       attrName = attrName.replace(fullform, shortform)
-            //     }
-            //     if (!attr) {
-            //       attr = findSingleAttr(attrName, pgel)
-            //     }
-            //   },
-            // )
-
-            // if (attr) {
-            //   var value = attr.value
-            //   if (value === 'true') {
-            //     pgel.setAttr(attr.name, null)
-            //   }
-            //   return value || 'true'
-            // }
-
             if (attr) {
               var value = attr.value
               return value
@@ -297,51 +257,8 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
               return
             }
 
-            // Remove existing msg if the props panel msg is binded (:msg)
-            // if ((!value || value === 'false') && attr) {
-            // 	// if control has ':maxHeight' or 'v-bind:maxHeight', and pgel has 'max-height', then remove the unbounded attr from pgel
-            // 	pgel.removeAttr(attr.name)
-            // 	pinegrow.reselectElement()
-            // 	return
-            // }
-
-            // if (value === null) {
-            //   const api = new PgApi()
-            //   const attrName = attr.name
-            //   api.removeAttribute(null /* to all sel elements */, attrName)
-            //   if (autoReloadOnUpdate) {
-            //     setTimeout(() => {
-            //       pgel.getPage()?.refresh()
-            //     }, 500)
-            //   } else {
-            //     //a quick and dumb way to refresh the prop panel
-            //     pinegrow.selectedElements.reselect()
-            //   }
-            //   return
-            // }
-
             let attrName = attr.name
-            // TODO: Shortform
-            // if (isShortform) {
-            //   const activeDirectiveGroup = frameworks.find(
-            //     (fx) => fx.name === activeFramework.name,
-            //   )
-            //   activeDirectiveGroup.directives.propBinders.forEach(
-            //     ({ fullform, shortform }) => {
-            //       if (attrName.startsWith(fullform)) {
-            //         attrName = attrName.replace(fullform, shortform)
-            //       }
-            //     },
-            //   )
-            // }
-
             pgel.setAttr(attrName, value)
-
-            // if (value === 'true') {
-            //   pgel.setAttr(attrName, null)
-            // } else {
-            //   pgel.setAttr(attrName, value)
-            // }
 
             if (eventType === 'change') {
               const currentAttrList = getAttrList(pgel)
