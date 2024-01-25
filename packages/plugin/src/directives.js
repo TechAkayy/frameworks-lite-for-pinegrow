@@ -207,7 +207,7 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
           with_clear_icon: function () {
             const $input = this.$input
             if ($input.length) {
-              $input.val('').trigger('input')
+              $input.val('').trigger('change')
             } else {
               const api = new PgApi()
               api.removeAttribute(null /* to all sel elements */, attrName)
