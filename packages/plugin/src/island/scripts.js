@@ -4,7 +4,7 @@ const cdnScripts = {
     scriptModuleNoExample: [
       {
         injectTo: 'body-prepend',
-        code: `<script type="module" src="/@11ty/is-land/is-land.js" data-pg-name="11ty-Package"></script>`,
+        code: `<script type="module" src="/@11ty/is-land/is-land.js" data-pg-name="11ty-App"></script>`,
       },
     ],
   },
