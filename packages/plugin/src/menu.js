@@ -135,6 +135,7 @@ const addCloakTag = (attribute) => {
   try {
     const page = pinegrow.getSelectedPage()
     if (!page) {
+      pinegrow.showQuickMessage('Frameworks lite: Open a page first!')
       return
     }
 
