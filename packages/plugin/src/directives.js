@@ -217,7 +217,7 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
               setTimeout(() => {
                 pgel.getPage()?.refresh()
               }, 500)
-            } else if (!$input.length) {
+            } else {
               //a quick and dumb way to refresh the prop panel
               pinegrow.selectedElements.reselect()
             }
