@@ -404,15 +404,6 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
               $field.data('delete_action', delete_action)
             }
           },
-          on_field_updated: (pgel, $field, fdef, control, field_key, field) => {
-            // console.log('Field Updated')
-            // Nudge so that clear-icon shows up
-            var $inputContainer = $field.find('div.crsa-input')
-            var $input = $inputContainer.find('input.crsa-input')
-            if ($input.length) {
-              $input.trigger('change')
-            }
-          },
         }
       }
     })
