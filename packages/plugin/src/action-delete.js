@@ -27,7 +27,7 @@ export class DeleteAction {
 
     // updatePill
     var el = this.$element.get(0)
-    el.innerHTML = `<i class="icon icon-down"></i>`
+    el.innerHTML = `<i class="icon icon-down" style="top:0px;"></i>`
 
     this.$container.get(0).appendChild(this.$element.get(0))
 

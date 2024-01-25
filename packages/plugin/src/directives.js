@@ -473,7 +473,15 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
       sections.splice(indexDirectives, 1)
     }
 
-    sections.unshift(directives_section)
+    const indexAttributesEditor = sections.findIndex(
+      (section) => section.name === 'Attribute editor',
+    )
+
+    if (indexAttributesEditor > -1) {
+      sections.splice(indexAttributesEditor, 0, directives_section)
+    } else {
+      sections.unshift(directives_section)
+    }
   }
 
   frameworks.forEach((fx) => {
