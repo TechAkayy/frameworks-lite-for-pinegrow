@@ -21,6 +21,7 @@ const cdnScripts = {
     <style id="pika-dark-styles">
       /**
       * This theme is an example to show how you can create your own.
+      * Can also be imported from cdn - https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css
       */
       .pika-single.dark-theme {
         color: #fff;

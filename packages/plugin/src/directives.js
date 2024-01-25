@@ -1,7 +1,8 @@
 import { key, framework, addLibSection } from './helpers.js'
 import { frameworks } from './data/index.js'
 import { frameworksLiteState } from './shared-state.js'
-import { ClearDeleteActions } from './clear-delete-actions.js'
+import { ClearAction } from './action-clear.js'
+import { DeleteAction } from './action-delete.js'
 
 let activeFramework, isShortform, autoReloadOnUpdate
 
@@ -379,16 +380,28 @@ const onShowProperties = (page, sections, pgel, defs, showPropertiesView) => {
               $input = $inputContainer.data('pgAutocomplete')
             }
 
-            // Add clear and delete icons
-            if (!$field.data('clear_delete_actions')) {
-              var clear_delete_actions = new ClearDeleteActions(
+            // Add clear icon
+            if (!$field.data('clear_action')) {
+              var clear_action = new ClearAction(
                 field_key,
                 fdef,
                 $inputContainer,
                 $input,
                 pgel,
               )
-              $field.data('clear_delete_actions', clear_delete_actions)
+              $field.data('clear_action', clear_action)
+            }
+
+            // Add delete action
+            if (!$field.data('delete_action')) {
+              var delete_action = new DeleteAction(
+                field_key,
+                fdef,
+                $inputContainer,
+                $input,
+                pgel,
+              )
+              $field.data('delete_action', delete_action)
             }
           },
           on_field_updated: (pgel, $field, fdef, control, field_key, field) => {
