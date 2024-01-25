@@ -1,3 +1,5 @@
+import { frameworks } from './data/index.js'
+import { frameworksLiteState } from './shared-state.js'
 import { framework as pgFramework, templatesUrl } from './helpers.js'
 
 try {
@@ -115,3 +117,24 @@ try {
 
 //   crsaStorage.setValue('frameworks', newFlist)
 // })
+
+const onFileCreatedFromMasterPage = (file, selectedProject, cb, info) => {
+  if (file.name.includes('standard-vue')) {
+    frameworksLiteState.activeFramework = frameworks.find(
+      (fx) => 'standard-vue' === fx.name,
+    )
+  } else if (file.name.includes('alpinejs')) {
+    frameworksLiteState.activeFramework = frameworks.find(
+      (fx) => 'alpinejs' === fx.name,
+    )
+  } else {
+    frameworksLiteState.activeFramework = frameworks.find(
+      (fx) => 'petite-vue' === fx.name,
+    )
+  }
+}
+
+pinegrow.addEventHandler(
+  'on_file_created_from_master_page',
+  onFileCreatedFromMasterPage,
+)
