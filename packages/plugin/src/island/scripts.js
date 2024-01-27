@@ -4,13 +4,13 @@ const cdnScripts = {
     scriptModuleNoExample: [
       {
         injectTo: 'body-prepend',
-        code: `<script type="module" src="/@11ty/is-land/is-land.js" data-pg-name="11ty-App"></script>`,
+        code: `<script type="module" src="/@11ty/is-land/is-land.js" data-pg-name="__SLOT1__11ty-App"></script>`,
       },
     ],
   },
   pikadayIntegrationIsland: {
     injectTo: 'body',
-    code: `<is-land data-pg-name="11ty-Island" on:visible>
+    code: `<is-land data-pg-name="__SLOT1__11ty-Island" on:visible>
   <template data-island>
     <link
       rel="stylesheet"
@@ -132,9 +132,9 @@ const cdnScripts = {
         color: rgb(255 255 255);
       }
     </style>
-    __SLOT1__
+    __SLOT2__
   </template>
-  __SLOT2__
+  __SLOT3__
 </is-land>`,
   },
 }

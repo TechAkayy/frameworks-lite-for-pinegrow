@@ -1,4 +1,4 @@
-import { __SLOT2__ } from './standard-vue.js'
+import { __SLOT3__ } from './standard-vue.js'
 
 const emptyState = `const state = {
     // state exposed to all expressions within v-scope regions
@@ -186,7 +186,7 @@ ${sampleScopesForGlobal}`,
     ],
     pikadayIntegrationsScripts: [
       {
-        __SLOT1__: `
+        __SLOT2__: `
 <script
   type="module"
   data-pg-name="Pt-App-Appointment"
@@ -222,9 +222,9 @@ ${sampleScopesForGlobal}`,
   createApp(state).directive('datepicker', datepickerDirective).mount('div#appointment')
 </script>
 `,
-        __SLOT2__: `
+        __SLOT3__: `
 <div id="appointment" data-pg-name="Pt-Island-Appointment" class="p-4">
-${__SLOT2__}
+${__SLOT3__}
 </div>
 `,
       },

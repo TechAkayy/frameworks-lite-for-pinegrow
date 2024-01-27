@@ -111,13 +111,22 @@ const processScriptInjection = (scriptArr) => {
       // 'insertAfter'
       let dest = scriptObj.injectTo.startsWith('head') ? headNode : bodyNode
 
-      api.insertElements(scriptObj.code, dest, insertPosition, {
-        select: true,
-        highlight: true,
-        scroll: true,
-        repeater: true,
-        format_html: true,
-      })
+      api.insertElements(
+        scriptObj.code.replace(
+          '__SLOT1__',
+          `${frameworksLiteState.activeFramework.prefix}-`,
+        ),
+        dest,
+        insertPosition,
+        {
+          select: true,
+          highlight: true,
+          scroll: true,
+          repeater: true,
+          format_html: true,
+        },
+      )
+
       pinegrow.showQuickMessage(
         `Frameworks lite: Added tags for ${frameworksLiteState.activeFramework.label} at ${scriptObj.injectTo} !`,
       )
@@ -285,6 +294,13 @@ const onProjectLoaded = () => {
           type: 'divider',
         },
         {
+          type: 'header',
+          label: `Follows a monolithic architecture that eagerly loads, and where the page is top-down hydrated`,
+        },
+        {
+          type: 'divider',
+        },
+        {
           label: 'Auto hydrated/init (simplest - added to head)',
           helptext: 'Added to head tag, includes defer and init attributes.',
           action: function () {
@@ -343,7 +359,14 @@ const onProjectLoaded = () => {
       addCdnScriptForglobalApp.push(
         {
           type: 'header',
-          label: `A global app for the entire page that manages tags using Alpinejs directives`,
+          label: `A global app for the entire page that manages tags that are enriched with Alpinejs directives`,
+        },
+        {
+          type: 'divider',
+        },
+        {
+          type: 'header',
+          label: `Follows a monolithic architecture that eagerly loads, and where the page is top-down hydrated`,
         },
         {
           type: 'divider',
@@ -404,7 +427,7 @@ const onProjectLoaded = () => {
     }
 
     menu.add({
-      label: `Global App (top-down hydration)`,
+      label: `Global App (simplest)`,
       submenu: addCdnScriptForglobalApp,
     })
 
@@ -414,7 +437,14 @@ const onProjectLoaded = () => {
       addCdnScriptForIndividualIslands.push(
         {
           type: 'header',
-          label: `Multiple apps across the page with it's own exclusive scope and mount point (islands)`,
+          label: `Multiple apps/islands across the page with it's own exclusive scope and mount point`,
+        },
+        {
+          type: 'divider',
+        },
+        {
+          type: 'header',
+          label: `Follows an islands architecture where islands COULD BE independently (and progressively) loaded and hydrated (partial hydration)`,
         },
         {
           type: 'divider',
@@ -481,7 +511,14 @@ const onProjectLoaded = () => {
       addCdnScriptForIndividualIslands.push(
         {
           type: 'header',
-          label: `Multiple apps across the page with it's own exclusive scope and mount point (islands).`,
+          label: `Multiple apps/islands across the page with it's own exclusive scope and mount point`,
+        },
+        {
+          type: 'divider',
+        },
+        {
+          type: 'header',
+          label: `Follows an islands architecture where islands COULD BE independently (and progressively) loaded and hydrated (partial hydration)`,
         },
         {
           type: 'divider',
@@ -519,7 +556,7 @@ const onProjectLoaded = () => {
     }
 
     menu.add({
-      label: `Islands (independent hydration)`,
+      label: `Independent Islands (advanced)`,
       submenu: addCdnScriptForIndividualIslands,
     })
 
@@ -556,7 +593,7 @@ const onProjectLoaded = () => {
 
     menu.add({
       type: 'header',
-      label: `Progressive Hydration - How/when to hydrate islands (advanced)`,
+      label: `Progressive Loading and Hydration - When to load & hydrate islands (advanced)`,
     })
 
     menu.add({
@@ -599,8 +636,12 @@ const onProjectLoaded = () => {
         {
           ...pikadayIntegrationIsland,
           code: pikadayIntegrationIsland.code
-            .replace('__SLOT1__', pikadayIntegrationsScript.__SLOT1__)
-            .replace('__SLOT2__', pikadayIntegrationsScript.__SLOT2__),
+            .replace(
+              '__SLOT1__',
+              `${frameworksLiteState.activeFramework.prefix}-`,
+            )
+            .replace('__SLOT2__', pikadayIntegrationsScript.__SLOT2__ || '')
+            .replace('__SLOT3__', pikadayIntegrationsScript.__SLOT3__ || ''),
         },
       ]
 

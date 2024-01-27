@@ -6,7 +6,7 @@ const emptyState = `const rootComponent = {
   },
 }`
 
-export const __SLOT2__ = `
+export const __SLOT3__ = `
 <form>
   <div class="flex items-center justify-center">
     <div class="p-1">
@@ -181,7 +181,7 @@ const cdnScripts = {
     pikadayIntegrationsScripts: [
       {
         label: 'Options API',
-        __SLOT1__: `
+        __SLOT2__: `
 <script
   type="module"
   data-pg-name="Vue-App-Appointment"
@@ -225,15 +225,15 @@ const cdnScripts = {
   createApp(rootComponent).mount('div#appointment')
 </script>
 `,
-        __SLOT2__: `
+        __SLOT3__: `
 <div id="appointment" data-pg-name="Vue-Island-Appointment" class="p-4">
-${__SLOT2__}
+${__SLOT3__}
 </div>
 `,
       },
       {
         label: 'Composition API',
-        __SLOT1__: `
+        __SLOT2__: `
 <script
   type="module"
   data-pg-name="Vue-App-Appointment"
@@ -279,9 +279,9 @@ const rootComponent = {
 createApp(rootComponent).mount('div#appointment')
 </script>
 `,
-        __SLOT2__: `
+        __SLOT3__: `
 <div id="appointment" data-pg-name="Vue-Island-Appointment" class="p-4">
-${__SLOT2__}
+${__SLOT3__}
 </div>
 `,
       },

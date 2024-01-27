@@ -1,4 +1,4 @@
-import { __SLOT2__ } from './standard-vue.js'
+import { __SLOT3__ } from './standard-vue.js'
 
 const emptyState = `const globalState = {
   // state exposed to all expressions across the page
@@ -82,7 +82,7 @@ const cdnScripts = {
   islands: {
     pikadayIntegrationsScripts: [
       {
-        __SLOT1__: `
+        __SLOT2__: `
 <script src="https://unpkg.com/alpinejs"></script>
 <script
   type="module"
@@ -117,13 +117,13 @@ document.addEventListener('alpine:init', () => {
 })
 </script>
 `,
-        __SLOT2__: `
+        __SLOT3__: `
 <div
   x-data="state"
   id="appointment"
   data-pg-name="Alpinejs-Island-Appointment"
   class="p-4">
-${__SLOT2__.replaceAll('v-', 'x-')}
+${__SLOT3__.replaceAll('v-', 'x-')}
 </div>
 `,
       },
