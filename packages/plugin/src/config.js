@@ -8,7 +8,7 @@ export const pgFrameworkConfig = {
   minor_version: '2.0',
 
   //Optional, add a badge to the framework list notify user of new or updated status
-  info_badge: '',
+  info_badge: 'Updated',
 
   // Define a framework type - if you plan on having multiple versions, this should be the same for each version.
 
@@ -47,7 +47,7 @@ export const pgFrameworkConfig = {
 
   //Add a framework description to be displayed with the framework templates
   get description() {
-    return `<a href="http://github.com/techakayy/frameworks-lite-for-pinegrow">${this.name}</a> components & blocks.`
+    return `<a href="http://github.com/techakayy/frameworks-lite-for-pinegrow">${this.name}</a> components & blocks. Free, open-source, feature-complete!`
   },
 
   //Add a framework author to be displayed with the framework templates
