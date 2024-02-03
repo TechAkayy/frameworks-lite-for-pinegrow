@@ -59,7 +59,7 @@ export class DeleteAction {
 
     var _this = this
     _this.actions.push({
-      label: 'delete',
+      label: 'remove',
       action: function () {
         let attrName = _this.fdef.name
 
