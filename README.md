@@ -6,7 +6,7 @@ Currently supported frameworks - [Petite-Vue](https://github.com/vuejs/petite-vu
 
 ❗Note: This is not an official plugin by the Pinegrow team, rather a personal contribution for the community. Follow me on twitter - [@techakayy](https://twitter.com/techakayy)
 
-💻 Pinegrow plugins can be used only with Pinegrow desktop apps like Pinegrow Web Editor or Vue Designer. So, this plugin is not for Pinegrow Online or Pinegrow WP Plugin. Also, [Vue Designer](https://vuedesigner.com) already includes this feature and more, refer to below [section](#development--contribution) for further details.
+💻 Pinegrow plugins can be used only with Pinegrow desktop apps like Pinegrow Web Editor or Vue Designer. So, this plugin is not for Pinegrow Online or Pinegrow WP Plugin. Also, [Vue Designer](https://vuedesigner.com) already includes this feature and more, refer to below [section](#vue-with-pinegrow-or-vue-designer) for further details.
 
 💙 This plugin is free to use, open-sourced with MIT license. Feel free to fork and improve. PRs, improvements to documentation, text/video tutorials are welcomed.
 
@@ -99,7 +99,7 @@ Currently supported frameworks - [Petite-Vue](https://github.com/vuejs/petite-vu
 - [x] Support both simple HTML page only (Pinegrow free version) & projects (Pinegrow pro).
 - [x] Add cdn script of different flavours to an existing page.
 - [x] Auto-reload page when adding or updating directives.
-- [ ] Add examples via page templates from docs.
+- [x] Add examples via page templates from docs.
 - [ ] In-app quick-start tutorial? - Should we use Pinegrow tutorials api or a separate dialog for this? Or may be just a simple vitepress docs site on netlify?
 - [ ] Use the actions panel instead of props panel?
 - [ ] Anything else you can think of?
