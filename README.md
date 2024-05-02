@@ -48,7 +48,7 @@ I did put together this [presentation](https://techakayy.github.io/frameworks-li
 ![06-choose-framework.jpg](/screenshots/quick-start/06-choose-framework.jpg?raw=true '06-choose-framework.jpg')
 
 6. If you still do not see the `Frameworks` menu, then open devtools (cmd/ctrl+shift+c) and look for any errors. Create a new issue if required with the screenshot of the error.
-7. Add cdn script to your page via **Frameworks/Add CDN Script (section)**. If in doubt with the various flavours, got with a **Global App** and add the recommended option with an example. Alternatively, use one of the templates via menu **File -> New Page** (look for **Frameworks Lite** in the vertical menu).
+7. Add cdn script to your page via **Frameworks/Add CDN Script (section)**. If in doubt with the various flavours, go with a **Global App** and add the recommended option with an example. Alternatively, use one of the templates via menu **File -> New Page** (look for **Frameworks Lite** in the vertical menu).
 
    ![07-add-cdn-script.jpg](/screenshots/quick-start/07-add-cdn-script.jpg?raw=true '07-add-cdn-script.jpg')
 
