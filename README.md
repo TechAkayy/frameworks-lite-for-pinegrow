@@ -104,31 +104,15 @@ I did put together this [presentation](https://techakayy.github.io/frameworks-li
 - [x] Add cdn script of different flavours to an existing page.
 - [x] Auto-reload page when adding or updating directives.
 - [x] Add examples via page templates from docs.
-- [ ] In-app quick-start tutorial? - Should we use Pinegrow tutorials api or a separate dialog for this? Or may be just a simple vitepress docs site on netlify?
+- [x] Quick-start tutorial
 - [ ] Use the actions panel instead of props panel?
-- [ ] Anything else you can think of?
+- [ ] Anything else you can think of? HTMX? 
 
 ## Vue with Pinegrow (or) Vue Designer?
 
 This plugin is useful for progressive enhancement of your HTML pages (with or without a build tool).
 
 For a Vite-powered Vue experience with Single-File components (.vue components), HMR updates, state-binding, interactive component libraries, and various cool features - check out [Vue Designer](https://vuedesigner.com).
-
-## Screenshots (menu might be missing some options, requires update)
-
-![Frameworks menu](/screenshots/file1.png?raw=true 'Frameworks menu')
-
-Assuming the data comes from an external API, and can't be pre-rendered or server-rendered,
-
-![Add directive](/screenshots/file2.png?raw=true 'Add directive')
-
-![Add a loop](/screenshots/file3.png?raw=true 'Add a loop')
-
-![Add a key](/screenshots/file4.png?raw=true 'Add a key')
-
-![Refresh page](/screenshots/file5.png?raw=true 'Refresh page')
-
-![Validate updates](/screenshots/file6.png?raw=true 'Validate updates')
 
 ## Development / Contribution
 
