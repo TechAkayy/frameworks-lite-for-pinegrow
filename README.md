@@ -14,7 +14,7 @@ Currently supported frameworks - [Petite-Vue](https://github.com/vuejs/petite-vu
 
 ## Tutorial (click the below screenshot)
 
-[![Watch the video](/screenshots/tutorial.png)](https://youtu.be/JG8lXwRVFGY)
+[![Watch the video](/screenshots/tutorial.png)](https://youtu.be/2MwVes_DJSw)
 
 ## Presentation Slides
 
