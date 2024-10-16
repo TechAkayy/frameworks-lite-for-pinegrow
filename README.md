@@ -8,17 +8,17 @@ Currently supported frameworks - [Petite-Vue](https://github.com/vuejs/petite-vu
 
 💻 Pinegrow plugins can be used only with Pinegrow desktop apps like Pinegrow Web Editor or Vue Designer. So, this plugin is not for Pinegrow Online or Pinegrow WP Plugin. Also, [Vue Designer](https://vuedesigner.com) includes specialized features to work with Vue Single-File Components and more, refer to below [section](#vue-with-pinegrow-or-vue-designer) for further details.
 
-💙 This plugin is free to use, open-sourced with MIT license. Feel free to fork and improve. PRs, improvements to documentation, text/video tutorials are welcomed. 
+💙 This plugin is free to use, open-sourced with MIT license. Feel free to fork and improve. PRs, improvements to documentation, text/video tutorials are welcomed.
 
 👏 Frameworks via cdn can be used with other Pinegrow Pro features like components, master pages, and also with Wordpress. Any contribution to the documentation showcasing such usage are welcomed.
+
+## Tutorial
+
+[![Watch the video](/screenshots/tutorial.png)](https://www.youtube.com/watch?v=4KYvnwWBn2o)
 
 ## Presentation Slides
 
 I did put together this [presentation](https://techakayy.github.io/frameworks-lite-for-pinegrow/progressive-enhancement-hydration-with-vue-and-beyond.pdf) and hope to develop a course someday (no promises). You're welcome to use this presentation as needed to develop your own; I can share the keynote version if you're interested.
-
-## Quick Demo
-
-[![Watch the video](/screenshots/demo.png)](https://www.youtube.com/watch?v=TyS7RpsQX_w)
 
 ## Usage
 
