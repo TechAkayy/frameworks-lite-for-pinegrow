@@ -12,7 +12,7 @@ Currently supported frameworks - [Petite-Vue](https://github.com/vuejs/petite-vu
 
 👏 Frameworks via cdn can be used with other Pinegrow Pro features like components, master pages, and also with Wordpress. Any contribution to the documentation showcasing such usage are welcomed.
 
-## Tutorial
+## Tutorial (click the below screenshot)
 
 [![Watch the video](/screenshots/tutorial.png)](https://www.youtube.com/watch?v=4KYvnwWBn2o)
 
