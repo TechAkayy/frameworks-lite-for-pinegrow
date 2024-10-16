@@ -71,7 +71,8 @@ export default (env, argv) => {
           new CopyPlugin({
             patterns: [
               { from: './src/templates', to: 'templates' },
-              { from: './src/island/packages', to: 'packages' },
+              // ESM via cdn is available (https://github.com/11ty/is-land/issues/22), so no need to package, updated webpack config, scripts.js & index.js for src/island folder and menu.js modules              
+              // { from: './src/island/packages', to: 'packages' },
               // { from: '../docs/dist', to: 'docs' },
             ],
           }),

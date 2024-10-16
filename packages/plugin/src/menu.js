@@ -156,8 +156,7 @@ const addCloakTag = (attribute) => {
 
       if (vCloakExists || xCloakExists) {
         pinegrow.showQuickMessage(
-          `Frameworks lite: ${
-            vCloakExists ? 'v-cloak' : 'x-cloak'
+          `Frameworks lite: ${vCloakExists ? 'v-cloak' : 'x-cloak'
           }'s inline style already exists.`,
         )
         return
@@ -568,8 +567,8 @@ const onProjectLoaded = () => {
       frameworksLiteState.activeFramework.name === 'alpinejs'
         ? 'x-cloak'
         : frameworksLiteState.activeFramework.name.includes('vue')
-        ? 'v-cloak'
-        : ''
+          ? 'v-cloak'
+          : ''
 
     if (cloakAttr) {
       menu.add({
@@ -597,22 +596,26 @@ const onProjectLoaded = () => {
     })
 
     menu.add({
-      label: `Add ${island.label} package`,
+      label: `Add ${island.label} (experimental)`,
       helptext:
-        'Package added to project, and import added to start of body tag.',
+        'Auto hydrated/init, added to start of body tag.',
       action: function () {
-        const projectRoot =
-          pinegrow.getCurrentProject() && pinegrow.getCurrentProject().getDir()
-        if (projectRoot) {
-          addPackages(projectRoot, island)
+        // ESM via cdn is available (https://github.com/11ty/is-land/issues/22), so no need to package, updated webpack config, scripts.js & index.js for src/island folder and menu.js modules           
+        // const projectRoot =
+        //   pinegrow.getCurrentProject() && pinegrow.getCurrentProject().getDir()
+        // if (projectRoot) {
+        //   addPackages(projectRoot, island)
 
-          const scriptArr = island.cdnScripts.globalApp.scriptModuleNoExample
-          processScriptInjection(scriptArr)
-        } else {
-          pinegrow.showQuickMessage(
-            `Frameworks lite: Open a project first. ${island.label} can be added only to Pinegrow projects!`,
-          )
-        }
+        //   const scriptArr = island.cdnScripts.globalApp.scriptModuleNoExample
+        //   processScriptInjection(scriptArr)
+        // } else {
+        //   pinegrow.showQuickMessage(
+        //     `Frameworks lite: Open a project first. ${island.label} can be added only to Pinegrow projects!`,
+        //   )
+        // }
+        const scriptArr = island.cdnScripts.globalApp.scriptModuleNoExample
+        processScriptInjection(scriptArr)
+
       },
     })
 
@@ -646,11 +649,10 @@ const onProjectLoaded = () => {
       ]
 
       add11tyIntegrations.push({
-        label: `Add Pikaday Datepicker${
-          pikadayIntegrationsScript.label
-            ? ` (${pikadayIntegrationsScript.label})`
-            : ''
-        }`,
+        label: `Add Pikaday Datepicker${pikadayIntegrationsScript.label
+          ? ` (${pikadayIntegrationsScript.label})`
+          : ''
+          }`,
         helptext:
           'Added before closing of body tag, hydrates when entering viewport.',
         action: function () {

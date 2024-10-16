@@ -4,7 +4,9 @@ const cdnScripts = {
     scriptModuleNoExample: [
       {
         injectTo: 'body-prepend',
-        code: `<script type="module" src="/@11ty/is-land/is-land.js" data-pg-name="__SLOT1__11ty-App"></script>`,
+        // ESM via cdn is available (https://github.com/11ty/is-land/issues/22), so no need to package, updated webpack config, scripts.js & index.js for src/island folder and menu.js modules
+        // code: `<script type="module" src="/@11ty/is-land/is-land.js" data-pg-name="__SLOT1__11ty-App"></script>`,
+        code: `<script type="module" src="https://unpkg.com/@11ty/is-land@4.0.0/is-land.js" data-pg-name="__SLOT1__11ty-App"></script>`,
       },
     ],
   },
