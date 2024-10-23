@@ -8,7 +8,7 @@ const cdnScripts = {
   },
   pikadayIntegrationIsland: {
     injectTo: 'body',
-    code: `<is-land data-pg-name="__SLOT1__11ty-Island" on:visible>
+    code: `<is-land data-pg-name="Pikaday-11ty-Island" on:visible>
   <template data-island>
     <link
       rel="stylesheet"
