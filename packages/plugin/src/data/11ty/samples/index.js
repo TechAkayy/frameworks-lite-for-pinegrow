@@ -8,8 +8,8 @@ const makeItAProgressiveIsland = (label, scripts) => {
       ...script,
     }
     if (script.app || script.scope) {
-      const prefix = label.replace(' ', '-')
-      _script.code = `<script type="module" src="https://unpkg.com/@11ty/is-land@4.0.0/is-land.js" data-pg-name="${prefix}-11ty-App"></script>
+      const prefix = label.replaceAll(' ', '-')
+      _script.code = `<script type="module" src="https://unpkg.com/@11ty/is-land@4.0.0/is-land.js" data-pg-name="11ty-Is-land"></script>
 <is-land data-pg-name="${prefix}-11ty-Island" on:visible>
     <template data-island>
         ${script.app}

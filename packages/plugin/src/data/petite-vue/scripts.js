@@ -202,10 +202,12 @@ ${sampleScopesForGlobal}`,
     date: '', // v-model won't work
     datePicker: null,
     addPikaday($el) {
-      this.datePicker = new Pikaday({
-        field: $el,
-        theme: 'dark-theme',
-      })
+      setTimeout(() => {
+        this.datePicker = new Pikaday({
+            field: $el,
+            theme: 'dark-theme',
+        })
+      },100)
     },
     removePikaday() {
       this.datePicker = null

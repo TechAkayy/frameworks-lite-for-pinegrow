@@ -214,10 +214,12 @@ const cdnScripts = {
 
     methods: {
       addPikaday($el) {
-        this.datePicker = new Pikaday({
-          field: $el,
-          theme: 'dark-theme',
-        })
+        setTimeout(() => {
+          this.datePicker = new Pikaday({
+              field: $el,
+              theme: 'dark-theme',
+          })
+        },100)
       },
       bookAppointment() {
         console.log(this.date) // v-model won't work
@@ -249,10 +251,12 @@ const rootComponent = {
     const date = ref('') // v-model won't work
     const datePicker = ref(null)
     const addPikaday = ($el) => {
-      datePicker.value = new Pikaday({
-        field: $el,
-        theme: 'dark-theme',
-      })
+      setTimeout(() => {
+        datePicker.value = new Pikaday({
+            field: $el,
+            theme: 'dark-theme',
+        })
+      },100)
     }
     const removePikaday = () => {
       datePicker.value = null
