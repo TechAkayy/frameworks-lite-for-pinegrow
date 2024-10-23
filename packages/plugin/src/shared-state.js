@@ -5,6 +5,11 @@ export let frameworksLiteState = reactive({
   // state
   theme: 'dark',
   activeFramework: { name: 'petite-vue', label: 'Petite Vue' },
+
+  preferModuleScripts: true,
+  preferIslands: true,
+
+  // fullform (false), shortform (true)
   isShortform: false,
   autoReloadOnUpdate: false,
 

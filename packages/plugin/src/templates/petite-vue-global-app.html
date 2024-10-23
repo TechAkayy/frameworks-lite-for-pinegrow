@@ -15,7 +15,7 @@
     </style>
   </head>
   <body>
-    <script type="module" data-pg-name="Pt-App">
+    <script type="module" data-pg-name="Global-Pt-App">
       import { createApp } from 'https://unpkg.com/petite-vue?module'
       const state = {
         // state exposed to all expressions within v-scope regions
@@ -35,7 +35,7 @@
       createApp(state).mount()
     </script>
     <div
-      data-pg-name="Pt-Scope-Counter"
+      data-pg-name="Counter-Pt-Scope"
       v-scope="{ msg: 'Happy Life!' }"
       style="
         padding: 20px;

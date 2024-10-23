@@ -1,4 +1,4 @@
-import { __SLOT3__ } from './standard-vue.js'
+import { __SLOT3__ } from '../standard-vue/scripts.js'
 
 const emptyState = `const globalState = {
   // state exposed to all expressions across the page
@@ -42,8 +42,8 @@ const sampleScopesForGlobal = `<div x-data="state" style="padding: 20px; margin:
 </div>`
 
 const scriptClassicGlobal = (withState = false) => {
-  return `<script defer src="https://unpkg.com/alpinejs" data-pg-name="Alpinejs-App"></script>
-<script>
+  return `<script defer src="https://unpkg.com/alpinejs" data-pg-name="Global-Alpinejs"></script>
+<script data-pg-name="Global-Alpinejs-App">
   ${withState ? sampleState : emptyState}
   document.addEventListener('alpine:init', () => {
     Alpine.data('state', () => (globalState))
@@ -54,6 +54,13 @@ const scriptClassicGlobal = (withState = false) => {
 // 'head' | 'body' | 'head-prepend' | 'body-prepend'
 const cdnScripts = {
   globalApp: {
+    scriptClassicNoExample: [
+      {
+        injectTo: 'body',
+        code: `${scriptClassicGlobal(false)}`,
+      },
+    ],
+
     scriptClassicWithExample: [
       {
         injectTo: 'body-prepend',
@@ -65,17 +72,10 @@ const cdnScripts = {
       },
     ],
 
-    scriptClassicNoExample: [
-      {
-        injectTo: 'body',
-        code: `${scriptClassicGlobal(false)}`,
-      },
-    ],
-
     scriptClassicAutoInit: [
       {
         injectTo: 'head',
-        code: `<script defer src="https://unpkg.com/alpinejs" data-pg-name="Alpinejs-App"></script>`,
+        code: `<script defer src="https://unpkg.com/alpinejs" data-pg-name="Alpinejs"></script>`,
       },
     ],
   },
@@ -86,7 +86,7 @@ const cdnScripts = {
 <script src="https://unpkg.com/alpinejs"></script>
 <script
   type="module"
-  data-pg-name="Alpinejs-App-Appointment"
+  data-pg-name="Appointment-Alpinejs-App"
 >
 const globalState = {
   date: '', // x-model won't work
@@ -120,8 +120,8 @@ document.addEventListener('alpine:init', () => {
         __SLOT3__: `
 <div
   x-data="state"
-  id="appointment"
-  data-pg-name="Alpinejs-Island-Appointment"
+  id="appointment-scope"
+  data-pg-name="Appointment-Alpinejs-Scope"
   class="p-4">
 ${__SLOT3__.replaceAll('v-', 'x-')}
 </div>

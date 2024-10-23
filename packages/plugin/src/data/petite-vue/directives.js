@@ -3,7 +3,7 @@ import {
   propBinders as vuePropBinder,
   lifecycleHooks as vueLifecycleHooks,
   directives as standardVueDirectives,
-} from './standard-vue.js'
+} from '../standard-vue/directives.js'
 
 const propBinders = vuePropBinder.filter(
   (binder) => binder.fullform !== 'v-slot',

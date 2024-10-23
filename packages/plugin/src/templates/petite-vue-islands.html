@@ -16,7 +16,7 @@
   </head>
   <body>
     <main>
-      <script type="module" data-pg-name="Pt-App-Hero" id="hero-app">
+      <script type="module" data-pg-name="Hero-Pt-App">
         import { createApp } from 'https://unpkg.com/petite-vue?module'
 
         const state = {
@@ -34,11 +34,11 @@
           },
         }
 
-        createApp(state).mount('div#hero-island')
+        createApp(state).mount('div#hero-scope')
       </script>
       <div
-        id="hero-island"
-        data-pg-name="Pt-Island-Hero"
+        id="hero-scope"
+        data-pg-name="Hero-Pt-Scope"
         v-scope="{}"
         style="
           padding: 20px;
@@ -59,7 +59,7 @@
         >
           <p style="text-align: center; width: 50%; min-width: 400px">
             Hello, I&apos;m within an island, and the root tag of the island
-            <code>div#hero-island</code> has an exclusive app mounted by
+            <code>div#hero-scope</code> has an exclusive app mounted by
             <code>script#hero-app</code>, and marked as a
             <code>v-scope</code> region. Any sprinkles of interactions within
             this <code>v-scope</code> region are managed by this exclusive app.
@@ -97,18 +97,18 @@
           </div>
         </div>
       </div>
-      <script type="module" data-pg-name="Pt-App-Feature" id="feature-app">
+      <script type="module" data-pg-name="Feature-Pt-App">
         import { createApp } from 'https://unpkg.com/petite-vue?module'
         const state = {
           // state exposed to all expressions within v-scope regions
           msg: 'Happy Life!',
         }
 
-        createApp(state).mount('div#feature-island')
+        createApp(state).mount('div#feature-scope')
       </script>
       <div
-        id="feature-island"
-        data-pg-name="Pt-Island-Feature"
+        id="feature-scope"
+        data-pg-name="Feature-Pt-Scope"
         v-scope="{}"
         style="
           padding: 20px;
@@ -129,7 +129,7 @@
         >
           <p style="text-align: center; width: 50%; min-width: 400px">
             Hello, I&apos;m within an island, and the root tag of the island
-            <code>div#feature-island</code> has an exclusive app mounted by
+            <code>div#feature-scope</code> has an exclusive app mounted by
             <code>script#feature-app</code>, and marked as a
             <code>v-scope</code> region. Any sprinkles of interactions within
             this <code>v-scope</code> region are managed by this exclusive app.

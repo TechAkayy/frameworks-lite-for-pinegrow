@@ -16,7 +16,7 @@
   </head>
   <body>
     <main>
-      <script type="module" data-pg-name="Vue-App-Hero" id="hero-app">
+      <script type="module" data-pg-name="Hero-Vue-App">
         import {
           createApp,
           ref,
@@ -47,11 +47,11 @@
           },
         }
 
-        createApp(rootComponent).mount('div#hero-island')
+        createApp(rootComponent).mount('div#hero-scope')
       </script>
       <div
-        id="hero-island"
-        data-pg-name="Vue-Island-Hero"
+        id="hero-scope"
+        data-pg-name="Hero-Vue-Scope"
         style="
           padding: 20px;
           margin: 20px;
@@ -71,7 +71,7 @@
         >
           <p style="text-align: center; width: 50%; min-width: 400px">
             Hello, I&apos;m within an island, and the root tag of the island
-            <code>div#hero-island</code> has an exclusive app mounted by
+            <code>div#hero-scope</code> has an exclusive app mounted by
             <code>script#hero-app</code>. Any sprinkles of interactions within
             this island are managed by this exclusive app.
           </p>
@@ -108,7 +108,7 @@
           </div>
         </div>
       </div>
-      <script type="module" data-pg-name="Vue-App-Feature" id="feature-app">
+      <script type="module" data-pg-name="Feature-Vue-App">
         import {
           createApp,
           ref,
@@ -142,11 +142,11 @@
           },
         }
 
-        createApp(rootComponent).mount('div#feature-island')
+        createApp(rootComponent).mount('div#feature-scope')
       </script>
       <div
-        id="feature-island"
-        data-pg-name="Vue-Island-Feature"
+        id="feature-scope"
+        data-pg-name="Feature-Vue-Scope"
         style="
           padding: 20px;
           margin: 20px;
@@ -166,7 +166,7 @@
         >
           <p style="text-align: center; width: 50%; min-width: 400px">
             Hello, I&apos;m within an island, and the root tag of the island
-            <code>div#feature-island</code> has an exclusive app mounted by
+            <code>div#feature-scope</code> has an exclusive app mounted by
             <code>script#feature-app</code>. Any sprinkles of interactions
             within this island are managed by this exclusive app.
           </p>

@@ -1,94 +1,39 @@
 import { framework, dependencyRoot, isExistsAndDirectory } from './helpers.js'
 import { pgFrameworkConfig as config } from './config.js'
-import { frameworks } from './data/index.js'
+import { frameworks, globalAppType } from './data/index.js'
 import { frameworksLiteState } from './shared-state.js'
 // import { tutorialPanel } from './tutorial-panel.js'
-import { island } from './island/index.js'
+import island from './data/11ty/index.js'
 
-// let activeFramework = frameworks[0]
+const resetPreferences = () => {
+  if (frameworksLiteState.activeFramework.scriptTypes.length === 1) {
+    if (
+      frameworksLiteState.activeFramework.scriptTypes[0].name ===
+      'module-scripts'
+    ) {
+      frameworksLiteState.preferModuleScripts = true
+    } else {
+      frameworksLiteState.preferModuleScripts = false
+    }
+  }
+
+  if (frameworksLiteState.activeFramework.appTypes.length === 1) {
+    if (frameworksLiteState.activeFramework.appTypes[0].name === 'islands') {
+      frameworksLiteState.preferIslands = true
+    } else {
+      frameworksLiteState.preferIslands = false
+    }
+  }
+}
+
 frameworksLiteState.activeFramework = frameworks[0]
-// fullform (false), shortform (true)
-// let isShortform = false
-frameworksLiteState.isShortform = false
-// let autoReloadOnUpdate = false
-frameworksLiteState.autoReloadOnUpdate = false
+resetPreferences()
 
 const $menu = $(`
 <li class="aadropdown menu-addon">
     <a href="#" class="aadropdown-toggle" data-toggle="aadropdown"><span>Frameworks</span></a>
 </li>
 `)
-
-const copyDir = (src, dest, callback) => {
-  const copy = (copySrc, copyDest) => {
-    fs.readdir(copySrc, (err, list) => {
-      if (err) {
-        callback(err)
-        return
-      }
-      list.forEach((item) => {
-        const ss = path.resolve(copySrc, item)
-        fs.stat(ss, (err, stat) => {
-          if (err) {
-            callback(err)
-          } else {
-            const curSrc = path.resolve(copySrc, item)
-            const curDest = path.resolve(copyDest, item)
-
-            if (stat.isFile()) {
-              // file, copy directly
-              fs.createReadStream(curSrc).pipe(fs.createWriteStream(curDest))
-            } else if (stat.isDirectory()) {
-              // directory, recursively
-              fs.mkdirSync(curDest, { recursive: true })
-              copy(curSrc, curDest)
-            }
-          }
-        })
-      })
-    })
-  }
-
-  fs.access(dest, (err) => {
-    if (err) {
-      // If the target directory does not exist, create it
-      fs.mkdirSync(dest, { recursive: true })
-    }
-    copy(src, dest)
-  })
-}
-
-const addPackages = (projectRoot, dependency) => {
-  const packageFolderName = dependency.packageFolderName
-
-  try {
-    const sourcePackagePath = path.resolve(
-      dependencyRoot,
-      packageFolderName,
-      island.packageRoot,
-    )
-    if (isExistsAndDirectory(sourcePackagePath)) {
-      const destPackagePath = path.resolve(projectRoot, island.packageRoot)
-      if (isExistsAndDirectory(destPackagePath)) {
-        pinegrow.showQuickMessage(
-          `Frameworks lite: ${dependency.label} package already exists!`,
-        )
-      } else {
-        copyDir(sourcePackagePath, destPackagePath)
-        setTimeout(() => {
-          // Delay refresh just to make sure any other file changes are included.
-          pinegrow.refreshCurrentProject(
-            null,
-            false,
-            true /* no restore tags */,
-          )
-        }, 1000)
-      }
-    }
-  } catch (err) {
-    console.log(err)
-  }
-}
 
 const processScriptInjection = (scriptArr) => {
   const page = pinegrow.getSelectedPage()
@@ -97,7 +42,7 @@ const processScriptInjection = (scriptArr) => {
     const bodyNode = page.sourceNode.findOne('body')
     if (!headNode || !bodyNode) {
       pinegrow.showQuickMessage(
-        'Frameworks lite: Ensure that the page contains head and body tags!',
+        'Frameworks Lite: Ensure that the page contains head and body tags!',
       )
     }
 
@@ -128,7 +73,7 @@ const processScriptInjection = (scriptArr) => {
       )
 
       pinegrow.showQuickMessage(
-        `Frameworks lite: Added tags for ${frameworksLiteState.activeFramework.label} at ${scriptObj.injectTo} !`,
+        `Frameworks Lite: Added tags for ${frameworksLiteState.activeFramework.label} at ${scriptObj.injectTo} !`,
       )
     })
 
@@ -136,7 +81,7 @@ const processScriptInjection = (scriptArr) => {
       page.refresh()
     }, 500)
   } else {
-    pinegrow.showQuickMessage('Frameworks lite: Open a page first!')
+    pinegrow.showQuickMessage('Frameworks Lite: Open a page first!')
   }
 }
 
@@ -144,7 +89,7 @@ const addCloakTag = (attribute) => {
   try {
     const page = pinegrow.getSelectedPage()
     if (!page) {
-      pinegrow.showQuickMessage('Frameworks lite: Open a page first!')
+      pinegrow.showQuickMessage('Frameworks Lite: Open a page first!')
       return
     }
 
@@ -156,7 +101,8 @@ const addCloakTag = (attribute) => {
 
       if (vCloakExists || xCloakExists) {
         pinegrow.showQuickMessage(
-          `Frameworks lite: ${vCloakExists ? 'v-cloak' : 'x-cloak'
+          `Frameworks Lite: ${
+            vCloakExists ? 'v-cloak' : 'x-cloak'
           }'s inline style already exists.`,
         )
         return
@@ -179,18 +125,33 @@ const onProjectLoaded = () => {
 
   const projectInfo = pinegrow.getCurrentProjectInfo()
   if (projectInfo) {
+    const _preferIslands = projectInfo.getSetting('prefer_islands')
+    if (_preferIslands !== undefined && _preferIslands !== null) {
+      frameworksLiteState.preferIslands = !!_preferIslands
+    }
+
+    const _preferModuleScripts = projectInfo.getSetting('prefer_module_scripts')
+    if (_preferModuleScripts !== undefined && _preferModuleScripts !== null) {
+      frameworksLiteState.preferModuleScripts = !!_preferModuleScripts
+    }
+
+    const _isShortform = projectInfo.getSetting('use-shortform-for-prop-binder')
+    if (_isShortform !== undefined && _isShortform !== null) {
+      frameworksLiteState.isShortform = !!_isShortform
+    }
+
+    const _autoReloadOnUpdate = projectInfo.getSetting('auto-reload-on-update')
+    if (_autoReloadOnUpdate !== undefined && _autoReloadOnUpdate !== null) {
+      frameworksLiteState.autoReloadOnUpdate = !!_autoReloadOnUpdate
+    }
+
     const lastUsedFramework = projectInfo.getSetting('framework_directives')
     if (lastUsedFramework) {
       frameworksLiteState.activeFramework = frameworks.find(
         (fx) => lastUsedFramework === fx.name,
       )
+      resetPreferences()
     }
-    frameworksLiteState.isShortform = !!projectInfo.getSetting(
-      'use-shortform-for-prop-binder',
-    )
-    frameworksLiteState.autoReloadOnUpdate = !!projectInfo.getSetting(
-      'auto-reload-on-update',
-    )
   }
 
   const activeDirectiveGroup = frameworks.find(
@@ -213,6 +174,7 @@ const onProjectLoaded = () => {
           projectInfo.setSetting('framework_directives', fx.name)
           projectInfo.save()
         }
+        resetPreferences()
         pinegrow.selectedElements.reselect()
       },
     })
@@ -221,6 +183,7 @@ const onProjectLoaded = () => {
   var menuView = new PgDropdownMenu($('.menu-addon'))
 
   menuView.onGetActions = function (menu) {
+    let stepNo = 1
     menu.add({
       label: `Video Tutorial & Docs`,
       action: function () {
@@ -230,6 +193,11 @@ const onProjectLoaded = () => {
 
     menu.add({
       type: 'divider',
+    })
+
+    menu.add({
+      type: 'header',
+      label: `Step ${stepNo++}: Choose a framework for the page`,
     })
 
     frameworks_menu.forEach((framework) => {
@@ -276,306 +244,218 @@ const onProjectLoaded = () => {
     // Add cdn script
     menu.add({
       type: 'header',
-      label: `Progressive Enhancement (choose between either to add cdn scripts, don't mix both)`,
+      label: `Step ${stepNo++}: Add a sample app to page`,
     })
 
-    const cdnScripts = frameworksLiteState.activeFramework.cdnScripts
+    // menu.add({
+    //   type: 'header',
+    //   label: `Progressive Enhancement (choose between either to add cdn scripts, don't mix both)`,
+    // })
 
-    const addCdnScriptForglobalApp = []
+    frameworksLiteState.activeFramework.appTypes.forEach((appType) => {
+      if (
+        (frameworksLiteState.preferIslands && appType.name === 'global-app') ||
+        (!frameworksLiteState.preferIslands && appType.name === 'islands')
+      ) {
+        return
+      }
 
-    if (frameworksLiteState.activeFramework.name === 'petite-vue') {
-      addCdnScriptForglobalApp.push(
-        {
-          type: 'header',
-          label: `A global app for the entire page that manages regions marked with the v-scope attribute`,
-        },
-        {
-          type: 'divider',
-        },
-        {
-          type: 'header',
-          label: `Follows a monolithic architecture that eagerly loads, and where the page is top-down hydrated`,
-        },
-        {
-          type: 'divider',
-        },
-        {
-          label: 'Auto hydrated/init (simplest - added to head)',
-          helptext: 'Added to head tag, includes defer and init attributes.',
-          action: function () {
-            const scriptArr = cdnScripts.globalApp.scriptClassicAutoInit
-            processScriptInjection(scriptArr)
-          },
-        },
-        {
-          type: 'divider',
-        },
-        {
-          type: 'header',
-          label: `App with Script (module) - Recommended`,
-        },
-        {
-          label: 'Hydrated/init with empty state',
-          helptext: 'Added to start of body tag.',
-          action: function () {
-            const scriptArr = cdnScripts.globalApp.scriptModuleNoExample
-            processScriptInjection(scriptArr)
-          },
-        },
-        {
-          label: 'Hydrated/init, with sample state & template',
-          helptext: 'Added to start of body tag.',
-          action: function () {
-            const scriptArr = cdnScripts.globalApp.scriptModuleWithExample
-            processScriptInjection(scriptArr)
-          },
-        },
-        {
-          type: 'divider',
-        },
-        {
-          type: 'header',
-          label: `App with Script (classic)`,
-        },
-        {
-          label: 'Hydrated/init with empty state',
-          helptext: 'Added before closing of body tag.',
-          action: function () {
-            const scriptArr = cdnScripts.globalApp.scriptClassicNoExample
-            processScriptInjection(scriptArr)
-          },
-        },
-        {
-          label: 'Hydrated/init, with sample state & template',
-          helptext: 'Added before closing of body tag.',
-          action: function () {
-            const scriptArr = cdnScripts.globalApp.scriptClassicWithExample
-            processScriptInjection(scriptArr)
-          },
-        },
-      )
-    } else if (frameworksLiteState.activeFramework.name === 'alpinejs') {
-      addCdnScriptForglobalApp.push(
-        {
-          type: 'header',
-          label: `A global app for the entire page that manages tags that are enriched with Alpinejs directives`,
-        },
-        {
-          type: 'divider',
-        },
-        {
-          type: 'header',
-          label: `Follows a monolithic architecture that eagerly loads, and where the page is top-down hydrated`,
-        },
-        {
-          type: 'divider',
-        },
-        {
-          label: 'Auto hydrated/init (simplest - added to head)',
-          helptext: 'Added to head tag, includes defer attribute.',
-          action: function () {
-            const scriptArr = cdnScripts.globalApp.scriptClassicAutoInit
-            processScriptInjection(scriptArr)
-          },
-        },
-        {
-          type: 'divider',
-        },
-        {
-          type: 'header',
-          label: `App with Script (classic)`,
-        },
-        {
-          label: 'Hydrated/init with empty state',
-          helptext: 'Added before closing of body tag.',
-          action: function () {
-            const scriptArr = cdnScripts.globalApp.scriptClassicNoExample
-            processScriptInjection(scriptArr)
-          },
-        },
-        {
-          label: 'Hydrated/init, with sample state & template',
-          helptext: 'Added before closing of body tag.',
-          action: function () {
-            const scriptArr = cdnScripts.globalApp.scriptClassicWithExample
-            processScriptInjection(scriptArr)
-          },
-        },
-      )
-    } else if (frameworksLiteState.activeFramework.name === 'standard-vue') {
-      addCdnScriptForglobalApp.push(
-        {
-          type: 'header',
-          label: `Not applicable.`,
-        },
-        {
-          type: 'divider',
-        },
-        {
-          type: 'header',
-          label: `Standard-Vue apps are always mounted to a tag (for eg div#app) in the page.`,
-        },
-        {
-          type: 'divider',
-        },
-        {
-          type: 'header',
-          label: `Use Petite-Vue or Alpinejs if you are after a simple global app.`,
-        },
-      )
-    }
+      const addSampleAppSubMenu = []
 
-    menu.add({
-      label: `Global App (simplest)`,
-      submenu: addCdnScriptForglobalApp,
-    })
+      appType.headers.forEach((header) => {
+        addSampleAppSubMenu.push(
+          {
+            type: 'header',
+            label: header,
+          },
+          {
+            type: 'divider',
+          },
+        )
+      })
 
-    const addCdnScriptForIndividualIslands = []
+      if (frameworksLiteState.preferModuleScripts) {
+        // Minimal Module Scripts & Samples
+        const scriptType = frameworksLiteState.activeFramework.scriptTypes.find(
+          (scriptType) => scriptType.name === 'module-scripts',
+        )
 
-    if (frameworksLiteState.activeFramework.name === 'petite-vue') {
-      addCdnScriptForIndividualIslands.push(
-        {
-          type: 'header',
-          label: `Multiple apps/islands across the page with it's own exclusive scope and mount point`,
-        },
-        {
-          type: 'divider',
-        },
-        {
-          type: 'header',
-          label: `Follows an islands architecture where islands COULD BE independently (and progressively) loaded and hydrated (partial hydration)`,
-        },
-        {
-          type: 'divider',
-        },
-        {
-          type: 'header',
-          label: `App with Script (module) - Recommended`,
-        },
-        {
-          label: 'Mounted to a sample island',
-          helptext:
-            'Added to start of body tag, app mounted to the sample island.',
-          action: function () {
-            const scriptArr = cdnScripts.islands.scriptModuleIsland
-            processScriptInjection(scriptArr)
-          },
-        },
-        {
-          type: 'divider',
-        },
-        {
-          type: 'header',
-          label: `App with Script (classic)`,
-        },
-        {
-          label: 'Mounted to a sample island',
-          helptext:
-            'Added before closing of body tag, app mounted to the sample island.',
-          action: function () {
-            const scriptArr = cdnScripts.islands.scriptClassicIsland
-            processScriptInjection(scriptArr)
-          },
-        },
-      )
-    } else if (frameworksLiteState.activeFramework.name === 'alpinejs') {
-      addCdnScriptForIndividualIslands.push(
-        {
-          type: 'header',
-          label: `Not applicable.`,
-        },
-        {
-          type: 'divider',
-        },
-        {
-          type: 'header',
-          label: `Alpinejs app is simply global across the entire page.`,
-        },
-        {
-          type: 'divider',
-        },
-        {
-          type: 'header',
-          label: `Islands are technically possible, but not an intented use case of Alpinejs.`,
-        },
-        {
-          type: 'divider',
-        },
-        {
-          type: 'header',
-          label: `Use Petite-Vue or Standard-Vue if you are after Islands in HTML pages.`,
-        },
-      )
-    } else if (frameworksLiteState.activeFramework.name === 'standard-vue') {
-      addCdnScriptForIndividualIslands.push(
-        {
-          type: 'header',
-          label: `Multiple apps/islands across the page with it's own exclusive scope and mount point`,
-        },
-        {
-          type: 'divider',
-        },
-        {
-          type: 'header',
-          label: `Follows an islands architecture where islands COULD BE independently (and progressively) loaded and hydrated (partial hydration)`,
-        },
-        {
-          type: 'divider',
-        },
-        {
-          type: 'header',
-          label: `App with Script (module) - Recommended`,
-        },
-        {
-          label: 'Mounted to a sample island',
-          helptext:
-            'Added to start of body tag, app mounted to the sample island.',
-          action: function () {
-            const scriptArr = cdnScripts.islands.scriptModuleIsland
-            processScriptInjection(scriptArr)
-          },
-        },
-        {
-          type: 'divider',
-        },
-        {
-          type: 'header',
-          label: `App with Script (classic)`,
-        },
-        {
-          label: 'Mounted to a sample island',
-          helptext:
-            'Added before closing of body tag, app mounted to the sample island.',
-          action: function () {
-            const scriptArr = cdnScripts.islands.scriptClassicIsland
-            processScriptInjection(scriptArr)
-          },
-        },
-      )
-    }
+        scriptType.headers.forEach((header) => {
+          addSampleAppSubMenu.push(
+            {
+              type: 'header',
+              label: header,
+            },
+            {
+              type: 'divider',
+            },
+          )
+        })
 
-    menu.add({
-      label: `Independent Islands (advanced)`,
-      submenu: addCdnScriptForIndividualIslands,
+        if (appType.name === 'global-app') {
+          addSampleAppSubMenu.push(
+            {
+              label: 'Sample App (empty state)',
+              helptext: 'Added to start of body tag.',
+              action: function () {
+                const scriptArr =
+                  frameworksLiteState.activeFramework.cdnScripts.globalApp
+                    .scriptModuleNoExample
+                processScriptInjection(scriptArr)
+              },
+            },
+            {
+              label: 'Sample App (with state & template)',
+              helptext: 'Added to start of body tag.',
+              action: function () {
+                const scriptArr =
+                  frameworksLiteState.activeFramework.cdnScripts.globalApp
+                    .scriptModuleWithExample
+                processScriptInjection(scriptArr)
+              },
+            },
+          )
+        } else {
+          addSampleAppSubMenu.push({
+            label: 'Sample Island App',
+            helptext:
+              'Added to start of body tag, app mounted to the sample island.',
+            action: function () {
+              const scriptArr =
+                frameworksLiteState.activeFramework.cdnScripts.islands
+                  .scriptModuleIsland
+              processScriptInjection(scriptArr)
+            },
+          })
+        }
+
+        addSampleAppSubMenu.push(
+          ...frameworksLiteState.activeFramework.samples.map(
+            ({ label, globalApp, island }) => ({
+              label,
+              helptext: 'Added to start of body tag.',
+              action: function () {
+                const scriptArr =
+                  appType.name === 'global-app' ? globalApp : island
+                processScriptInjection(scriptArr)
+              },
+            }),
+          ),
+        )
+      } else {
+        addSampleAppSubMenu.push({
+          type: 'divider',
+        })
+
+        // Minimal Classic Scripts
+        const scriptType = frameworksLiteState.activeFramework.scriptTypes.find(
+          (scriptType) => scriptType.name === 'classic-scripts',
+        )
+
+        scriptType.headers.forEach((header) => {
+          addSampleAppSubMenu.push(
+            {
+              type: 'header',
+              label: header,
+            },
+            {
+              type: 'divider',
+            },
+          )
+        })
+
+        if (appType.name === 'global-app') {
+          addSampleAppSubMenu.push(
+            {
+              label: 'Sample App (empty state)',
+              helptext: 'Added before closing of body tag.',
+              action: function () {
+                const scriptArr =
+                  frameworksLiteState.activeFramework.cdnScripts.globalApp
+                    .scriptClassicNoExample
+                processScriptInjection(scriptArr)
+              },
+            },
+            {
+              label: 'Sample App (with state & template)',
+              helptext: 'Added before closing of body tag.',
+              action: function () {
+                const scriptArr =
+                  frameworksLiteState.activeFramework.cdnScripts.globalApp
+                    .scriptClassicWithExample
+                processScriptInjection(scriptArr)
+              },
+            },
+          )
+
+          frameworksLiteState.activeFramework.cdnScripts.globalApp
+            .scriptClassicAutoInit &&
+            addSampleAppSubMenu.push(
+              {
+                type: 'divider',
+              },
+              {
+                label: 'Add bare script tag to head',
+                helptext:
+                  'Added to head tag, includes defer and init attributes.',
+                action: function () {
+                  const scriptArr =
+                    frameworksLiteState.activeFramework.cdnScripts.globalApp
+                      .scriptClassicAutoInit
+                  processScriptInjection(scriptArr)
+                },
+              },
+            )
+        } else {
+          addSampleAppSubMenu.push({
+            label: 'Sample Island App',
+            helptext:
+              'Added to start of body tag, app mounted to the sample island.',
+            action: function () {
+              const scriptArr =
+                frameworksLiteState.activeFramework.cdnScripts.islands
+                  .scriptClassicIsland
+              processScriptInjection(scriptArr)
+            },
+          })
+        }
+      }
+
+      appType.footers.forEach((footer) => {
+        addSampleAppSubMenu.push(
+          {
+            type: 'divider',
+          },
+          {
+            type: 'header',
+            label: footer,
+          },
+        )
+      })
+
+      menu.add({
+        label: appType.label,
+        submenu: addSampleAppSubMenu,
+      })
     })
 
     menu.add({
       type: 'divider',
     })
 
+    menu.add({
+      type: 'header',
+      label: `Step ${stepNo++}: Enable use of cloak directive to hide flash of unrendered content`,
+    })
+
     const cloakAttr =
       frameworksLiteState.activeFramework.name === 'alpinejs'
         ? 'x-cloak'
         : frameworksLiteState.activeFramework.name.includes('vue')
-          ? 'v-cloak'
-          : ''
+        ? 'v-cloak'
+        : ''
 
     if (cloakAttr) {
-      menu.add({
-        type: 'header',
-        label: `Cloak inline style`,
-      })
-
       menu.add({
         label: `Add ${cloakAttr} inline style`,
         action: function () {
@@ -592,43 +472,67 @@ const onProjectLoaded = () => {
 
     menu.add({
       type: 'header',
-      label: `Progressive Loading and Hydration - When to load & hydrate islands (advanced)`,
+      label: `Step ${stepNo++}: Optionally, load and hydrate islands conditionally`,
     })
 
-    menu.add({
-      label: `Add ${island.label} (experimental)`,
-      helptext:
-        'Auto hydrated/init, added to start of body tag.',
-      action: function () {
-        // ESM via cdn is available (https://github.com/11ty/is-land/issues/22), so no need to package, updated webpack config, scripts.js & index.js for src/island folder and menu.js modules           
-        // const projectRoot =
-        //   pinegrow.getCurrentProject() && pinegrow.getCurrentProject().getDir()
-        // if (projectRoot) {
-        //   addPackages(projectRoot, island)
+    const add11tyIntegrations = []
 
-        //   const scriptArr = island.cdnScripts.globalApp.scriptModuleNoExample
-        //   processScriptInjection(scriptArr)
-        // } else {
-        //   pinegrow.showQuickMessage(
-        //     `Frameworks lite: Open a project first. ${island.label} can be added only to Pinegrow projects!`,
-        //   )
-        // }
-        const scriptArr = island.cdnScripts.globalApp.scriptModuleNoExample
-        processScriptInjection(scriptArr)
-
-      },
-    })
-
-    const add11tyIntegrations = [
-      {
+    island.headers.forEach((header) => {
+      add11tyIntegrations.push({
         type: 'header',
-        label: `Ensure that the ${island.label} package has already been added to the page`,
-      },
-      {
-        type: 'divider',
-      },
-    ]
+        label: header,
+      })
+    })
 
+    // Restricted Sample Apps to use only Module Scripts
+    frameworksLiteState.preferIslands &&
+      frameworksLiteState.preferModuleScripts &&
+      frameworksLiteState.activeFramework.appTypes.forEach((appType) => {
+        if (
+          (frameworksLiteState.preferIslands &&
+            appType.name === 'global-app') ||
+          (!frameworksLiteState.preferIslands && appType.name === 'islands')
+        ) {
+          return
+        }
+
+        const samplesOfActiveFramework = island.samples.filter(
+          (sample) =>
+            sample.framework === frameworksLiteState.activeFramework.name,
+        )
+
+        samplesOfActiveFramework.length &&
+          add11tyIntegrations.push(
+            {
+              type: 'divider',
+            },
+            {
+              type: 'header',
+              label: appType.label,
+            },
+          )
+
+        // GlobalApp
+        samplesOfActiveFramework.forEach(
+          ({ name, label, helptext, globalApp, island }) => {
+            add11tyIntegrations.push({
+              label,
+              helptext,
+              action: function () {
+                const scriptArr =
+                  appType.name === 'global-app' ? globalApp : island
+                processScriptInjection(scriptArr)
+              },
+            })
+          },
+        )
+      })
+
+    add11tyIntegrations.push({
+      type: 'divider',
+    })
+
+    const lltyGlobalApp = island.cdnScripts.globalApp.scriptModuleNoExample
     const pikadayIntegrationIsland = island.cdnScripts.pikadayIntegrationIsland
     const pikadayIntegrationsScripts =
       frameworksLiteState.activeFramework.cdnScripts.islands
@@ -636,6 +540,7 @@ const onProjectLoaded = () => {
 
     pikadayIntegrationsScripts?.forEach((pikadayIntegrationsScript) => {
       const localPikadayIntegrationIsland = [
+        lltyGlobalApp,
         {
           ...pikadayIntegrationIsland,
           code: pikadayIntegrationIsland.code
@@ -649,10 +554,11 @@ const onProjectLoaded = () => {
       ]
 
       add11tyIntegrations.push({
-        label: `Add Pikaday Datepicker${pikadayIntegrationsScript.label
-          ? ` (${pikadayIntegrationsScript.label})`
-          : ''
-          }`,
+        label: `Pikaday Datepicker${
+          pikadayIntegrationsScript.label
+            ? ` (${pikadayIntegrationsScript.label})`
+            : ''
+        }`,
         helptext:
           'Added before closing of body tag, hydrates when entering viewport.',
         action: function () {
@@ -684,13 +590,110 @@ const onProjectLoaded = () => {
     })
 
     menu.add({
-      label: `Sample Integrations`,
+      label: `${island.label} (advanced)`,
       submenu: add11tyIntegrations,
     })
 
-    menu.add({
-      type: 'divider',
-    })
+    if (projectInfo) {
+      menu.add({
+        type: 'divider',
+      })
+
+      if (
+        frameworksLiteState.activeFramework.appTypes.length > 1 ||
+        frameworksLiteState.activeFramework.scriptTypes.length > 1
+      ) {
+        menu.add({
+          type: 'header',
+          label: 'Preference',
+        })
+      }
+
+      if (frameworksLiteState.activeFramework.appTypes.length > 1) {
+        menu.add({
+          label: `Prefer Islands`,
+          helptext: 'Prefer Islands over Global App!',
+          check: function () {
+            return frameworksLiteState.preferIslands
+          },
+          action: function () {
+            frameworksLiteState.preferIslands =
+              !frameworksLiteState.preferIslands
+            if (projectInfo) {
+              projectInfo.setSetting(
+                'prefer_islands',
+                frameworksLiteState.preferIslands,
+              )
+              projectInfo.save()
+            }
+            pinegrow.showAlert(
+              `Ensure you use one app-type in your page, either Islands or a Global App. Mixing them up might result in unexpected conflicts and errors.`,
+              'Islands vs Global App',
+              'Ok',
+            )
+          },
+        })
+      }
+
+      if (frameworksLiteState.activeFramework.scriptTypes.length > 1) {
+        menu.add({
+          label: `Prefer Module Scripts`,
+          helptext: 'Prefer Module Scripts over Classic Scripts!',
+          check: function () {
+            return frameworksLiteState.preferModuleScripts
+          },
+          action: function () {
+            frameworksLiteState.preferModuleScripts =
+              !frameworksLiteState.preferModuleScripts
+            if (projectInfo) {
+              projectInfo.setSetting(
+                'prefer_module_scripts',
+                frameworksLiteState.preferModuleScripts,
+              )
+              projectInfo.save()
+            }
+            pinegrow.showAlert(
+              `Ensure you use one script-type in your page for the same library. Mixing them up might result in unexpected conflicts and errors.`,
+              'Module Scripts vs Classic Scripts',
+              'Ok',
+            )
+          },
+        })
+      }
+
+      menu.add({
+        type: 'divider',
+      })
+
+      if (!frameworksLiteState.autoReloadOnUpdate) {
+        frameworksLiteState.autoReloadOnUpdate = false
+        if (projectInfo) {
+          projectInfo.setSetting(
+            'auto-reload-on-update',
+            frameworksLiteState.autoReloadOnUpdate,
+          )
+        }
+      }
+
+      menu.add({
+        label: `Auto reload on update`,
+        helptext: 'Automatically reload page when directives are updated!',
+        check: function () {
+          return frameworksLiteState.autoReloadOnUpdate
+        },
+        action: function () {
+          frameworksLiteState.autoReloadOnUpdate =
+            !frameworksLiteState.autoReloadOnUpdate
+          if (projectInfo) {
+            projectInfo.setSetting(
+              'auto-reload-on-update',
+              frameworksLiteState.autoReloadOnUpdate,
+            )
+            projectInfo.save()
+          }
+        },
+      })
+    }
 
     menu.add({
       label: `Open Devtools`,
@@ -700,35 +703,6 @@ const onProjectLoaded = () => {
       },
       // helptext: '',
       kbd: 'CMD SHIFT C',
-    })
-
-    if (!frameworksLiteState.autoReloadOnUpdate) {
-      frameworksLiteState.autoReloadOnUpdate = false
-      if (projectInfo) {
-        projectInfo.setSetting(
-          'auto-reload-on-update',
-          frameworksLiteState.autoReloadOnUpdate,
-        )
-      }
-    }
-
-    menu.add({
-      label: `Auto reload on update`,
-      helptext: 'Automatically reload page when directives are updated!',
-      check: function () {
-        return frameworksLiteState.autoReloadOnUpdate
-      },
-      action: function () {
-        frameworksLiteState.autoReloadOnUpdate =
-          !frameworksLiteState.autoReloadOnUpdate
-        if (projectInfo) {
-          projectInfo.setSetting(
-            'auto-reload-on-update',
-            frameworksLiteState.autoReloadOnUpdate,
-          )
-          projectInfo.save()
-        }
-      },
     })
 
     // menu.add({
@@ -749,6 +723,7 @@ const onProjectClosed = () => {
   $menu.remove()
   // Reload menu with vanilla settings
   frameworksLiteState.activeFramework = frameworks[0]
+  resetPreferences()
   frameworksLiteState.isShortform = false
   frameworksLiteState.autoReloadOnUpdate = false
   onProjectLoaded()
