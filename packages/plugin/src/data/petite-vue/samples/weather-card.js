@@ -37,7 +37,7 @@ const state = {
 createApp(state).mount(__MOUNT_POINT__) 
 </script>`
 
-const scope = `<div data-pg-name="Weather-Pt-Scope"__MOUNT_POINT__ class="p-4 relative" v-scope="{}" v-on:vue:mounted="getLocation()">
+const scope = `<div data-pg-name="Weather-Pt-Scope"__MOUNT_POINT__ class="p-4 relative hidden lg:block" v-scope="{}" v-on:vue:mounted="getLocation()">
     <p> <button id="dropdownButton" class="bg-primary-700 font-medium inline-flex items-center min-w-32 px-5 py-2.5 rounded-lg text-center text-sm text-white dark:bg-primary-600 dark:focus:ring-primary-800 dark:hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-300 hover:bg-primary-800" type="button" data-dropdown-toggle="dropdown" data-dropdown-offset-skidding="-65">
             <template v-if="loading">
                 <span class="min-w-12">loading...</span>
@@ -114,6 +114,8 @@ const sample = {
   helptext: 'Added to start of body tag.',
   globalApp,
   island,
+  clientDirectiveKey: 'on:media',
+  clientDirectiveValue: 'screen and (min-width: 1024px)',
 }
 
 export { sample }

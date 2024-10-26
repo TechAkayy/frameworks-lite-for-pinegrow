@@ -76,6 +76,7 @@ const sample = {
   helptext: 'Added to start of body tag.',
   globalApp,
   island,
+  clientDirectiveKey: 'on:visible',
 }
 
 export { sample }
