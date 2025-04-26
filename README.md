@@ -12,7 +12,7 @@ Currently supported frameworks - [Petite-Vue](https://github.com/vuejs/petite-vu
 
 👏 Frameworks via cdn can be used with other Pinegrow Pro features like components, master pages, and also with Wordpress. Any contribution to the documentation showcasing such usage are welcomed.
 
-## Tutorial (click the below screenshot)
+## Tutorial - click the below screenshot (Yet to be updated for v4.00)
 
 [![Watch the video](/screenshots/tutorial.png)](https://youtu.be/2MwVes_DJSw)
 
@@ -20,7 +20,7 @@ Currently supported frameworks - [Petite-Vue](https://github.com/vuejs/petite-vu
 
 I did put together this [presentation](https://techakayy.github.io/frameworks-lite-for-pinegrow/progressive-enhancement-hydration-with-vue-and-beyond.pdf) and hope to develop a course someday (no promises). You're welcome to use this presentation as needed to develop your own; I can share the keynote version if you're interested.
 
-## Usage
+## Usage (Yet to be updated for v4.00)
 
 1. Download the latest plugin from [here](https://github.com/techakayy/frameworks-lite-for-pinegrow/releases/latest) (`frameworks-lite-for-pinegrow.zip`). Extract the zip file. The extracted folder contains:
 
@@ -105,8 +105,9 @@ I did put together this [presentation](https://techakayy.github.io/frameworks-li
 - [x] Auto-reload page when adding or updating directives.
 - [x] Add examples via page templates from docs.
 - [x] Quick-start tutorial
+- [x] HTMX Support
 - [ ] Use the actions panel instead of props panel?
-- [ ] Anything else you can think of? HTMX?
+- [ ] Anything else you can think of?
 
 ## Vue with Pinegrow (or) Vue Designer?
 
