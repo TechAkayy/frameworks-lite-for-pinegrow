@@ -6,23 +6,18 @@ import { frameworksLiteState } from './shared-state.js'
 import island from './data/11ty/index.js'
 
 const resetPreferences = () => {
-  if (frameworksLiteState.activeFramework.scriptTypes.length === 1) {
-    if (
-      frameworksLiteState.activeFramework.scriptTypes[0].name ===
-      'module-scripts'
-    ) {
-      frameworksLiteState.preferModuleScripts = true
-    } else {
-      frameworksLiteState.preferModuleScripts = false
-    }
+  if (
+    frameworksLiteState.activeFramework.scriptTypes[0].name === 'module-scripts'
+  ) {
+    frameworksLiteState.preferModuleScripts = true
+  } else {
+    frameworksLiteState.preferModuleScripts = false
   }
 
-  if (frameworksLiteState.activeFramework.appTypes.length === 1) {
-    if (frameworksLiteState.activeFramework.appTypes[0].name === 'islands') {
-      frameworksLiteState.preferIslands = true
-    } else {
-      frameworksLiteState.preferIslands = false
-    }
+  if (frameworksLiteState.activeFramework.appTypes[0].name === 'islands') {
+    frameworksLiteState.preferIslands = true
+  } else {
+    frameworksLiteState.preferIslands = false
   }
 }
 
@@ -293,8 +288,9 @@ const onProjectLoaded = () => {
         })
 
         if (appType.name === 'global-app') {
-          addSampleAppSubMenu.push(
-            {
+          frameworksLiteState.activeFramework.cdnScripts.globalApp
+            .scriptModuleNoExample &&
+            addSampleAppSubMenu.push({
               label: 'Sample App (empty state)',
               helptext: 'Added to start of body tag.',
               action: function () {
@@ -303,8 +299,11 @@ const onProjectLoaded = () => {
                     .scriptModuleNoExample
                 processScriptInjection(scriptArr)
               },
-            },
-            {
+            })
+
+          frameworksLiteState.activeFramework.cdnScripts.globalApp
+            .scriptModuleWithExample &&
+            addSampleAppSubMenu.push({
               label: 'Sample App (with state & template)',
               helptext: 'Added to start of body tag.',
               action: function () {
@@ -313,20 +312,21 @@ const onProjectLoaded = () => {
                     .scriptModuleWithExample
                 processScriptInjection(scriptArr)
               },
-            },
-          )
+            })
         } else {
-          addSampleAppSubMenu.push({
-            label: 'Sample Island App',
-            helptext:
-              'Added to start of body tag, app mounted to the sample island.',
-            action: function () {
-              const scriptArr =
-                frameworksLiteState.activeFramework.cdnScripts.islands
-                  .scriptModuleIsland
-              processScriptInjection(scriptArr)
-            },
-          })
+          frameworksLiteState.activeFramework.cdnScripts.islands
+            .scriptModuleIsland &&
+            addSampleAppSubMenu.push({
+              label: 'Sample Island App',
+              helptext:
+                'Added to start of body tag, app mounted to the sample island.',
+              action: function () {
+                const scriptArr =
+                  frameworksLiteState.activeFramework.cdnScripts.islands
+                    .scriptModuleIsland
+                processScriptInjection(scriptArr)
+              },
+            })
         }
 
         addSampleAppSubMenu.push(
@@ -365,8 +365,9 @@ const onProjectLoaded = () => {
         })
 
         if (appType.name === 'global-app') {
-          addSampleAppSubMenu.push(
-            {
+          frameworksLiteState.activeFramework.cdnScripts.globalApp
+            .scriptClassicNoExample &&
+            addSampleAppSubMenu.push({
               label: 'Sample App (empty state)',
               helptext: 'Added before closing of body tag.',
               action: function () {
@@ -375,8 +376,10 @@ const onProjectLoaded = () => {
                     .scriptClassicNoExample
                 processScriptInjection(scriptArr)
               },
-            },
-            {
+            })
+          frameworksLiteState.activeFramework.cdnScripts.globalApp
+            .scriptClassicWithExample &&
+            addSampleAppSubMenu.push({
               label: 'Sample App (with state & template)',
               helptext: 'Added before closing of body tag.',
               action: function () {
@@ -385,8 +388,7 @@ const onProjectLoaded = () => {
                     .scriptClassicWithExample
                 processScriptInjection(scriptArr)
               },
-            },
-          )
+            })
 
           frameworksLiteState.activeFramework.cdnScripts.globalApp
             .scriptClassicAutoInit &&
@@ -407,17 +409,19 @@ const onProjectLoaded = () => {
               },
             )
         } else {
-          addSampleAppSubMenu.push({
-            label: 'Sample Island App',
-            helptext:
-              'Added to start of body tag, app mounted to the sample island.',
-            action: function () {
-              const scriptArr =
-                frameworksLiteState.activeFramework.cdnScripts.islands
-                  .scriptClassicIsland
-              processScriptInjection(scriptArr)
-            },
-          })
+          frameworksLiteState.activeFramework.cdnScripts.islands
+            .scriptClassicIsland &&
+            addSampleAppSubMenu.push({
+              label: 'Sample Island App',
+              helptext:
+                'Added to start of body tag, app mounted to the sample island.',
+              action: function () {
+                const scriptArr =
+                  frameworksLiteState.activeFramework.cdnScripts.islands
+                    .scriptClassicIsland
+                processScriptInjection(scriptArr)
+              },
+            })
         }
       }
 
@@ -439,15 +443,6 @@ const onProjectLoaded = () => {
       })
     })
 
-    menu.add({
-      type: 'divider',
-    })
-
-    menu.add({
-      type: 'header',
-      label: `Step ${stepNo++}: Enable use of cloak directive to hide flash of unrendered content`,
-    })
-
     const cloakAttr =
       frameworksLiteState.activeFramework.name === 'alpinejs'
         ? 'x-cloak'
@@ -456,6 +451,15 @@ const onProjectLoaded = () => {
         : ''
 
     if (cloakAttr) {
+      menu.add({
+        type: 'divider',
+      })
+
+      menu.add({
+        type: 'header',
+        label: `Step ${stepNo++}: Enable use of cloak directive to hide flash of unrendered content`,
+      })
+
       menu.add({
         label: `Add ${cloakAttr} inline style`,
         action: function () {
@@ -470,129 +474,137 @@ const onProjectLoaded = () => {
       })
     }
 
-    menu.add({
-      type: 'header',
-      label: `Step ${stepNo++}: Optionally, load and hydrate islands conditionally`,
-    })
+    const lltyIntegration = !!(
+      frameworksLiteState.activeFramework.name === 'alpinejs' ||
+      frameworksLiteState.activeFramework.name.includes('vue')
+    )
 
-    const add11tyIntegrations = []
-
-    island.headers.forEach((header) => {
-      add11tyIntegrations.push({
+    if (lltyIntegration) {
+      menu.add({
         type: 'header',
-        label: header,
+        label: `Step ${stepNo++}: Optionally, load and hydrate islands conditionally`,
       })
-    })
 
-    // Restricted Sample Apps to use only Module Scripts
-    frameworksLiteState.preferIslands &&
-      frameworksLiteState.preferModuleScripts &&
-      frameworksLiteState.activeFramework.appTypes.forEach((appType) => {
-        if (
-          (frameworksLiteState.preferIslands &&
-            appType.name === 'global-app') ||
-          (!frameworksLiteState.preferIslands && appType.name === 'islands')
-        ) {
-          return
-        }
+      const add11tyIntegrations = []
 
-        const samplesOfActiveFramework = island.samples.filter(
-          (sample) =>
-            sample.framework === frameworksLiteState.activeFramework.name,
-        )
+      island.headers.forEach((header) => {
+        add11tyIntegrations.push({
+          type: 'header',
+          label: header,
+        })
+      })
 
-        samplesOfActiveFramework.length &&
-          add11tyIntegrations.push(
-            {
-              type: 'divider',
-            },
-            {
-              type: 'header',
-              label: appType.label,
-            },
+      // Restricted Sample Apps to use only Module Scripts
+      frameworksLiteState.preferIslands &&
+        frameworksLiteState.preferModuleScripts &&
+        frameworksLiteState.activeFramework.appTypes.forEach((appType) => {
+          if (
+            (frameworksLiteState.preferIslands &&
+              appType.name === 'global-app') ||
+            (!frameworksLiteState.preferIslands && appType.name === 'islands')
+          ) {
+            return
+          }
+
+          const samplesOfActiveFramework = island.samples.filter(
+            (sample) =>
+              sample.framework === frameworksLiteState.activeFramework.name,
           )
 
-        // GlobalApp
-        samplesOfActiveFramework.forEach(
-          ({ name, label, helptext, globalApp, island }) => {
-            add11tyIntegrations.push({
-              label,
-              helptext,
-              action: function () {
-                const scriptArr =
-                  appType.name === 'global-app' ? globalApp : island
-                processScriptInjection(scriptArr)
+          samplesOfActiveFramework.length &&
+            add11tyIntegrations.push(
+              {
+                type: 'divider',
               },
-            })
-          },
-        )
-      })
-
-    add11tyIntegrations.push({
-      type: 'divider',
-    })
-
-    const lltyGlobalApp = island.cdnScripts.globalApp.scriptModuleNoExample
-    const pikadayIntegrationIsland = island.cdnScripts.pikadayIntegrationIsland
-    const pikadayIntegrationsScripts =
-      frameworksLiteState.activeFramework.cdnScripts.islands
-        ?.pikadayIntegrationsScripts
-
-    pikadayIntegrationsScripts?.forEach((pikadayIntegrationsScript) => {
-      const localPikadayIntegrationIsland = [
-        lltyGlobalApp,
-        {
-          ...pikadayIntegrationIsland,
-          code: pikadayIntegrationIsland.code
-            .replace(
-              '__SLOT1__',
-              `${frameworksLiteState.activeFramework.prefix}-`,
+              {
+                type: 'header',
+                label: appType.label,
+              },
             )
-            .replace('__SLOT2__', pikadayIntegrationsScript.__SLOT2__ || '')
-            .replace('__SLOT3__', pikadayIntegrationsScript.__SLOT3__ || ''),
-        },
-      ]
+
+          // GlobalApp
+          samplesOfActiveFramework.forEach(
+            ({ name, label, helptext, globalApp, island }) => {
+              add11tyIntegrations.push({
+                label,
+                helptext,
+                action: function () {
+                  const scriptArr =
+                    appType.name === 'global-app' ? globalApp : island
+                  processScriptInjection(scriptArr)
+                },
+              })
+            },
+          )
+        })
 
       add11tyIntegrations.push({
-        label: `Pikaday Datepicker${
-          pikadayIntegrationsScript.label
-            ? ` (${pikadayIntegrationsScript.label})`
-            : ''
-        }`,
-        helptext:
-          'Added before closing of body tag, hydrates when entering viewport.',
+        type: 'divider',
+      })
+
+      const lltyGlobalApp = island.cdnScripts.globalApp.scriptModuleNoExample
+      const pikadayIntegrationIsland =
+        island.cdnScripts.pikadayIntegrationIsland
+      const pikadayIntegrationsScripts =
+        frameworksLiteState.activeFramework.cdnScripts.islands
+          ?.pikadayIntegrationsScripts
+
+      pikadayIntegrationsScripts?.forEach((pikadayIntegrationsScript) => {
+        const localPikadayIntegrationIsland = [
+          lltyGlobalApp,
+          {
+            ...pikadayIntegrationIsland,
+            code: pikadayIntegrationIsland.code
+              .replace(
+                '__SLOT1__',
+                `${frameworksLiteState.activeFramework.prefix}-`,
+              )
+              .replace('__SLOT2__', pikadayIntegrationsScript.__SLOT2__ || '')
+              .replace('__SLOT3__', pikadayIntegrationsScript.__SLOT3__ || ''),
+          },
+        ]
+
+        add11tyIntegrations.push({
+          label: `Pikaday Datepicker${
+            pikadayIntegrationsScript.label
+              ? ` (${pikadayIntegrationsScript.label})`
+              : ''
+          }`,
+          helptext:
+            'Added before closing of body tag, hydrates when entering viewport.',
+          action: function () {
+            processScriptInjection(localPikadayIntegrationIsland)
+          },
+        })
+      })
+
+      add11tyIntegrations.push({
+        type: 'divider',
+      })
+
+      add11tyIntegrations.push({
+        type: 'header',
+        label: `Refer to official docs for detailed usage`,
+      })
+
+      add11tyIntegrations.push({
+        type: 'divider',
+      })
+
+      add11tyIntegrations.push({
+        label: `Learn ${island.label} (official docs)`,
         action: function () {
-          processScriptInjection(localPikadayIntegrationIsland)
+          pinegrow.openExternalUrl(
+            'https://www.11ty.dev/docs/plugins/partial-hydration/',
+          )
         },
       })
-    })
 
-    add11tyIntegrations.push({
-      type: 'divider',
-    })
-
-    add11tyIntegrations.push({
-      type: 'header',
-      label: `Refer to official docs for detailed usage`,
-    })
-
-    add11tyIntegrations.push({
-      type: 'divider',
-    })
-
-    add11tyIntegrations.push({
-      label: `Learn ${island.label} (official docs)`,
-      action: function () {
-        pinegrow.openExternalUrl(
-          'https://www.11ty.dev/docs/plugins/partial-hydration/',
-        )
-      },
-    })
-
-    menu.add({
-      label: `${island.label} (advanced)`,
-      submenu: add11tyIntegrations,
-    })
+      menu.add({
+        label: `${island.label} (advanced)`,
+        submenu: add11tyIntegrations,
+      })
+    }
 
     if (projectInfo) {
       menu.add({
