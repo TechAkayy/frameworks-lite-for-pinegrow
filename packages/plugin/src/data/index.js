@@ -1,6 +1,7 @@
 import petiteVueFramework from './petite-vue/index.js'
 import alpinejsFramework from './alpinejs/index.js'
 import standardVueFramework from './standard-vue/index.js'
+import HtmxFramework from './htmx/index.js'
 
 export const globalAppType = {
   name: 'global-app',
@@ -43,6 +44,7 @@ export const frameworks = [
     ...petiteVueFramework,
     scriptTypes: [moduleScriptType, classicScriptType],
     appTypes: [
+      islandAppType,
       {
         ...globalAppType,
         footers: [
@@ -50,7 +52,6 @@ export const frameworks = [
           `A global app for the entire page that manages regions marked with the v-scope attribute`,
         ],
       },
-      islandAppType,
     ],
   },
   {
@@ -67,6 +68,20 @@ export const frameworks = [
         footers: [
           ...globalAppType.footers,
           `A global app for the entire page that manages tags that are enriched with Alpinejs directives`,
+        ],
+      },
+    ],
+  },
+  {
+    ...HtmxFramework,
+    scriptTypes: [classicScriptType],
+    appTypes: [
+      {
+        ...globalAppType,
+        headers: [],
+        footers: [
+          ...globalAppType.footers,
+          `A global app for the entire page that enhances standard HTML elements with dynamic behaviors through htmx attributes.`,
         ],
       },
     ],
