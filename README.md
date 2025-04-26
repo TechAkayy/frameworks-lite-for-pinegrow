@@ -2,7 +2,7 @@
 
 A [Pinegrow](https://pinegrow.com/) Plugin that provides the ability to [progressively enhance](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement) your HTML with light-weight framework directives via the Props Panel.
 
-Currently supported frameworks - [Petite-Vue](https://github.com/vuejs/petite-vue), [AlpineJS](https://alpinejs.dev/start-here) and [Standard-Vue](https://vuejs.org/guide/quick-start.html#using-the-global-build). To add a new framework, refer to the [Development & Contribution](#development--contribution) section.
+Currently supported frameworks - [Petite-Vue](https://github.com/vuejs/petite-vue), [AlpineJS](https://alpinejs.dev/start-here), [Standard-Vue](https://vuejs.org/guide/quick-start.html#using-the-global-build) and HTMX (https://htmx.org/). To add a new framework, refer to the [Development & Contribution](#development--contribution) section.
 
 ❗Note: This is not an official plugin by the Pinegrow team, rather a personal contribution for the community. Follow me on twitter - [@techakayy](https://twitter.com/techakayy)
 
