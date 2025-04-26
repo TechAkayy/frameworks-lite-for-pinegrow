@@ -106,7 +106,7 @@ I did put together this [presentation](https://techakayy.github.io/frameworks-li
 - [x] Add examples via page templates from docs.
 - [x] Quick-start tutorial
 - [ ] Use the actions panel instead of props panel?
-- [ ] Anything else you can think of? HTMX? 
+- [ ] Anything else you can think of? HTMX?
 
 ## Vue with Pinegrow (or) Vue Designer?
 
@@ -164,7 +164,7 @@ $(function () {
 1. Fork this repo, and clone it to your local machine.
 2. Open project in your code editor, open your terminal and navigate to the project root.
 3. Install dependencies - `npm install`.
-4. Add a new file, say `my-framework.js` within the `packages/plugin/src/data/**` folders that contains an array of directives and cdn scripts (default exported). Refer to existing files for examples.
+4. Add a new folder for your framework, say `htmx` within the `packages/plugin/src/data/**` folders that contains an array of directives, cdn scripts and samples (default exported). Refer to existing files for examples.
 5. Import the new framework within `index.js` and add it to the exported object. Refer to existing code for an example.
 6. Format your project (optional) - `npm run lint`.
 7. Build the plugin - `npm run build`

@@ -1,4 +1,4 @@
-import { __SLOT3__ } from './standard-vue.js'
+import { __SLOT3__ } from '../standard-vue/scripts.js'
 
 const emptyState = `const state = {
     // state exposed to all expressions within v-scope regions
@@ -42,7 +42,7 @@ const sampleScopeMsg = `<div style="display: flex; margin: 8px; padding: 8px; ju
     </div>
 `
 
-const sampleScopesForGlobal = `<div data-pg-name="Pt-Scope-Counter" v-scope="{ msg: 'Happy Life!' }" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
+const sampleScopesForGlobal = `<div data-pg-name="Global-Pt-Scope" v-scope="{ msg: 'Happy Life!' }" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
     <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
     <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within a <code>v-scope</code> region. Any sprinkles of interactions within this <code>v-scope</code> region are managed by a global app (loaded for the entire page).</p>
     </div>
@@ -51,7 +51,7 @@ const sampleScopesForGlobal = `<div data-pg-name="Pt-Scope-Counter" v-scope="{ m
 </div>`
 
 const scriptModuleGlobal = (withState = false) => {
-  return `<script type="module" data-pg-name="Pt-App-Counter">
+  return `<script type="module" data-pg-name="Global-Pt-App">
   import { createApp } from 'https://unpkg.com/petite-vue?module'
   ${withState ? sampleStateCount : emptyState}
   createApp(state).mount()
@@ -59,8 +59,8 @@ const scriptModuleGlobal = (withState = false) => {
 }
 
 const scriptClassicGlobal = (withState = false) => {
-  return `<script src="https://unpkg.com/petite-vue" data-pg-name="Pt-App-Counter"></script>
-<script>
+  return `<script src="https://unpkg.com/petite-vue" data-pg-name="Global-Petite-Vue"></script>
+<script data-pg-name="Global-Pt-App">
   ${
     withState
       ? sampleStateCount.replace('const state', 'var state')
@@ -70,53 +70,57 @@ const scriptClassicGlobal = (withState = false) => {
 </script>`
 }
 
-const scriptIslandsModule = `<script type="module" data-pg-name="Pt-App-Hero" id="hero-app">
-  import { createApp } from 'https://unpkg.com/petite-vue?module'
+const scriptIslandsModule = `<div data-pg-name="Hero-Pt-Island">
+    <script type="module" data-pg-name="Hero-Pt-App">
+      import { createApp } from 'https://unpkg.com/petite-vue?module'
 
-  ${sampleStateCount}
+      ${sampleStateCount}
 
-  createApp(state).mount('div#hero-island')
-</script>
-<div id="hero-island" data-pg-name="Pt-Island-Hero" v-scope="{}" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
-    <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
-      <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#hero-island</code> has an exclusive app mounted by <code>script#hero-app</code>, and marked as a <code>v-scope</code> region. Any sprinkles of interactions within this <code>v-scope</code> region are managed by this exclusive app.</p>
+      createApp(state).mount('div#hero-scope')
+    </script>
+    <div id="hero-scope" data-pg-name="Hero-Pt-Scope" v-scope="{}" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
+        <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
+          <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#hero-scope</code> has an exclusive app mounted by <code>script#hero-app</code>, and marked as a <code>v-scope</code> region. Any sprinkles of interactions within this <code>v-scope</code> region are managed by this exclusive app.</p>
+        </div>
+        ${sampleScopeCount}
     </div>
-    ${sampleScopeCount}
 </div>
-<script type="module" data-pg-name="Pt-App-Feature" id="feature-app">
-  import { createApp } from 'https://unpkg.com/petite-vue?module'
-  ${sampleStateMsg}
+<div data-pg-name="Feature-Pt-Island">
+    <script type="module" data-pg-name="Feature-Pt-App">
+      import { createApp } from 'https://unpkg.com/petite-vue?module'
+      ${sampleStateMsg}
 
-  createApp(state).mount('div#feature-island')
-</script>
-<div id="feature-island" data-pg-name="Pt-Island-Feature" v-scope="{}" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
-    <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
-        <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#feature-island</code> has an exclusive app mounted by <code>script#feature-app</code>, and marked as a <code>v-scope</code> region. Any sprinkles of interactions within this <code>v-scope</code> region are managed by this exclusive app.</p>
+      createApp(state).mount('div#feature-scope')
+    </script>
+    <div id="feature-scope" data-pg-name="Feature-Pt-Scope" v-scope="{}" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
+        <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
+            <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#feature-scope</code> has an exclusive app mounted by <code>script#feature-app</code>, and marked as a <code>v-scope</code> region. Any sprinkles of interactions within this <code>v-scope</code> region are managed by this exclusive app.</p>
+        </div>
+        ${sampleScopeMsg}
     </div>
-    ${sampleScopeMsg}
 </div>`
 
-const scriptIslandsClassic_Apps = `<script src="https://unpkg.com/petite-vue" data-pg-name="Pt-App-Counter"></script>
-<script id="hero-app">
+const scriptIslandsClassic_Apps = `<script src="https://unpkg.com/petite-vue" data-pg-name="Classic-Petite-Vue"></script>
+<script data-pg-name="Hero-Pt-App">
   ${sampleStateCount.replace('const state', 'var state')}
 
-  PetiteVue.createApp(state).mount('div#hero-island')
+  PetiteVue.createApp(state).mount('div#hero-scope')
 </script>
-<script id="feature-app">
+<script data-pg-name="Feature-Pt-App">
   ${sampleStateMsg.replace('const state', 'var state')}
 
-  PetiteVue.createApp(state).mount('div#feature-island')
+  PetiteVue.createApp(state).mount('div#feature-scope')
 </script>`
 
-const scriptIslandsClassic_Scopes = `<div id="hero-island" data-pg-name="Pt-Island-Hero" v-scope="{}" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
+const scriptIslandsClassic_Scopes = `<div id="hero-scope" data-pg-name="Hero-Pt-Scope" v-scope="{}" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
     <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
-        <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#hero-island</code> has an exclusive app mounted by <code>script#hero-app</code>, and marked as a <code>v-scope</code> region. Any sprinkles of interactions within this <code>v-scope</code> region are managed by this exclusive app.</p>
+        <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#hero-scope</code> has an exclusive app mounted by <code>script#hero-app</code>, and marked as a <code>v-scope</code> region. Any sprinkles of interactions within this <code>v-scope</code> region are managed by this exclusive app.</p>
     </div>
     ${sampleScopeCount}
 </div>
-<div id="feature-island" data-pg-name="Pt-Island-Feature" v-scope="{}" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
+<div id="feature-scope" data-pg-name="Feature-Pt-Scope" v-scope="{}" style="padding: 20px; margin: 20px; border-radius: 4px; border-width: 2px; outline: 1px solid #cccccc;">
     <div style="display: flex; margin: 8px; padding: 8px; justify-content: center; align-items: center;">
-        <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#feature-island</code> has an exclusive app mounted by <code>script#feature-app</code>, and marked as a <code>v-scope</code> region. Any sprinkles of interactions within this <code>v-scope</code> region are managed by this exclusive app.</p>
+        <p style="text-align: center; width: 50%; min-width: 400px;">Hello, I&apos;m within an island, and the root tag of the island <code>div#feature-scope</code> has an exclusive app mounted by <code>script#feature-app</code>, and marked as a <code>v-scope</code> region. Any sprinkles of interactions within this <code>v-scope</code> region are managed by this exclusive app.</p>
     </div>
     ${sampleScopeMsg}
 </div>
@@ -161,7 +165,7 @@ ${sampleScopesForGlobal}`,
     scriptClassicAutoInit: [
       {
         injectTo: 'head',
-        code: `<script src="https://unpkg.com/petite-vue" defer init data-pg-name="Pt-App-Global"></script>`,
+        code: `<script src="https://unpkg.com/petite-vue" defer init data-pg-name="Global-Petite-Vue"></script>`,
       },
     ],
   },
@@ -189,7 +193,7 @@ ${sampleScopesForGlobal}`,
         __SLOT2__: `
 <script
   type="module"
-  data-pg-name="Pt-App-Appointment"
+  data-pg-name="Appointment-Pt-App"
 >
   import { createApp } from 'https://unpkg.com/petite-vue?module'
 
@@ -198,10 +202,12 @@ ${sampleScopesForGlobal}`,
     date: '', // v-model won't work
     datePicker: null,
     addPikaday($el) {
-      this.datePicker = new Pikaday({
-        field: $el,
-        theme: 'dark-theme',
-      })
+      setTimeout(() => {
+        this.datePicker = new Pikaday({
+            field: $el,
+            theme: 'dark-theme',
+        })
+      },100)
     },
     removePikaday() {
       this.datePicker = null
@@ -219,11 +225,11 @@ ${sampleScopesForGlobal}`,
     }
   }
 
-  createApp(state).directive('datepicker', datepickerDirective).mount('div#appointment')
+  createApp(state).directive('datepicker', datepickerDirective).mount('div#appointment-scope')
 </script>
 `,
         __SLOT3__: `
-<div id="appointment" data-pg-name="Pt-Island-Appointment" class="p-4">
+<div id="appointment-scope" data-pg-name="Appointment-Pt-Scope" class="p-4">
 ${__SLOT3__}
 </div>
 `,

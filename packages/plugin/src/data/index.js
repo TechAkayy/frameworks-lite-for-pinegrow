@@ -1,35 +1,89 @@
-import petiteVueDirectives from './directives/petite-vue.js'
-import alpinejsDirectives from './directives/alpinejs.js'
-import standardVueDirectives from './directives/standard-vue.js'
+import petiteVueFramework from './petite-vue/index.js'
+import alpinejsFramework from './alpinejs/index.js'
+import standardVueFramework from './standard-vue/index.js'
+import HtmxFramework from './htmx/index.js'
 
-import petiteVueInjectScripts from './scripts/petite-vue.js'
-import alpinejsInjectScripts from './scripts/alpinejs.js'
-import standardVueInjectScripts from './scripts/standard-vue.js'
+export const globalAppType = {
+  name: 'global-app',
+  label: 'Global App',
+  headers: [
+    `Progressive Enhancement - Sprinkles of interactivity`,
+    // `Follows a monolithic architecture that eagerly loads, and where the page is top-down hydrated`
+  ],
+  footers: [],
+}
+
+export const islandAppType = {
+  name: 'islands',
+  label: 'Islands',
+  headers: [
+    `Progressive Enhancement - Islands of interactivity`,
+    // `Follows an islands architecture where islands COULD BE independently (and progressively) loaded and hydrated (partial hydration)`,
+  ],
+  footers: [
+    `Multiple apps/islands across the page with it's own exclusive scope and mount point`,
+  ],
+}
+
+export const moduleScriptType = {
+  name: 'module-scripts',
+  label: 'Module Scripts',
+  headers: [`App with Script (module) - Recommended`],
+  footers: [],
+}
+
+export const classicScriptType = {
+  name: 'classic-scripts',
+  label: 'Classic Scripts',
+  headers: [`App with Script (classic)`],
+  footers: [],
+}
 
 export const frameworks = [
   {
-    name: 'petite-vue',
-    label: 'Petite Vue',
-    prefix: 'Pt',
-    directives: petiteVueDirectives,
-    cdnScripts: petiteVueInjectScripts,
-    helptext: `Petite-Vue is DOM-based (doesn't use Virtual-DOM like Standard Vue), small, and optimized for progressive enhancement.`,
+    ...petiteVueFramework,
+    scriptTypes: [moduleScriptType, classicScriptType],
+    appTypes: [
+      islandAppType,
+      {
+        ...globalAppType,
+        footers: [
+          ...globalAppType.footers,
+          `A global app for the entire page that manages regions marked with the v-scope attribute`,
+        ],
+      },
+    ],
   },
   {
-    name: 'alpinejs',
-    label: 'Alpinejs',
-    prefix: 'Alpinejs',
-    directives: alpinejsDirectives,
-    cdnScripts: alpinejsInjectScripts,
-    helptext:
-      'Alpinejs is similar to Petite-Vue but includes additional features such as plugins, transitions, design blocks, and is npm installable.',
+    ...standardVueFramework,
+    scriptTypes: [moduleScriptType, classicScriptType],
+    appTypes: [islandAppType],
   },
   {
-    name: 'standard-vue',
-    label: 'Standard Vue',
-    prefix: 'Vue',
-    directives: standardVueDirectives,
-    cdnScripts: standardVueInjectScripts,
-    helptext: `Unlike Petite-Vue, Standard-Vue ships a template compiler, uses a Virtual-DOM, has vue-devtools support, optimized for next-level progressive enhancement.`,
+    ...alpinejsFramework,
+    scriptTypes: [classicScriptType],
+    appTypes: [
+      {
+        ...globalAppType,
+        footers: [
+          ...globalAppType.footers,
+          `A global app for the entire page that manages tags that are enriched with Alpinejs directives`,
+        ],
+      },
+    ],
+  },
+  {
+    ...HtmxFramework,
+    scriptTypes: [classicScriptType],
+    appTypes: [
+      {
+        ...globalAppType,
+        headers: [],
+        footers: [
+          ...globalAppType.footers,
+          `A global app for the entire page that enhances standard HTML elements with dynamic behaviors through htmx attributes.`,
+        ],
+      },
+    ],
   },
 ]
